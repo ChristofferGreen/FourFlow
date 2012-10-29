@@ -1,0 +1,59 @@
+<ServerManagerConfiguration>
+  <ProxyGroup name="hiddenfilters">
+   <SourceProxy name="RingPolygonSource" class="vtkRingPolygonSource">
+
+     <InputProperty
+        name="Input"
+        command="AddInputConnection"
+        clean_command="RemoveAllInputs"
+        multiple_input="0">
+       <ProxyGroupDomain name="groups">
+         <Group name="sources"/>
+       </ProxyGroupDomain>
+       <DataTypeDomain name="input_type" composite_data_supported="1">
+         <DataType value="vtkDataObject"/>
+       </DataTypeDomain>
+       <InputArrayDomain name="input_array" attribute_type="point"
+                         number_of_components="3"/>
+     </InputProperty>
+
+      <DoubleVectorProperty
+         name="Center"
+         command="SetCenter"
+         number_of_elements="3"
+         animateable="1"
+         default_values="0.0 0.0 0.0" >
+        <DoubleRangeDomain name="range"/>
+      </DoubleVectorProperty>
+
+      <DoubleVectorProperty name="TimestepValues"
+			    repeatable="1"
+			    information_only="1">
+        <TimeStepsInformationHelper/>
+      </DoubleVectorProperty>
+
+
+      <StringVectorProperty
+        name="Vertex2dString"
+        command="SetVertex2dString"
+        number_of_elements="1"
+        animateable="0">
+        <Hints>
+          <NoDefault/>
+          <!--<Widget type="multi_line"/>-->
+        </Hints>
+      </StringVectorProperty>
+
+      <IntVectorProperty
+         name="Resolution"
+         command="SetResolution"
+         number_of_elements="1"
+         default_values="25" >
+      </IntVectorProperty>
+      
+   <Hints>
+     <Visibility replace_input="0" />
+   </Hints>
+   </SourceProxy>
+  </ProxyGroup>
+</ServerManagerConfiguration>
