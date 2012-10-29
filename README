@@ -1,0 +1,9 @@
+FourFlow - Open Source software for quantification and visualization of time-resolved three-directional phase contrast magnetic resonance velocity mapping
+
+FourFlow is an open source software for quantification and visualization of 4D PC-MR data that enables development of new quantitative analysis tools.
+
+Background
+Time-resolved three-directional phase contrast magnetic resonance velocity mapping (4D PC-MR) has the potential to be a powerful modality for studying normal physiology and pathophysiology. However, a wider application of 4D PC-MR is hampered by a lack of methods for quantitative analysis. Currently available software packages for visualization of 4D PC-MR do not allow for modifications or additions by users. This limits innovation of new quantification tools, and limits the possibilities to answer specific clinical and physiological questions. Therefore, the aim of this study was to develop a comprehensive open source software for quantification and analysis of 4D PC-MR data that includes the possibility to develop and add new quantitative analysis methods.
+
+Homepage
+The homepage for FourFlow can be found here: http://heiberg.se/fourflow/
