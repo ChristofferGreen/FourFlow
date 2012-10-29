@@ -1,0 +1,697 @@
+<ServerManagerConfiguration>
+  <ProxyGroup name="filters">
+   <SourceProxy name="FourFlowParticleTracerSource" class="vtkFourFlowTemporalParticleTracer">
+     <InputProperty
+        name="Input"
+        command="AddInputConnection"
+        clean_command="RemoveAllInputs"
+        multiple_input="1">
+       <ProxyGroupDomain name="groups">
+         <Group name="sources"/>
+         <Group name="filters"/>
+       </ProxyGroupDomain>
+       <DataTypeDomain name="input_type" composite_data_supported="1">
+         <DataType value="vtkDataObject"/>
+       </DataTypeDomain>
+       <InputArrayDomain name="input_array" attribute_type="point"
+                         number_of_components="3"/>
+     </InputProperty>
+
+      <InputProperty
+         name="Source"
+         command="AddSourceConnection"
+         clean_command="RemoveAllSources"
+         multiple_input="1">
+        <ProxyGroupDomain name="groups">
+          <Group name="sources"/>
+          <Group name="filters"/>
+        </ProxyGroupDomain>
+        <DataTypeDomain name="input_type">
+          <DataType value="vtkDataSet"/>
+        </DataTypeDomain>
+      </InputProperty>
+      
+     <IntVectorProperty 
+       name="IntegrationDirection" 
+       command="SetIntegrationDirection" 
+       number_of_elements="1"
+       default_values="0" >
+       <EnumerationDomain name="enum">
+         <Entry value="0" text="FORWARD"/>
+         <Entry value="1" text="BACKWARD"/>
+       </EnumerationDomain>
+       <Documentation>
+         This property determines in which direction(s) a particle trace is generated.
+       </Documentation>
+     </IntVectorProperty>
+<!--      
+     <DoubleVectorProperty
+        name="TimeStepResolution"
+        command="SetTimeStepResolution"
+        number_of_elements="1"
+        default_values="1.0" >
+       <DoubleRangeDomain name="range"/>
+     </DoubleVectorProperty>
+-->
+     <IntVectorProperty
+       name="TimeStep"
+       command="SetTimeStep"
+       number_of_elements="1"
+       animateable="1"
+       default_values="0"
+       information_property="TimestepValues">
+
+       <IntRangeDomain name="range">
+         <RequiredProperties>
+           <Property name="TimeStepRangeInfo" function="Range"/>
+         </RequiredProperties>
+       </IntRangeDomain>
+     </IntVectorProperty>
+
+     <DoubleVectorProperty 
+        name="TimestepValues"
+        information_only="1">
+       <TimeStepsInformationHelper/>
+     </DoubleVectorProperty>
+
+     <IntVectorProperty 
+        name="StaticSeeds" 
+        command="SetStaticSeeds" 
+        number_of_elements="1"
+        default_values="1" >
+       <BooleanDomain name="bool"/>
+       <Documentation>
+         Force the use of static seed optimizations
+      </Documentation>
+     </IntVectorProperty> 
+
+     <IntVectorProperty 
+        name="StaticMesh" 
+        command="SetStaticMesh" 
+        number_of_elements="1"
+        default_values="0" >
+       <BooleanDomain name="bool"/>
+       <Documentation>
+         Force the use of static mesh optimizations
+       </Documentation>
+     </IntVectorProperty>
+     
+     <IntVectorProperty 
+        name="ForceReinjectionEveryNSteps" 
+        command="SetForceReinjectionEveryNSteps" 
+        number_of_elements="1"
+        default_values="1" >
+     </IntVectorProperty>
+
+     <IntVectorProperty 
+        name="ParticleReleaseStartFrame" 
+        command="SetParticleReleaseStartFrame" 
+        number_of_elements="1"
+        default_values="-1" >
+     </IntVectorProperty>
+
+     <IntVectorProperty 
+        name="ParticleReleaseEndFrame" 
+        command="SetParticleReleaseEndFrame" 
+        number_of_elements="1"
+        default_values="-1" >
+     </IntVectorProperty>
+
+     <StringVectorProperty 
+        name="SelectInputVectors" 
+        command="SetInputArrayToProcess"
+        number_of_elements="5"
+        element_types="0 0 0 0 2"
+        animateable="0"> 
+           <ArrayListDomain name="array_list" attribute_type="Vectors">
+             <RequiredProperties>
+                <Property name="Input" function="Input"/>
+             </RequiredProperties>
+           </ArrayListDomain>
+     </StringVectorProperty>
+
+      <DoubleVectorProperty
+        name="InitialIntegrationStep"
+        command="SetInitialIntegrationStep"
+        number_of_elements="1"
+        default_values="0.25" >
+        <DoubleRangeDomain name="range"/>
+      </DoubleVectorProperty>
+      
+      <IntVectorProperty 
+         name="ComputeVorticity" 
+         command="SetComputeVorticity" 
+         number_of_elements="1"
+         default_values="1" >
+        <BooleanDomain name="bool"/>
+        <Documentation>
+          Compute vorticity and angular rotation of particles as they progress
+        </Documentation>
+      </IntVectorProperty>
+
+<!--      
+      <IntVectorProperty 
+        name="InitialIntegrationStepUnit" 
+        command="SetInitialIntegrationStepUnit" 
+        number_of_elements="1"
+        default_values="2" >
+       <EnumerationDomain name="enum">
+         <Entry value="0" text="Time"/>
+       </EnumerationDomain>
+     </IntVectorProperty>
+
+     <IntVectorProperty 
+        name="IntegratorType" 
+        command="SetIntegratorType" 
+        number_of_elements="1"
+        default_values="0" >
+       <EnumerationDomain name="enum">
+         <Entry value="0" text="Runge-Kutta 2"/>
+         <Entry value="1" text="Runge-Kutta 4"/>
+         <Entry value="2" text="Runge-Kutta 4-5"/>
+       </EnumerationDomain>
+     </IntVectorProperty>
+
+     <DoubleVectorProperty
+        name="MaximumError"
+        command="SetMaximumError"
+        number_of_elements="1"
+        default_values="0.000001" >
+       <DoubleRangeDomain name="range"/>
+     </DoubleVectorProperty>
+
+     <IntVectorProperty 
+        name="MinimumIntegrationStepUnit" 
+        command="SetMinimumIntegrationStepUnit" 
+        number_of_elements="1"
+        default_values="2" >
+       <EnumerationDomain name="enum">
+         <Entry value="0" text="Time"/>
+       </EnumerationDomain>
+     </IntVectorProperty>
+
+     <DoubleVectorProperty
+        name="MinimumIntegrationStep"
+        command="SetMinimumIntegrationStep"
+        number_of_elements="1"
+        default_values="0.01" >
+       <DoubleRangeDomain name="range"/>
+     </DoubleVectorProperty>
+
+     <IntVectorProperty 
+        name="MaximumIntegrationStepUnit" 
+        command="SetMaximumIntegrationStepUnit" 
+        number_of_elements="1"
+        default_values="2" >
+       <EnumerationDomain name="enum">
+         <Entry value="0" text="Time"/>
+       </EnumerationDomain>
+     </IntVectorProperty>
+
+     <DoubleVectorProperty
+        name="MaximumIntegrationStep"
+        command="SetMaximumIntegrationStep"
+        number_of_elements="1"
+        default_values="0.01" >
+       <DoubleRangeDomain name="range"/>
+     </DoubleVectorProperty>
+-->
+
+      <DoubleVectorProperty
+         name="TerminationTime"
+         command="SetTerminationTime"
+         number_of_elements="1"
+         default_values="0.0" >
+        <DoubleRangeDomain name="range"/>
+      </DoubleVectorProperty>
+      
+     <IntVectorProperty 
+        name="TerminationTimeUnit" 
+        label="Termination Time Unit"
+        command="SetTerminationTimeUnit" 
+        number_of_elements="1"
+        default_values="1" >
+       <EnumerationDomain name="enum">
+         <Entry value="0" text="Simulation Time"/>
+         <Entry value="1" text="TimeSteps"/>
+       </EnumerationDomain>
+       <Documentation>
+         The termination time may be specified as TimeSteps or Simulation  time       
+       </Documentation>
+     </IntVectorProperty>
+
+      <DoubleVectorProperty
+         name="TerminalSpeed"
+         label="Term. Speed"
+         command="SetTerminalSpeed"
+         number_of_elements="1"
+         default_values="0.000000000001" >
+        <DoubleRangeDomain name="range"/>
+        <Documentation>
+          If at any point the speed is below the value of this property, the integration is terminated.
+        </Documentation>
+      </DoubleVectorProperty>
+
+      <IntVectorProperty 
+         name="IgnorePipelineTime" 
+         command="SetIgnorePipelineTime" 
+         number_of_elements="1"
+         default_values="0" >
+        <BooleanDomain name="bool"/>
+        <Documentation>
+          Ignore the TIME_ requests made by the pipeline and only use the TimeStep set manually
+        </Documentation>
+      </IntVectorProperty>
+
+      <StringVectorProperty 
+         name="ParticleFileName" 
+         command="SetParticleFileName" 
+         number_of_elements="1"
+         default_values="/project/csvis/biddisco/ptracer/run-1">
+        <Documentation>
+          Provide a name for the particle file generated if writing is enabled
+        </Documentation>
+      </StringVectorProperty>
+
+      <IntVectorProperty 
+         name="EnableParticleWriting" 
+         command="SetEnableParticleWriting" 
+         number_of_elements="1"
+         default_values="0" >
+        <BooleanDomain name="bool"/>
+        <Documentation>
+          Turn On/Off particle writing
+        </Documentation>
+      </IntVectorProperty>
+
+      <Hints>
+        <Visibility replace_input="0" />
+      </Hints>
+      <!-- End ParticleTracer -->
+   </SourceProxy>
+
+    <CompoundSourceProxy id="11797" servers="1" name="FourFlowParticleTracerCompound" label="Particle Trace">
+      <Proxy group="filters" type="FourFlowParticleTracerSource" id="9432" servers="1" compound_name="ParticleTracer4">
+        <Property name="ComputeVorticity" id="9432.ComputeVorticity" number_of_elements="1">
+          <Element index="0" value="0"/>
+          <Domain name="bool" id="9432.ComputeVorticity.bool"/>
+        </Property>
+        <Property name="EnableParticleWriting" id="9432.EnableParticleWriting" number_of_elements="1">
+          <Element index="0" value="0"/>
+          <Domain name="bool" id="9432.EnableParticleWriting.bool"/>
+        </Property>
+        <Property name="ForceReinjectionEveryNSteps" id="9432.ForceReinjectionEveryNSteps" number_of_elements="1">
+          <Element index="0" value="1"/>
+        </Property>
+        <Property name="IgnorePipelineTime" id="9432.IgnorePipelineTime" number_of_elements="1">
+          <Element index="0" value="0"/>
+          <Domain name="bool" id="9432.IgnorePipelineTime.bool"/>
+        </Property>
+        <Property name="InitialIntegrationStep" id="9432.InitialIntegrationStep" number_of_elements="1">
+          <Element index="0" value="0.25"/>
+          <Domain name="range" id="9432.InitialIntegrationStep.range"/>
+        </Property>
+        <Property name="Input" id="9432.Input" number_of_elements="1">
+          <Proxy value="9134" output_port="0"/>
+          <Domain name="groups" id="9432.Input.groups">
+            <Group value="sources"/>
+            <Group value="filters"/>
+          </Domain>
+          <Domain name="input_array" id="9432.Input.input_array">
+            <InputArray attribute_type="point" number_of_components="3"/>
+          </Domain>
+          <Domain name="input_type" id="9432.Input.input_type">
+            <DataType value="vtkDataObject"/>
+          </Domain>
+        </Property>
+        <Property name="ParticleFileName" id="9432.ParticleFileName" number_of_elements="1">
+          <Element index="0" value="/project/csvis/biddisco/ptracer/run-1"/>
+        </Property>
+        <Property name="SelectInputVectors" id="9432.SelectInputVectors" number_of_elements="5">
+          <Element index="0" value=""/>
+          <Element index="1" value=""/>
+          <Element index="2" value=""/>
+          <Element index="3" value="0"/>
+          <Element index="4" value="V_3D_01"/>
+          <Domain name="array_list" id="9432.SelectInputVectors.array_list">
+            <String text="V_3D_01"/>
+          </Domain>
+        </Property>
+        <Property name="Source" id="9432.Source" number_of_elements="1">
+          <Domain name="groups" id="9432.Source.groups">
+            <Group value="sources"/>
+            <Group value="filters"/>
+          </Domain>
+          <Domain name="input_type" id="9432.Source.input_type">
+            <DataType value="vtkDataSet"/>
+          </Domain>
+        </Property>
+        <Property name="StaticMesh" id="9432.StaticMesh" number_of_elements="1">
+          <Element index="0" value="0"/>
+          <Domain name="bool" id="9432.StaticMesh.bool"/>
+        </Property>
+        <Property name="StaticSeeds" id="9432.StaticSeeds" number_of_elements="1">
+          <Element index="0" value="1"/>
+          <Domain name="bool" id="9432.StaticSeeds.bool"/>
+        </Property>
+        <Property name="TerminalSpeed" id="9432.TerminalSpeed" number_of_elements="1">
+          <Element index="0" value="1e-012"/>
+          <Domain name="range" id="9432.TerminalSpeed.range"/>
+        </Property>
+        <Property name="TerminationTime" id="9432.TerminationTime" number_of_elements="1">
+          <Element index="0" value="0"/>
+          <Domain name="range" id="9432.TerminationTime.range"/>
+        </Property>
+        <Property name="TerminationTimeUnit" id="9432.TerminationTimeUnit" number_of_elements="1">
+          <Element index="0" value="1"/>
+          <Domain name="enum" id="9432.TerminationTimeUnit.enum">
+            <Entry value="0" text="Simulation Time"/>
+            <Entry value="1" text="TimeSteps"/>
+          </Domain>
+        </Property>
+        <Property name="TimeStep" id="9432.TimeStep" number_of_elements="1">
+          <Element index="0" value="0"/>
+          <Domain name="range" id="9432.TimeStep.range"/>
+        </Property>
+      </Proxy>
+      <Proxy group="filters" type="TemporalCache" id="9134" servers="1" compound_name="TemporalCache2">
+        <Property name="CacheSize" id="9134.CacheSize" number_of_elements="1">
+          <Element index="0" value="2"/>
+          <Domain name="range" id="9134.CacheSize.range">
+            <Min index="0" value="2"/>
+            <Max index="0" value="10"/>
+          </Domain>
+        </Property>
+        <Property name="Input" id="9134.Input" number_of_elements="1">
+          <Domain name="groups" id="9134.Input.groups">
+            <Group value="sources"/>
+            <Group value="filters"/>
+          </Domain>
+          <Domain name="input_type" id="9134.Input.input_type">
+            <DataType value="vtkDataObject"/>
+          </Domain>
+        </Property>
+      </Proxy>
+      <ExposedProperties>
+        <Property name="IntegrationDirection" proxy_name="ParticleTracer4" exposed_name="Integration Direction"/>
+        <Property name="ParticleReleaseStartFrame" proxy_name="ParticleTracer4" exposed_name="Particle Release Start Frame"/>
+        <Property name="ParticleReleaseEndFrame" proxy_name="ParticleTracer4" exposed_name="Particle Release End Frame"/>
+        <Property name="TerminationTime" proxy_name="ParticleTracer4" exposed_name="Termination Time"/>
+        <Property name="TerminationTimeUnit" proxy_name="ParticleTracer4" exposed_name="Termination Time unit"/>
+        <Property name="TerminalSpeed" proxy_name="ParticleTracer4" exposed_name="Term. Speed"/>
+        <Property name="ForceReinjectionEveryNSteps" proxy_name="ParticleTracer4" exposed_name="Force Reinjection Every NSteps"/>
+        <Property name="IgnorePipelineTime" proxy_name="ParticleTracer4" exposed_name="Ignore Pipeline Time"/>
+        <Property name="InitialIntegrationStep" proxy_name="ParticleTracer4" exposed_name="Initial Integration Step"/>
+        <Property name="Input" proxy_name="TemporalCache2" exposed_name="Input"/>
+        <Property name="SelectInputVectors" proxy_name="ParticleTracer4" exposed_name="Select Input Vectors"/>
+        <Property name="Source" proxy_name="ParticleTracer4" exposed_name="Source"/>
+        <Property name="TimeStep" proxy_name="ParticleTracer4" exposed_name="Time Step"/>
+      </ExposedProperties>
+      <Hints>
+        <Visibility replace_input="0" />
+      </Hints>
+      <OutputPort name="Output" proxy="ParticleTracer4" port_index="0"/>
+    </CompoundSourceProxy>
+    
+    <CompoundSourceProxy id="339" servers="1" name="Custom Particle Trace2" group="filters">
+      <Proxy group="filters" type="FourFlowParticleTracerSource" id="329" servers="1" compound_name="FourFlowParticleTracerSource1">
+        <Property name="ComputeVorticity" id="329.ComputeVorticity" number_of_elements="1">
+          <Element index="0" value="1"/>
+          <Domain name="bool" id="329.ComputeVorticity.bool"/>
+        </Property>
+        <Property name="EnableParticleWriting" id="329.EnableParticleWriting" number_of_elements="1">
+          <Element index="0" value="0"/>
+          <Domain name="bool" id="329.EnableParticleWriting.bool"/>
+        </Property>
+        <Property name="ForceReinjectionEveryNSteps" id="329.ForceReinjectionEveryNSteps" number_of_elements="1">
+          <Element index="0" value="1"/>
+        </Property>
+        <Property name="IgnorePipelineTime" id="329.IgnorePipelineTime" number_of_elements="1">
+          <Element index="0" value="0"/>
+          <Domain name="bool" id="329.IgnorePipelineTime.bool"/>
+        </Property>
+        <Property name="InitialIntegrationStep" id="329.InitialIntegrationStep" number_of_elements="1">
+          <Element index="0" value="0.25"/>
+          <Domain name="range" id="329.InitialIntegrationStep.range"/>
+        </Property>
+        <Property name="Input" id="329.Input" number_of_elements="1">
+          <Proxy value="319" output_port="0"/>
+          <Domain name="groups" id="329.Input.groups"/>
+          <Domain name="input_array" id="329.Input.input_array">
+            <InputArray attribute_type="point" number_of_components="3"/>
+          </Domain>
+          <Domain name="input_type" id="329.Input.input_type"/>
+        </Property>
+        <Property name="IntegrationDirection" id="329.IntegrationDirection" number_of_elements="1">
+          <Element index="0" value="0"/>
+          <Domain name="enum" id="329.IntegrationDirection.enum">
+            <Entry value="0" text="FORWARD"/>
+            <Entry value="1" text="BACKWARD"/>
+          </Domain>
+        </Property>
+        <Property name="ParticleFileName" id="329.ParticleFileName" number_of_elements="1">
+          <Element index="0" value="/project/csvis/biddisco/ptracer/run-1"/>
+        </Property>
+        <Property name="ParticleReleaseEndFrame" id="329.ParticleReleaseEndFrame" number_of_elements="1">
+          <Element index="0" value="-1"/>
+        </Property>
+        <Property name="ParticleReleaseStartFrame" id="329.ParticleReleaseStartFrame" number_of_elements="1">
+          <Element index="0" value="-1"/>
+        </Property>
+        <Property name="SelectInputVectors" id="329.SelectInputVectors" number_of_elements="5">
+          <Element index="0" value=""/>
+          <Element index="1" value=""/>
+          <Element index="2" value=""/>
+          <Element index="3" value="0"/>
+          <Element index="4" value="V_3D_01"/>
+          <Domain name="array_list" id="329.SelectInputVectors.array_list">
+            <String text="V_3D_01"/>
+          </Domain>
+        </Property>
+        <Property name="Source" id="329.Source" number_of_elements="1">
+          <Domain name="groups" id="329.Source.groups"/>
+          <Domain name="input_type" id="329.Source.input_type"/>
+        </Property>
+        <Property name="StaticMesh" id="329.StaticMesh" number_of_elements="1">
+          <Element index="0" value="0"/>
+          <Domain name="bool" id="329.StaticMesh.bool"/>
+        </Property>
+        <Property name="StaticSeeds" id="329.StaticSeeds" number_of_elements="1">
+          <Element index="0" value="1"/>
+          <Domain name="bool" id="329.StaticSeeds.bool"/>
+        </Property>
+        <Property name="TerminalSpeed" id="329.TerminalSpeed" number_of_elements="1">
+          <Element index="0" value="1e-012"/>
+          <Domain name="range" id="329.TerminalSpeed.range"/>
+        </Property>
+        <Property name="TerminationTime" id="329.TerminationTime" number_of_elements="1">
+          <Element index="0" value="0"/>
+          <Domain name="range" id="329.TerminationTime.range"/>
+        </Property>
+        <Property name="TerminationTimeUnit" id="329.TerminationTimeUnit" number_of_elements="1">
+          <Element index="0" value="1"/>
+          <Domain name="enum" id="329.TerminationTimeUnit.enum">
+            <Entry value="0" text="Simulation Time"/>
+            <Entry value="1" text="TimeSteps"/>
+          </Domain>
+        </Property>
+        <Property name="TimeStep" id="329.TimeStep" number_of_elements="1">
+          <Element index="0" value="0"/>
+          <Domain name="range" id="329.TimeStep.range"/>
+        </Property>
+        <Property name="TimestepValues" id="329.TimestepValues" number_of_elements="79">
+          <Element index="0" value="0.0258718"/>
+          <Element index="1" value="0.0517436"/>
+          <Element index="2" value="0.0776154"/>
+          <Element index="3" value="0.103487"/>
+          <Element index="4" value="0.129359"/>
+          <Element index="5" value="0.155231"/>
+          <Element index="6" value="0.181103"/>
+          <Element index="7" value="0.206974"/>
+          <Element index="8" value="0.232846"/>
+          <Element index="9" value="0.258718"/>
+          <Element index="10" value="0.28459"/>
+          <Element index="11" value="0.310462"/>
+          <Element index="12" value="0.336333"/>
+          <Element index="13" value="0.362205"/>
+          <Element index="14" value="0.388077"/>
+          <Element index="15" value="0.413949"/>
+          <Element index="16" value="0.439821"/>
+          <Element index="17" value="0.465692"/>
+          <Element index="18" value="0.491564"/>
+          <Element index="19" value="0.517436"/>
+          <Element index="20" value="0.543308"/>
+          <Element index="21" value="0.56918"/>
+          <Element index="22" value="0.595051"/>
+          <Element index="23" value="0.620923"/>
+          <Element index="24" value="0.646795"/>
+          <Element index="25" value="0.672667"/>
+          <Element index="26" value="0.698539"/>
+          <Element index="27" value="0.72441"/>
+          <Element index="28" value="0.750282"/>
+          <Element index="29" value="0.776154"/>
+          <Element index="30" value="0.802026"/>
+          <Element index="31" value="0.827898"/>
+          <Element index="32" value="0.853769"/>
+          <Element index="33" value="0.879641"/>
+          <Element index="34" value="0.905513"/>
+          <Element index="35" value="0.931385"/>
+          <Element index="36" value="0.957257"/>
+          <Element index="37" value="0.983128"/>
+          <Element index="38" value="1.009"/>
+          <Element index="39" value="1.03487"/>
+          <Element index="40" value="1.06074"/>
+          <Element index="41" value="1.08662"/>
+          <Element index="42" value="1.11249"/>
+          <Element index="43" value="1.13836"/>
+          <Element index="44" value="1.16423"/>
+          <Element index="45" value="1.1901"/>
+          <Element index="46" value="1.21597"/>
+          <Element index="47" value="1.24185"/>
+          <Element index="48" value="1.26772"/>
+          <Element index="49" value="1.29359"/>
+          <Element index="50" value="1.31946"/>
+          <Element index="51" value="1.34533"/>
+          <Element index="52" value="1.37121"/>
+          <Element index="53" value="1.39708"/>
+          <Element index="54" value="1.42295"/>
+          <Element index="55" value="1.44882"/>
+          <Element index="56" value="1.47469"/>
+          <Element index="57" value="1.50056"/>
+          <Element index="58" value="1.52644"/>
+          <Element index="59" value="1.55231"/>
+          <Element index="60" value="1.57818"/>
+          <Element index="61" value="1.60405"/>
+          <Element index="62" value="1.62992"/>
+          <Element index="63" value="1.6558"/>
+          <Element index="64" value="1.68167"/>
+          <Element index="65" value="1.70754"/>
+          <Element index="66" value="1.73341"/>
+          <Element index="67" value="1.75928"/>
+          <Element index="68" value="1.78515"/>
+          <Element index="69" value="1.81103"/>
+          <Element index="70" value="1.8369"/>
+          <Element index="71" value="1.86277"/>
+          <Element index="72" value="1.88864"/>
+          <Element index="73" value="1.91451"/>
+          <Element index="74" value="1.94039"/>
+          <Element index="75" value="1.96626"/>
+          <Element index="76" value="1.99213"/>
+          <Element index="77" value="2.018"/>
+          <Element index="78" value="2.04387"/>
+        </Property>
+      </Proxy>
+      <Proxy group="filters" type="TemporalCache" id="319" servers="1" compound_name="TemporalCache1">
+        <Property name="CacheSize" id="319.CacheSize" number_of_elements="1">
+          <Element index="0" value="2"/>
+          <Domain name="range" id="319.CacheSize.range"/>
+        </Property>
+        <Property name="Input" id="319.Input" number_of_elements="1">
+          <Domain name="groups" id="319.Input.groups"/>
+          <Domain name="input_type" id="319.Input.input_type"/>
+        </Property>
+        <Property name="TimestepValues" id="319.TimestepValues" number_of_elements="80">
+          <Element index="0" value="0"/>
+          <Element index="1" value="0.0258718"/>
+          <Element index="2" value="0.0517436"/>
+          <Element index="3" value="0.0776154"/>
+          <Element index="4" value="0.103487"/>
+          <Element index="5" value="0.129359"/>
+          <Element index="6" value="0.155231"/>
+          <Element index="7" value="0.181103"/>
+          <Element index="8" value="0.206974"/>
+          <Element index="9" value="0.232846"/>
+          <Element index="10" value="0.258718"/>
+          <Element index="11" value="0.28459"/>
+          <Element index="12" value="0.310462"/>
+          <Element index="13" value="0.336333"/>
+          <Element index="14" value="0.362205"/>
+          <Element index="15" value="0.388077"/>
+          <Element index="16" value="0.413949"/>
+          <Element index="17" value="0.439821"/>
+          <Element index="18" value="0.465692"/>
+          <Element index="19" value="0.491564"/>
+          <Element index="20" value="0.517436"/>
+          <Element index="21" value="0.543308"/>
+          <Element index="22" value="0.56918"/>
+          <Element index="23" value="0.595051"/>
+          <Element index="24" value="0.620923"/>
+          <Element index="25" value="0.646795"/>
+          <Element index="26" value="0.672667"/>
+          <Element index="27" value="0.698539"/>
+          <Element index="28" value="0.72441"/>
+          <Element index="29" value="0.750282"/>
+          <Element index="30" value="0.776154"/>
+          <Element index="31" value="0.802026"/>
+          <Element index="32" value="0.827898"/>
+          <Element index="33" value="0.853769"/>
+          <Element index="34" value="0.879641"/>
+          <Element index="35" value="0.905513"/>
+          <Element index="36" value="0.931385"/>
+          <Element index="37" value="0.957257"/>
+          <Element index="38" value="0.983128"/>
+          <Element index="39" value="1.009"/>
+          <Element index="40" value="1.03487"/>
+          <Element index="41" value="1.06074"/>
+          <Element index="42" value="1.08662"/>
+          <Element index="43" value="1.11249"/>
+          <Element index="44" value="1.13836"/>
+          <Element index="45" value="1.16423"/>
+          <Element index="46" value="1.1901"/>
+          <Element index="47" value="1.21597"/>
+          <Element index="48" value="1.24185"/>
+          <Element index="49" value="1.26772"/>
+          <Element index="50" value="1.29359"/>
+          <Element index="51" value="1.31946"/>
+          <Element index="52" value="1.34533"/>
+          <Element index="53" value="1.37121"/>
+          <Element index="54" value="1.39708"/>
+          <Element index="55" value="1.42295"/>
+          <Element index="56" value="1.44882"/>
+          <Element index="57" value="1.47469"/>
+          <Element index="58" value="1.50056"/>
+          <Element index="59" value="1.52644"/>
+          <Element index="60" value="1.55231"/>
+          <Element index="61" value="1.57818"/>
+          <Element index="62" value="1.60405"/>
+          <Element index="63" value="1.62992"/>
+          <Element index="64" value="1.6558"/>
+          <Element index="65" value="1.68167"/>
+          <Element index="66" value="1.70754"/>
+          <Element index="67" value="1.73341"/>
+          <Element index="68" value="1.75928"/>
+          <Element index="69" value="1.78515"/>
+          <Element index="70" value="1.81103"/>
+          <Element index="71" value="1.8369"/>
+          <Element index="72" value="1.86277"/>
+          <Element index="73" value="1.88864"/>
+          <Element index="74" value="1.91451"/>
+          <Element index="75" value="1.94039"/>
+          <Element index="76" value="1.96626"/>
+          <Element index="77" value="1.99213"/>
+          <Element index="78" value="2.018"/>
+          <Element index="79" value="2.04387"/>
+        </Property>
+      </Proxy>
+      <ExposedProperties>
+        <Property name="ForceReinjectionEveryNSteps" proxy_name="FourFlowParticleTracerSource1" exposed_name="Force Reinjection Every NSteps"/>
+        <Property name="InitialIntegrationStep" proxy_name="FourFlowParticleTracerSource1" exposed_name="Initial Integration Step"/>
+        <Property name="Input" proxy_name="TemporalCache1" exposed_name="Input"/>
+        <Property name="IntegrationDirection" proxy_name="FourFlowParticleTracerSource1" exposed_name="Integration Direction"/>
+        <Property name="ParticleReleaseEndFrame" proxy_name="FourFlowParticleTracerSource1" exposed_name="Particle Release End Frame"/>
+        <Property name="ParticleReleaseStartFrame" proxy_name="FourFlowParticleTracerSource1" exposed_name="Particle Release Start Frame"/>
+        <Property name="SelectInputVectors" proxy_name="FourFlowParticleTracerSource1" exposed_name="Select Input Vectors"/>
+        <Property name="Source" proxy_name="FourFlowParticleTracerSource1" exposed_name="Source"/>
+        <Property name="TerminalSpeed" proxy_name="FourFlowParticleTracerSource1" exposed_name="Term. Speed"/>
+        <Property name="TerminationTime" proxy_name="FourFlowParticleTracerSource1" exposed_name="Termination Time"/>
+        <Property name="TerminationTimeUnit" proxy_name="FourFlowParticleTracerSource1" exposed_name="Termination Time Unit"/>
+        <Property name="TimeStep" proxy_name="FourFlowParticleTracerSource1" exposed_name="Time Step"/>
+      </ExposedProperties>
+      <OutputPort name="Output" proxy="FourFlowParticleTracerSource1" port_index="0"/>
+      <Hints>
+        <ShowInMenu/>
+      </Hints>
+    </CompoundSourceProxy>
+
+  </ProxyGroup>
+</ServerManagerConfiguration>
