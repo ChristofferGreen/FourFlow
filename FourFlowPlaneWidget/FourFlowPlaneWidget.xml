@@ -1,0 +1,328 @@
+<ServerManagerConfiguration>
+  <ProxyGroup name="representations">
+    <NewWidgetRepresentationProxy name="FourFlowPlaneWidgetRepresentation" class="vtk3DWidgetRepresentation">
+
+      <IntVectorProperty name="Enabled"
+        command="SetEnabled"
+        number_of_elements="1"
+        default_values="0">
+        <BooleanDomain name="bool"/>
+        <Documentation>
+          Enable/Disable widget interaction.
+        </Documentation>
+      </IntVectorProperty>
+
+      <SubProxy>
+        <Proxy name="Prop" proxygroup="3d_widget_representations" proxyname="FourFlowPlaneRepresentation">
+        </Proxy>
+        <ExposedProperties>
+          <Property name="Visibility" />
+          <Property name="Origin" />
+          <Property name="OriginInfo" />
+          <Property name="Point1" />
+          <Property name="Point1Info" />
+          <Property name="Point2" />
+          <Property name="Point2Info" />
+          <Property name="PlaceWidget" />
+        </ExposedProperties>
+      </SubProxy>
+
+      <SubProxy>
+        <Proxy name="Widget" proxygroup="3d_widgets" proxyname="FourFlowPlaneWidget">
+        </Proxy>
+        <ExposedProperties>
+          <Property name="ProcessEvents" />
+        </ExposedProperties>
+      </SubProxy>
+    </NewWidgetRepresentationProxy>
+  </ProxyGroup>
+
+  <ProxyGroup name="3d_widgets"> 
+    <Proxy name="FourFlowPlaneWidget" class="vtkFourFlowPlaneWidget" base_proxygroup="3d_widgets" base_proxyname="WidgetBase">
+      <IntVectorProperty name="ProcessEvents"
+                         command="SetProcessEvents"
+                         number_of_elements="1"
+                         default_values="1">
+        <BooleanDomain/>
+      </IntVectorProperty>
+    </Proxy>
+  </ProxyGroup>
+  
+  <ProxyGroup name="3d_widget_representations">  
+    <Proxy name="FourFlowPlaneRepresentation" class="vtkFourFlowPlaneRepresentation">
+
+     <IntVectorProperty name="Visibility"
+        command="SetVisibility"
+        number_of_elements="1"
+        default_values="1"
+        animateable="1">
+        <BooleanDomain name="bool" />
+     </IntVectorProperty>
+
+     <DoubleVectorProperty name="Origin"
+        command="SetOrigin"
+        number_of_elements="3"
+        argument_is_array="1"
+        information_property="OriginInfo"
+        default_values="0 0 0">
+        <DoubleRangeDomain name="range"/>
+     </DoubleVectorProperty>
+
+     <DoubleVectorProperty name="OriginInfo"
+        command="GetOrigin"
+        information_only="1">
+        <SimpleDoubleInformationHelper/>
+     </DoubleVectorProperty>
+
+     <DoubleVectorProperty name="Point1"
+        command="SetPoint1"
+        number_of_elements="3"
+        argument_is_array="1"
+        information_property="Point1Info"
+        default_values="0 0 0">
+        <DoubleRangeDomain name="range"/>
+     </DoubleVectorProperty>
+
+     <DoubleVectorProperty name="Point1Info"
+        command="GetPoint1"
+        information_only="1">
+        <SimpleDoubleInformationHelper/>
+     </DoubleVectorProperty>
+
+     <DoubleVectorProperty name="Point2"
+        command="SetPoint2"
+        number_of_elements="3"
+        argument_is_array="1"
+        information_property="Point2Info"
+        default_values="0 0 0">
+        <DoubleRangeDomain name="range"/>
+     </DoubleVectorProperty>
+
+     <DoubleVectorProperty name="Point2Info"
+        command="GetPoint2"
+        information_only="1">
+        <SimpleDoubleInformationHelper/>
+     </DoubleVectorProperty>
+	 
+     <DoubleVectorProperty name="PlaceWidget"
+        is_internal="1"
+        command="PlaceWidget"
+        number_of_elements="6"
+        argument_is_array="1"
+        default_values="0 1 0 1 0 1">
+        <DoubleRangeDomain name="range"/>
+     </DoubleVectorProperty>
+    </Proxy>  
+  </ProxyGroup>
+  
+  <ProxyGroup name="filters"> <!-- Probe Filter -->
+    <SourceProxy name="Probe Filter" class="vtkCompositeDataProbeFilter">
+     <InputProperty
+        name="Input"
+        command="AddInputConnection"
+        clean_command="RemoveAllInputs"
+        multiple_input="1">
+       <ProxyGroupDomain name="groups">
+         <Group name="sources"/>
+         <Group name="filters"/>
+       </ProxyGroupDomain>
+       <DataTypeDomain name="input_type" composite_data_supported="1">
+         <DataType value="vtkDataObject"/>
+       </DataTypeDomain>
+     </InputProperty>
+
+      <InputProperty
+         name="Source"
+         command="SetSourceConnection"
+         multiple_input="1">
+        <ProxyGroupDomain name="groups">
+          <Group name="sources"/>
+          <Group name="filters"/>
+        </ProxyGroupDomain>
+        <DataTypeDomain name="input_type">
+          <DataType value="vtkDataSet"/>
+        </DataTypeDomain>
+      </InputProperty>
+   </SourceProxy>
+
+   <CompoundSourceProxy id="3316" servers="1" name="ProbePlane" label="Probe Plane">
+   
+      <!-- Instance of Calculator so we can get the magnitude of the volume data source for the probe filter-->
+      <Proxy group="filters" type="Calculator" id="2154" servers="1" compound_name="Calculator2">
+        <Property name="AttributeMode" id="2154.AttributeMode" number_of_elements="1">
+          <Element index="0" value="1"/>
+          <Domain name="enum" id="2154.AttributeMode.enum">
+            <Entry value="1" text="point_data"/>
+            <Entry value="2" text="cell_data"/>
+            <Entry value="5" text="field_data"/>
+          </Domain>
+        </Property>
+        <Property name="CoordinateResults" id="2154.CoordinateResults" number_of_elements="1">
+          <Element index="0" value="0"/>
+          <Domain name="bool" id="2154.CoordinateResults.bool"/>
+        </Property>
+        <Property name="Function" id="2154.Function" number_of_elements="1">
+          <Element index="0" value="V_3D_01_X^2+V_3D_01_Y^2+V_3D_01_Z^2"/>
+        </Property>
+        <Property name="Input" id="2154.Input" number_of_elements="1">
+          <Domain name="groups" id="2154.Input.groups">
+            <Group value="sources"/>
+            <Group value="filters"/>
+          </Domain>
+          <Domain name="input_type" id="2154.Input.input_type">
+            <DataType value="vtkDataSet"/>
+          </Domain>
+        </Property>
+        <Property name="ReplaceInvalidValues" id="2154.ReplaceInvalidValues" number_of_elements="1">
+          <Element index="0" value="1"/>
+          <Domain name="bool" id="2154.ReplaceInvalidValues.bool"/>
+        </Property>
+        <Property name="ReplacementValue" id="2154.ReplacementValue" number_of_elements="1">
+          <Element index="0" value="0"/>
+          <Domain name="range" id="2154.ReplacementValue.range"/>
+        </Property>
+        <Property name="ResultArrayName" id="2154.ResultArrayName" number_of_elements="1">
+          <Element index="0" value="Result"/>
+        </Property>
+      </Proxy>
+      
+      <!-- instance of PlaneSource; used for visualizing the probe filter-->
+      <Proxy group="sources" type="HighResPlaneSource" id="2453" servers="1" compound_name="Plane2">
+        <IntVectorProperty
+           name="XResolution"
+           command="SetXResolution"
+           number_of_elements="1"
+           default_values="100" >
+          <IntRangeDomain name="range" min="1" />
+          <Documentation>
+            This property specifies the number of divisions along the X axis of the parallelogram.
+          </Documentation>
+        </IntVectorProperty>
+
+        <IntVectorProperty
+           name="YResolution"
+           command="SetYResolution"
+           number_of_elements="1"
+           default_values="100" >
+          <IntRangeDomain name="range" min="1" />
+          <Documentation>
+            This property specifies the number of divisions along the Y axis of the parallelogram.
+          </Documentation>
+        </IntVectorProperty>
+      </Proxy>
+
+      <!-- instance of Probe Filter -->
+      <Proxy group="filters" type="Probe Filter" id="2867" servers="1" compound_name="ProbeFilter2">
+        <Property name="Input" id="2867.Input" number_of_elements="1">
+          <Proxy value="2453" output_port="0"/>
+          <Domain name="groups" id="2867.Input.groups">
+            <Group value="sources"/>
+            <Group value="filters"/>
+          </Domain>
+          <Domain name="input_type" id="2867.Input.input_type">
+            <DataType value="vtkDataObject"/>
+          </Domain>
+        </Property>
+        <Property name="Source" id="2867.Source" number_of_elements="1">
+          <Proxy value="2154" output_port="0"/>
+          <Domain name="groups" id="2867.Source.groups">
+            <Group value="sources"/>
+            <Group value="filters"/>
+          </Domain>
+          <Domain name="input_type" id="2867.Source.input_type">
+            <DataType value="vtkDataSet"/>
+          </Domain>
+        </Property>
+      </Proxy>
+      <ExposedProperties>
+        <Property name="Input" proxy_name="Calculator2" exposed_name="Calcinput"/>
+        <Property name="Function" proxy_name="Calculator2" exposed_name="Function"/>
+        <Property name="Origin" proxy_name="Plane2" exposed_name="Origin"/>
+        <Property name="Point1" proxy_name="Plane2" exposed_name="Point1"/>
+        <Property name="Point2" proxy_name="Plane2" exposed_name="Point2"/>
+        <Property name="XResolution" proxy_name="Plane2" exposed_name="X Resolution"/>
+        <Property name="YResolution" proxy_name="Plane2" exposed_name="Y Resolution"/>
+      </ExposedProperties>
+
+        <!--<View type="VolumeSliceView"/>-->
+        <Visibility replace_input="0" />
+		  <Hints>
+			<PropertyGroup type="FourFlowPlane" >
+			  <Property function="Point1" name="Point1" />
+			  <Property function="Point2" name="Point2" />
+			  <Property function="Origin" name="Origin" />
+			</PropertyGroup>
+		  </Hints>
+
+      <OutputPort name="ProbeOut" proxy="ProbeFilter2" port_index="0"/>
+    </CompoundSourceProxy>
+  </ProxyGroup>
+
+  <ProxyGroup name="sources">
+	<SourceProxy name="HighResPlaneSource" class="vtkPlaneSource" label="PlaneWithWidget">
+      <Documentation
+        long_help="Create a parallelogram given an origin and two points. The resolution indicates the number of division along each axis of the plane." 
+        short_help="Create a parallelogram from an origin and two points">
+The Plane source can be used to add a polygonal parallelogram to the 3D scene. Unlike the sphere, cone, and cylinder sources, the parallelogram is exactly represented at the lowest resolution, but higher resolutions may be desired if this plane is to be used as an input to a filter. The output of the Plane source is polygonal data.
+      </Documentation>
+      <DoubleVectorProperty
+         name="Origin"
+         command="SetOrigin"
+         number_of_elements="3"
+         animateable="1"
+         default_values="0.0 0.0 0.0" >
+        <DoubleRangeDomain name="range"/>
+        <Documentation>
+          This property specifies the 3D coordinate of the origin (one corner) of the plane.
+        </Documentation>
+      </DoubleVectorProperty>
+
+      <DoubleVectorProperty
+         name="Point1"
+         command="SetPoint1"
+         number_of_elements="3"
+         animateable="1"
+         default_values="0.05 0.0 0.0" >
+        <DoubleRangeDomain name="range"/>
+        <Documentation>
+          This property specifies the 3D coordinate a second corner of the parallelogram. The line connecting this point and that specified by the Origin property define one edge of the parallelogram (its X axis).
+        </Documentation>
+      </DoubleVectorProperty>
+
+      <DoubleVectorProperty
+         name="Point2"
+         command="SetPoint2"
+         number_of_elements="3"
+         animateable="1"
+         default_values="0.0 -0.05 0.0" >
+        <DoubleRangeDomain name="range"/>
+        <Documentation>
+          This property specifies the 3D coordinate a third corner of the parallelogram. The line connecting this point and that specified by the Origin property define a second edge of the parallelogram (its Y axis).
+        </Documentation>
+      </DoubleVectorProperty>
+
+      <IntVectorProperty
+         name="XResolution"
+         command="SetXResolution"
+         number_of_elements="1"
+         default_values="100" >
+        <IntRangeDomain name="range" min="1" />
+        <Documentation>
+          This property specifies the number of divisions along the X axis of the parallelogram.
+        </Documentation>
+      </IntVectorProperty>
+
+      <IntVectorProperty
+         name="YResolution"
+         command="SetYResolution"
+         number_of_elements="1"
+         default_values="100" >
+        <IntRangeDomain name="range" min="1" />
+        <Documentation>
+          This property specifies the number of divisions along the Y axis of the parallelogram.
+        </Documentation>
+      </IntVectorProperty>
+    </SourceProxy>
+  </ProxyGroup>
+  
+</ServerManagerConfiguration>
