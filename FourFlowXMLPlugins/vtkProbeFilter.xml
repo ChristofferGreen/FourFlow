@@ -1,0 +1,33 @@
+<ServerManagerConfiguration>
+  <ProxyGroup name="filters">
+    <SourceProxy name="Probe Filter" class="vtkCompositeDataProbeFilter">
+     <InputProperty
+        name="Input"
+        command="AddInputConnection"
+        clean_command="RemoveAllInputs"
+        multiple_input="1">
+       <ProxyGroupDomain name="groups">
+         <Group name="sources"/>
+         <Group name="filters"/>
+       </ProxyGroupDomain>
+       <DataTypeDomain name="input_type" composite_data_supported="1">
+         <DataType value="vtkDataObject"/>
+       </DataTypeDomain>
+     </InputProperty>
+
+      <InputProperty
+         name="Source"
+         command="SetSourceConnection"
+         multiple_input="1">
+        <ProxyGroupDomain name="groups">
+          <Group name="sources"/>
+          <Group name="filters"/>
+        </ProxyGroupDomain>
+        <DataTypeDomain name="input_type">
+          <DataType value="vtkDataSet"/>
+        </DataTypeDomain>
+      </InputProperty>
+      
+   </SourceProxy>
+  </ProxyGroup>
+</ServerManagerConfiguration>
