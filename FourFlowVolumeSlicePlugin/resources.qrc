@@ -1,0 +1,12 @@
+<RCC>
+  <qresource prefix="Icons">
+    <file>icons/misc/Crystal_Clear_app_kbounce.png</file>
+    <file>icons/misc/Crystal_Clear_app_kenolaba.png</file>
+    <file>icons/tango/32x32/status/weather-clear.png</file>
+    <file>icons/tango/32x32/status/network-wireless-encrypted.png</file>
+    <file>icons/tango/32x32/emblems/emblem-unreadable.png</file>
+	<file>icons/copytoallframes.png</file>
+	<file>icons/copytonextframe.png</file>
+	<file>icons/polygoneditor.png</file>
+  </qresource>
+</RCC>
