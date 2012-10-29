@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg4720"
+   version="1.1"
+   inkscape:version="0.48.1 "
+   sodipodi:docname="probeplane.svg"
+   inkscape:export-filename="C:\Users\Green\RealDocuments\FourFlow\FourFlow\ui\icons\custom\probeplane.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
+  <defs
+     id="defs4722">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient5376">
+      <stop
+         style="stop-color:#ff8080;stop-opacity:1"
+         offset="0"
+         id="stop5378" />
+      <stop
+         style="stop-color:#f4d7d7;stop-opacity:1"
+         offset="1"
+         id="stop5380" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient5240">
+      <stop
+         style="stop-color:#5d6c53;stop-opacity:1"
+         offset="0"
+         id="stop5242" />
+      <stop
+         style="stop-color:#dee3db;stop-opacity:1"
+         offset="1"
+         id="stop5244" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5240"
+       id="linearGradient5248"
+       x1="-43.380684"
+       y1="158.92581"
+       x2="535.70941"
+       y2="640.00592"
+       gradientUnits="userSpaceOnUse" />
+    <filter
+       id="filter5324"
+       inkscape:label="Drop shadow"
+       width="1.5"
+       height="1.5"
+       x="-.25"
+       y="-.25">
+      <feGaussianBlur
+         id="feGaussianBlur5326"
+         in="SourceAlpha"
+         stdDeviation="2"
+         result="blur" />
+      <feColorMatrix
+         id="feColorMatrix5328"
+         result="bluralpha"
+         type="matrix"
+         values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.5 0 " />
+      <feOffset
+         id="feOffset5330"
+         in="bluralpha"
+         dx="10"
+         dy="10"
+         result="offsetBlur" />
+      <feMerge
+         id="feMerge5332">
+        <feMergeNode
+           id="feMergeNode5334"
+           in="offsetBlur" />
+        <feMergeNode
+           id="feMergeNode5336"
+           in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5376"
+       id="radialGradient5382"
+       cx="518.83582"
+       cy="268.01889"
+       fx="518.83582"
+       fy="268.01889"
+       r="26.015006"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.82106903"
+     inkscape:cx="172.82455"
+     inkscape:cy="520"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1138"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata4725">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:url(#linearGradient5248);stroke:#292941;stroke-width:15;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;fill-opacity:1;filter:url(#filter5324)"
+       d="M 102.80892,286.30337 200.23811,628.3312 393.17354,512.86173 328.70423,286.54047 z"
+       id="path5238"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="C:\Users\Green\RealDocuments\FourFlow\FourFlow\ui\icons\custom\probeplane.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#dee3db;fill-opacity:1;stroke:#292941;stroke-width:5.72069695;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path5250"
+       sodipodi:cx="228.96979"
+       sodipodi:cy="392.24716"
+       sodipodi:rx="26.794336"
+       sodipodi:ry="26.794336"
+       d="m 255.76412,392.24716 a 26.794336,26.794336 0 1 1 -53.58867,0 26.794336,26.794336 0 1 1 53.58867,0 z"
+       transform="matrix(1.4153314,-0.40316776,0.56883743,1.9969193,-274.98689,-282.89254)"
+       inkscape:export-filename="C:\Users\Green\RealDocuments\FourFlow\FourFlow\ui\icons\custom\probeplane.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#292941;stroke-width:30;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="M 277.68676,406.86226 503.00277,315.51793"
+       id="path5252"
+       inkscape:connector-curvature="0"
+       inkscape:export-filename="C:\Users\Green\RealDocuments\FourFlow\FourFlow\ui\icons\custom\probeplane.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#5599ff;fill-opacity:1;stroke:#292941;stroke-width:5.91318856000000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path5279"
+       sodipodi:cx="69.421692"
+       sodipodi:cy="253.40378"
+       sodipodi:rx="21.92264"
+       sodipodi:ry="21.92264"
+       d="m 91.344332,253.40378 a 21.92264,21.92264 0 1 1 -43.84528,0 21.92264,21.92264 0 1 1 43.84528,0 z"
+       transform="matrix(2.5646323,0,0,2.5090768,-67.818953,-348.91282)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       inkscape:export-filename="C:\Users\Green\RealDocuments\FourFlow\FourFlow\ui\icons\custom\probeplane.png" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#5599ff;fill-opacity:1;stroke:#292941;stroke-width:7.42100191000000020;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path5279-5"
+       sodipodi:cx="69.421692"
+       sodipodi:cy="253.40378"
+       sodipodi:rx="21.92264"
+       sodipodi:ry="21.92264"
+       d="m 91.344332,253.40378 a 21.92264,21.92264 0 1 1 -43.84528,0 21.92264,21.92264 0 1 1 43.84528,0 z"
+       transform="matrix(1.7837221,0,0,1.7837221,269.56056,57.166019)"
+       inkscape:export-filename="C:\Users\Green\RealDocuments\FourFlow\FourFlow\ui\icons\custom\probeplane.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       sodipodi:type="arc"
+       style="fill:url(#radialGradient5382);fill-opacity:1;stroke:#292941;stroke-width:5.74888467999999970;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path5338"
+       sodipodi:cx="518.83582"
+       sodipodi:cy="268.01889"
+       sodipodi:rx="23.140564"
+       sodipodi:ry="23.140564"
+       d="m 541.97638,268.01889 a 23.140564,23.140564 0 1 1 -46.28113,0 23.140564,23.140564 0 1 1 46.28113,0 z"
+       transform="matrix(2.1608138,0,0,2.1608138,-641.24539,-255.09552)"
+       inkscape:export-filename="C:\Users\Green\RealDocuments\FourFlow\FourFlow\ui\icons\custom\probeplane.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#5599ff;fill-opacity:1;stroke:#292941;stroke-width:5.35827039000000040;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path5279-4"
+       sodipodi:cx="69.421692"
+       sodipodi:cy="253.40378"
+       sodipodi:rx="21.92264"
+       sodipodi:ry="21.92264"
+       d="m 91.344332,253.40378 a 21.92264,21.92264 0 1 1 -43.84528,0 21.92264,21.92264 0 1 1 43.84528,0 z"
+       transform="matrix(2.7994108,0,0,2.7994108,10.271465,-82.074699)"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"
+       inkscape:export-filename="C:\Users\Green\RealDocuments\FourFlow\FourFlow\ui\icons\custom\probeplane.png" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#5599ff;fill-opacity:1;stroke:#292941;stroke-width:7.05563450000000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path5279-5-7"
+       sodipodi:cx="69.421692"
+       sodipodi:cy="253.40378"
+       sodipodi:rx="21.92264"
+       sodipodi:ry="21.92264"
+       d="m 91.344332,253.40378 a 21.92264,21.92264 0 1 1 -43.84528,0 21.92264,21.92264 0 1 1 43.84528,0 z"
+       transform="matrix(1.8388321,0,0,1.8388321,196.31304,-184.55099)"
+       inkscape:export-filename="C:\Users\Green\RealDocuments\FourFlow\FourFlow\ui\icons\custom\probeplane.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+  </g>
+</svg>

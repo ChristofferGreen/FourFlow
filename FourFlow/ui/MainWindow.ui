@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1241</width>
+    <height>857</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="pqViewManager" name="MultiViewManager" native="true"/>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="pqStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonTextUnderIcon</enum>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionNewScene"/>
+   <addaction name="actionSaveState"/>
+   <addaction name="actionLoadState"/>
+   <addaction name="actionOpenDir"/>
+   <addaction name="separator"/>
+   <addaction name="actionPolygonEditor"/>
+   <addaction name="actionScripting"/>
+   <addaction name="separator"/>
+   <addaction name="actionParticleTrace"/>
+   <addaction name="actionStreamlines"/>
+   <addaction name="actionGraph"/>
+   <addaction name="separator"/>
+   <addaction name="actionProbePlane"/>
+   <addaction name="actionPathlines"/>
+   <addaction name="actionVolumeTrace"/>
+   <addaction name="actionClip"/>
+   <addaction name="actionIsoSurface"/>
+   <addaction name="separator"/>
+   <addaction name="actionAdvancedMenu"/>
+   <addaction name="separator"/>
+   <addaction name="actionUndo"/>
+   <addaction name="actionRedo"/>
+  </widget>
+  <widget class="QDockWidget" name="animationControls">
+   <property name="features">
+    <set>QDockWidget::NoDockWidgetFeatures</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::NoDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Animation Controls</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="pqPVAnimationWidget" name="widget" native="true"/>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="pipelineBrowserDock">
+   <property name="features">
+    <set>QDockWidget::NoDockWidgetFeatures</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Pipeline Browser</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="pqPipelineBrowserWidget" name="pipelineBrowser">
+    <property name="contextMenuPolicy">
+     <enum>Qt::ActionsContextMenu</enum>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="objectInspectorDock">
+   <property name="features">
+    <set>QDockWidget::NoDockWidgetFeatures</set>
+   </property>
+   <property name="windowTitle">
+    <string>Properties</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="pqObjectInspectorWidget" name="objectInspector"/>
+  </widget>
+  <widget class="QDockWidget" name="displayDock">
+   <property name="features">
+    <set>QDockWidget::NoDockWidgetFeatures</set>
+   </property>
+   <property name="windowTitle">
+    <string>Display</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="displayWidgetFrame">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QScrollArea" name="displayScrollArea">
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+       <widget class="pqDisplayProxyEditorWidget" name="displayWidget">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>69</width>
+          <height>233</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="informationDock">
+   <property name="features">
+    <set>QDockWidget::NoDockWidgetFeatures</set>
+   </property>
+   <property name="windowTitle">
+    <string>Information</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="informationWidgetFrame">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QScrollArea" name="informationScrollArea">
+       <property name="widgetResizable">
+        <bool>true</bool>
+       </property>
+       <widget class="pqProxyInformationWidget" name="informationWidget">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>69</width>
+          <height>231</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <action name="actionNewScene">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/icons/tango/document-new.png</normaloff>:/actions/icons/tango/document-new.png</iconset>
+   </property>
+   <property name="text">
+    <string>New</string>
+   </property>
+  </action>
+  <action name="actionProperties">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/icons/tango/applications-system.png</normaloff>:/actions/icons/tango/applications-system.png</iconset>
+   </property>
+   <property name="text">
+    <string>Properties</string>
+   </property>
+  </action>
+  <action name="actionAnimation">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/icons/misc/200px-Appointment.svg.png</normaloff>:/actions/icons/misc/200px-Appointment.svg.png</iconset>
+   </property>
+   <property name="text">
+    <string>Time Line</string>
+   </property>
+  </action>
+  <action name="actionOpenDir">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/icons/tango/folder-open.png</normaloff>:/actions/icons/tango/folder-open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Import Data</string>
+   </property>
+   <property name="toolTip">
+    <string>Import Directory</string>
+   </property>
+  </action>
+  <action name="actionProbePlane">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/icons/custom/probeplane.png</normaloff>:/actions/icons/custom/probeplane.png</iconset>
+   </property>
+   <property name="text">
+    <string>Probe Plane</string>
+   </property>
+   <property name="toolTip">
+    <string>Probe Plane</string>
+   </property>
+  </action>
+  <action name="actionParticleTrace">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/icons/custom/particletrace.png</normaloff>:/actions/icons/custom/particletrace.png</iconset>
+   </property>
+   <property name="text">
+    <string>Particle Trace</string>
+   </property>
+  </action>
+  <action name="actionVolume">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/icons/tango/mail-mark-junk.png</normaloff>:/actions/icons/tango/mail-mark-junk.png</iconset>
+   </property>
+   <property name="text">
+    <string>Volume</string>
+   </property>
+  </action>
+  <action name="actionIsoSurface">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/icons/misc/pqIsosurface24.png</normaloff>:/actions/icons/misc/pqIsosurface24.png</iconset>
+   </property>
+   <property name="text">
+    <string>Iso Surface</string>
+   </property>
+  </action>
+  <action name="actionStreamlines">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/icons/misc/pqStreamTracer24.png</normaloff>:/actions/icons/misc/pqStreamTracer24.png</iconset>
+   </property>
+   <property name="text">
+    <string>Streamlines</string>
+   </property>
+   <property name="toolTip">
+    <string>Particle Streamlines</string>
+   </property>
+  </action>
+  <action name="actionScripting">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/icons/misc/200px-Python.svg.png</normaloff>:/actions/icons/misc/200px-Python.svg.png</iconset>
+   </property>
+   <property name="text">
+    <string>Scripting</string>
+   </property>
+  </action>
+  <action name="actionRedo">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/icons/tango/edit-redo.png</normaloff>:/actions/icons/tango/edit-redo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Redo</string>
+   </property>
+  </action>
+  <action name="actionUndo">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/icons/tango/edit-undo.png</normaloff>:/actions/icons/tango/edit-undo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Undo</string>
+   </property>
+  </action>
+  <action name="actionSaveState">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/icons/tango/document-save.png</normaloff>:/actions/icons/tango/document-save.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="actionLoadState">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/icons/tango/document-open.png</normaloff>:/actions/icons/tango/document-open.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
+  <action name="actionGraph">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/icons/misc/200px-Icon_Mathematical_Plot.svg.png</normaloff>:/actions/icons/misc/200px-Icon_Mathematical_Plot.svg.png</iconset>
+   </property>
+   <property name="text">
+    <string>Graph</string>
+   </property>
+  </action>
+  <action name="actionVolumeTrace">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/icons/misc/pqSource32.png</normaloff>:/actions/icons/misc/pqSource32.png</iconset>
+   </property>
+   <property name="text">
+    <string>Volume Tracking</string>
+   </property>
+  </action>
+  <action name="actionClip">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/icons/misc/pqClip24.png</normaloff>:/actions/icons/misc/pqClip24.png</iconset>
+   </property>
+   <property name="text">
+    <string>Clip</string>
+   </property>
+  </action>
+  <action name="actionAdvancedMenu">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/icons/tango/software-update-available.png</normaloff>:/actions/icons/tango/software-update-available.png</iconset>
+   </property>
+   <property name="text">
+    <string>Advanced Menu</string>
+   </property>
+  </action>
+  <action name="actionPolygonEditor">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/icons/custom/polygoneditor.png</normaloff>:/actions/icons/custom/polygoneditor.png</iconset>
+   </property>
+   <property name="text">
+    <string>Polygon Editor</string>
+   </property>
+  </action>
+  <action name="actionPathlines">
+   <property name="icon">
+    <iconset resource="resources.qrc">
+     <normaloff>:/actions/icons/misc/200px-Meld.svg.png</normaloff>:/actions/icons/misc/200px-Meld.svg.png</iconset>
+   </property>
+   <property name="text">
+    <string>Pathlines</string>
+   </property>
+   <property name="toolTip">
+    <string>Pathlines</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>pqObjectInspectorWidget</class>
+   <extends>QWidget</extends>
+   <header>pqObjectInspectorWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>pqViewManager</class>
+   <extends>QWidget</extends>
+   <header>pqViewManager.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>pqStatusBar</class>
+   <extends>QStatusBar</extends>
+   <header>pqStatusBar.h</header>
+  </customwidget>
+  <customwidget>
+   <class>pqPVAnimationWidget</class>
+   <extends>QWidget</extends>
+   <header>pqPVAnimationWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>pqPipelineBrowserWidget</class>
+   <extends>QWidget</extends>
+   <header>pqPipelineBrowserWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>pqDisplayProxyEditorWidget</class>
+   <extends>QWidget</extends>
+   <header>pqdisplayproxyeditorwidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>pqProxyInformationWidget</class>
+   <extends>QWidget</extends>
+   <header>pqproxyinformationwidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>
