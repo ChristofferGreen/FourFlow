@@ -5,3 +5,11 @@ Time-resolved three-directional phase contrast magnetic resonance velocity mappi
 
 Homepage
 The homepage for FourFlow can be found here: http://heiberg.se/fourflow/
+
+Building
+Requirements:
+Microsoft Visual Studio 2008
+Python 2.6
+Qt 4.6.4
+ParaView 3.14
+CMake ~2.8
