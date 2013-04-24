@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/config/abi
+END
+msvc_suffix.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/config/abi/msvc_suffix.hpp
+END
+borland_prefix.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/config/abi/borland_prefix.hpp
+END
+borland_suffix.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/config/abi/borland_suffix.hpp
+END
+msvc_prefix.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/config/abi/msvc_prefix.hpp
+END

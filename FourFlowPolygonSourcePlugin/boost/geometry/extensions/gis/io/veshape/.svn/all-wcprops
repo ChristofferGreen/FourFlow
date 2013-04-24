@@ -1,0 +1,11 @@
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/gis/io/veshape
+END
+write_veshape.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/gis/io/veshape/write_veshape.hpp
+END

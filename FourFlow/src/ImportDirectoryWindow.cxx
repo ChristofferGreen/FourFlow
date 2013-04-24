@@ -103,7 +103,7 @@ void ImportDirectoryWindow::representationAddedLoadDataSlot(pqPipelineSource *so
 }
 
 void ImportDirectoryWindow::loadTexture(const QString& filename, pqDataRepresentation *Representation) {
-	vtkObject::GlobalWarningDisplayOff();
+	/*vtkObject::GlobalWarningDisplayOff();
 	QFileInfo finfo(filename);
 
 	vtkSMProxyManager* pxm = vtkSMProxyManager::GetProxyManager();
@@ -118,19 +118,24 @@ void ImportDirectoryWindow::loadTexture(const QString& filename, pqDataRepresent
 	pxm->RegisterProxy("textures", vtksys::SystemTools::GetFilenameName(filename.toAscii().data()).c_str(), texture);
 	texture->Delete();
 
-	vtkObject::GlobalWarningDisplayOn();
+	vtkObject::GlobalWarningDisplayOn();*/
 }
 
 void ImportDirectoryWindow::updatedLoadDataPostRepresentationSlot() {
-	cout << "ImportDirectoryWindow::updatedLoadDataPostRepresentationSlot" << endl;
+	//cout << "ImportDirectoryWindow::updatedLoadDataPostRepresentationSlot" << endl;
 	pqDataRepresentation *repr = (pqDataRepresentation *)sender();
 	QObject::disconnect(repr, SIGNAL(dataUpdated()), this, SLOT(updatedLoadDataPostRepresentationSlot()));
 	pqPipelineSource *source = repr->getInput();
 	if(source->getSMName().contains(".pvd")) {
-		cout << "classname: " << repr->getProxy()->GetClassName() << endl;
 		ifstream  pvdFile(pvdPath.c_str());
 		if(pvdFile.is_open()) {
-			pqSMAdaptor::setEnumerationProperty(repr->getProxy()->GetProperty("Representation"), "Volume");
+			//pqSMAdaptor::setEnumerationProperty(repr->getProxy()->GetProperty("Representation"), "Volume");
+			/*QList<QVariant> list = pqSMAdaptor::getEnumerationPropertyDomain(repr->getProxy()->GetProperty("Representation"));
+		    foreach(QVariant v, list)
+				std::cout << v.toString().toStdString() << std::endl;*/
+			/*pqPipelineRepresentation* pipelineRep = qobject_cast<pqPipelineRepresentation*>(repr);
+			pipelineRep->setRepresentation("Volume");
+			repr->getProxy()->UpdateVTKObjects();*/
 			string line;
 			getline(pvdFile, line);
 			getline(pvdFile, line);
@@ -209,7 +214,7 @@ void ImportDirectoryWindow::updatedLoadDataPostRepresentationSlot() {
 
 		namedInputs["Input"].append(vortexInput->getOutputPort(0));
 		namedInputs["Source"].append(vortexSource->getOutputPort(0));
-		pqPipelineSource *streamTracerSource = builder->createFilter("filters", "CustomShortStreamTracer", namedInputs, server);
+		pqPipelineSource *streamTracerSource = builder->createFilter("filters", "CustomShortStreamLines", namedInputs, server);
 		this->ffWindow->internals->preferedColorVariable = "AngularVelocity";
 		this->ffWindow->internals->useVelocityForColor(streamTracerSource);
 

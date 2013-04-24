@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/strategies/agnostic
+END
+point_in_poly_winding.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/strategies/agnostic/point_in_poly_winding.hpp
+END
+hull_graham_andrew.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/strategies/agnostic/hull_graham_andrew.hpp
+END
+simplify_douglas_peucker.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/strategies/agnostic/simplify_douglas_peucker.hpp
+END

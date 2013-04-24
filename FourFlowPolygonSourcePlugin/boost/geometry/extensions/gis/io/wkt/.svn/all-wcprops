@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/gis/io/wkt
+END
+write_wkt_multi.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/gis/io/wkt/write_wkt_multi.hpp
+END
+read_wkt_multi.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/gis/io/wkt/read_wkt_multi.hpp
+END
+write_wkt.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/gis/io/wkt/write_wkt.hpp
+END
+read_wkt.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/gis/io/wkt/read_wkt.hpp
+END
+stream_wkt.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/gis/io/wkt/stream_wkt.hpp
+END
+wkt.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/gis/io/wkt/wkt.hpp
+END

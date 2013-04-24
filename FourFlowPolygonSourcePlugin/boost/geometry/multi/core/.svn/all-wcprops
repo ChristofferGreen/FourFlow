@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/multi/core
+END
+point_type.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/multi/core/point_type.hpp
+END
+interior_rings.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/multi/core/interior_rings.hpp
+END
+tags.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/multi/core/tags.hpp
+END
+ring_type.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/multi/core/ring_type.hpp
+END
+topological_dimension.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/multi/core/topological_dimension.hpp
+END
+num_geometries.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/multi/core/num_geometries.hpp
+END
+is_multi.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/multi/core/is_multi.hpp
+END
+geometry_id.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/multi/core/geometry_id.hpp
+END

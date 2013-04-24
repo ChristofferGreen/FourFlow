@@ -11,7 +11,7 @@
 #include "staticFunctions.h"
 #include "vtkSMDoubleVectorProperty.h"
 #include "pqTimeKeeper.h"
-
+#include "pqAutoApplyReaction.h"
 
 pqInternals::pqInternals() {
 	this->animationHidden = true;
@@ -25,19 +25,20 @@ void pqInternals::connectButtonSignalsWithSlots() {
 
 	this->actionProperties->toggle();
 	this->actionAnimation->toggle();
-	QObject::connect(this->actionAdvancedMenu,	SIGNAL(triggered()), this, SLOT(openAdvancedMenu()));
-	QObject::connect(this->actionPolygonEditor, SIGNAL(triggered()), this, SLOT(polygonEditorToggle()));
-	QObject::connect(this->actionProbePlane,	SIGNAL(triggered()), this, SLOT(applyProbePlane()));
-	QObject::connect(this->actionParticleTrace, SIGNAL(triggered()), this, SLOT(applyParticleTrace()));
-	QObject::connect(this->actionStreamlines,	SIGNAL(triggered()), this, SLOT(applyStreamlines()));
-	QObject::connect(this->actionGraph,			SIGNAL(triggered()), this, SLOT(applyGraph()));
-	QObject::connect(this->actionPathlines,		SIGNAL(triggered()), this, SLOT(applyPathlines()));
-	QObject::connect(this->actionVolume,		SIGNAL(triggered()), this, SLOT(applyVolume()));
-	QObject::connect(this->actionVolumeTrace,	SIGNAL(triggered()), this, SLOT(applyVolumeTrace()));
-	QObject::connect(this->actionClip,			SIGNAL(triggered()), this, SLOT(applyClip()));
-	QObject::connect(this->actionIsoSurface,	SIGNAL(triggered()), this, SLOT(applyIsoSurface()));
-	QObject::connect(this->actionUndo,			SIGNAL(triggered()), this, SLOT(onUndo()));
-	QObject::connect(this->actionRedo,			SIGNAL(triggered()), this, SLOT(onRedo()));
+	QObject::connect(this->actionAdvancedMenu,		SIGNAL(triggered()), this, SLOT(openAdvancedMenu()));
+	QObject::connect(this->actionPolygonEditor,		SIGNAL(triggered()), this, SLOT(polygonEditorToggle()));
+	QObject::connect(this->actionProbePlane,		SIGNAL(triggered()), this, SLOT(applyProbePlane()));
+	QObject::connect(this->actionParticleTrace,		SIGNAL(triggered()), this, SLOT(applyParticleTrace()));
+	QObject::connect(this->actionParticleCollector, SIGNAL(triggered()), this, SLOT(applyParticleCollector()));
+	QObject::connect(this->actionStreamlines,		SIGNAL(triggered()), this, SLOT(applyStreamlines()));
+	QObject::connect(this->actionGraph,				SIGNAL(triggered()), this, SLOT(applyGraph()));
+	QObject::connect(this->actionPathlines,			SIGNAL(triggered()), this, SLOT(applyPathlines()));
+	QObject::connect(this->actionVolume,			SIGNAL(triggered()), this, SLOT(applyVolume()));
+	QObject::connect(this->actionVolumeTrace,		SIGNAL(triggered()), this, SLOT(applyVolumeTrace()));
+	QObject::connect(this->actionClip,				SIGNAL(triggered()), this, SLOT(applyClip()));
+	QObject::connect(this->actionIsoSurface,		SIGNAL(triggered()), this, SLOT(applyIsoSurface()));
+	QObject::connect(this->actionUndo,				SIGNAL(triggered()), this, SLOT(onUndo()));
+	QObject::connect(this->actionRedo,				SIGNAL(triggered()), this, SLOT(onRedo()));
 
 	QObject::connect(&pqActiveObjects::instance(), SIGNAL(representationChanged(pqDataRepresentation*)), this, SLOT(updateEnableState()), Qt::QueuedConnection);
 
@@ -81,12 +82,6 @@ void pqInternals::applyClip() {
 	pqFiltersMenuReaction::createFilter("filters", "Clip");
 }
 
-void pqInternals::applyStreamlines() {
-	setActiveRenderView();
-	preferedColorVariable = "V_3D_01";
-	autoConnectFilter("CustomStreamTracer", true);
-}
-
 void pqInternals::applyVolumeTrace() {
 	setActiveRenderView();
 	useVelocityForColor(pqFiltersMenuReaction::createFilter("filters", "FourFlowVolumeTrack"));
@@ -101,8 +96,15 @@ void pqInternals::applyProbePlane()  {
 	setActiveRenderView();
 	pqPipelineSource *source = pqFiltersMenuReaction::createFilter("filters", "ProbePlane");
 	QObject::connect(source, SIGNAL(representationAdded(pqPipelineSource*, pqDataRepresentation*, int)), this->fourFlowMainWindow, SLOT(representationAddedGreyscale(pqPipelineSource*, pqDataRepresentation*, int)));
-//	connect(source, SIGNAL(representationAdded(pqPipelineSource*,pqDataRepresentation*,int)), 
-//		SLOT(onRepresentationAddedProbePlane(pqPipelineSource*,pqDataRepresentation*,int)));
+	connect(source, SIGNAL(representationAdded(pqPipelineSource*,pqDataRepresentation*,int)), SLOT(onRepresentationAddedProbePlane(pqPipelineSource*,pqDataRepresentation*,int)));
+}
+
+void pqInternals::onRepresentationAddedProbePlane(pqPipelineSource*, pqDataRepresentation *rep, int) {
+	QObject::connect(rep, SIGNAL(dataUpdated()), this, SLOT(probePlaneUpdated()));
+}
+
+void pqInternals::probePlaneUpdated() {
+	updateVolumeSlice();
 }
 
 void pqInternals::onUndo() {
@@ -127,14 +129,15 @@ void pqInternals::updateEnableState() {
 	cout << "pqInternals::updateEnableState()" << endl;
 	pqPipelineRepresentation* repr = qobject_cast<pqPipelineRepresentation*>(pqActiveObjects::instance().activeRepresentation());
 
-	this->actionPathlines->setDisabled(true);
+	this->actionPathlines->setEnabled(true);
+	this->actionParticleTrace->setEnabled(true);
+	this->actionStreamlines->setEnabled(true);
+
 	this->actionProbePlane->setDisabled(true);
 	this->actionVolume->setDisabled(true);
 	this->actionIsoSurface->setDisabled(true);
 	this->actionClip->setDisabled(true);
 	this->actionVolumeTrace->setDisabled(true);
-	this->actionParticleTrace->setEnabled(true);
-	this->actionStreamlines->setEnabled(true);
 	this->actionGraph->setEnabled(true);
 	if(repr) {
 		//if(source->getOutputPort(0)->getDataInformation()->GetPointDataInformation()->GetArrayInformation(0)->GetNumberOfComponents() == 3) {
@@ -162,12 +165,10 @@ void pqInternals::updateEnableState() {
 				|| QString("Clip") == source->getProxy()->GetXMLName()
 				|| QString("IsoSurface") == source->getProxy()->GetXMLName()) {
 				this->actionParticleTrace->setEnabled(true);
+				this->actionPathlines->setEnabled(true);
 				this->actionStreamlines->setEnabled(true);
 				this->actionGraph->setEnabled(true);
 				this->actionClip->setEnabled(true);
-			}
-			if(QString("FourFlowParticleTracerCompound") == source->getProxy()->GetXMLName()) {
-				this->actionPathlines->setEnabled(true);
 			}
 		}
 	}
@@ -273,10 +274,18 @@ void pqInternals::useColorVariable(pqDataRepresentation *repr) {
 	repr->renderView(true);
 }
 
+void pqInternals::applyParticleCollector() {
+	setActiveRenderView();
+	pqPipelineSource *source = autoConnectFilter("FourFlowCollector", true);
+}
+
 void pqInternals::applyParticleTrace() {
 	setActiveRenderView();
 	this->preferedColorVariable = "V_3D_01";
-	pqPipelineSource *source = autoConnectFilter("FourFlowParticleTracerCompound", true);
+	//pqPipelineSource *source = autoConnectFilter("FourFlowParticleTracerCompound", true);
+	//pqPipelineSource *source = autoConnectFilter("ParticleTracer", true);
+	pqPipelineSource *source = autoConnectFilter("FourFlowParticleTraceSource", true);
+	
 	if(!source)
 		return;
 	useVelocityForColor(source);
@@ -289,27 +298,32 @@ void pqInternals::applyParticleTrace() {
 	double currentTime = timekeeper->getTime();
 	int currentFrame = timekeeper->getTimeStepValueIndex(currentTime);
 
-	vtkSMProperty *prop = sourceProxy->GetProperty("Particle Release Start Frame");
+	vtkSMProperty *prop = sourceProxy->GetProperty("ParticleReleaseStartFrame");
+	std::cout << "current frame: " << currentFrame << " " << prop << std::endl;
 	pqSMAdaptor::setElementProperty(prop, currentFrame);
-	sourceProxy->UpdateProperty("Particle Release Start Frame", true);
+	sourceProxy->UpdateProperty("ParticleReleaseStartFrame", true);
 	sourceProxy->UpdateVTKObjects();
+}
+
+void pqInternals::applyStreamlines() {
+	setActiveRenderView();
+	preferedColorVariable = "V_3D_01";
+	autoConnectFilter("CustomStreamLines", true);
 }
 
 void pqInternals::applyPathlines() {
 	setActiveRenderView();
 	preferedColorVariable = "V_3D_01";
-	pqPipelineSource *source = pqFiltersMenuReaction::createFilter("filters", "FourFlowPathlines");
+	autoConnectFilter("CustomParticlePath", true);
+	/*setActiveRenderView();
+	preferedColorVariable = "V_3D_01";
+	pqPipelineSource *source = pqFiltersMenuReaction::createFilter("filters", "ParticlePath");
 	useVelocityForColor(source);
-	/*vtkSMPropertyIterator *propIterator = source->getProxy()->NewPropertyIterator();
-	while(!propIterator->IsAtEnd()) {
-		cout << "property label: " << propIterator->GetPropertyLabel() << endl;
-		propIterator->Next();
-	}*/
 	vtkSMProxy *sourceProxy = source->getProxy();
 	vtkSMProperty *prop = sourceProxy->GetProperty("Id Channel Array");
 	pqSMAdaptor::setElementProperty(prop, "ParticleId");
 	sourceProxy->UpdateProperty("Id Channel Array", true);
-	sourceProxy->UpdateVTKObjects();
+	sourceProxy->UpdateVTKObjects();*/
 }
 
 // Enable sane clicking behaviour for the advanced menu button (ie it should open right away)
@@ -357,10 +371,11 @@ void pqInternals::setUpDefaults(FourFlowMainWindow *mainWindow) {
 	mainWindow->setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
 
 	// Enable automatic creation of representation on accept.
-	pqSettings *settings = pqApplicationCore::instance()->settings();
+	/*pqSettings *settings = pqApplicationCore::instance()->settings();
 	if(settings)
 		settings->setValue("autoAccept", true);
-	pqObjectInspectorWidget::setAutoAccept(true);
+	pqObjectInspectorWidget::setAutoAccept(true);*/
+	pqAutoApplyReaction::setAutoApply(true);
 
 	// setup the context menu for the pipeline browser.
 	pqParaViewMenuBuilders::buildPipelineBrowserContextMenu(*this->pipelineBrowser);
@@ -405,7 +420,7 @@ void pqInternals::setUpAdvancedMenu() {
 	new pqSaveDataReaction(saveDataAction);
 	QAction *applicationSettingsAction = advancedMenu.addAction("Application Settings");
 	new pqApplicationSettingsReaction(applicationSettingsAction);
-	QAction *managePluginsAction = advancedMenu.addAction("Manage plugins");
+	QAction *managePluginsAction = advancedMenu.addAction("Manage Plugins");
 	new pqManagePluginsReaction(managePluginsAction);
 	QAction *manageFiltersAction = advancedMenu.addAction("Manage Custom Filters");
 	new pqManageCustomFiltersReaction(manageFiltersAction);

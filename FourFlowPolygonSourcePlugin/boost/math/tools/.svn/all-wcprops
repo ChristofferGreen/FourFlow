@@ -1,0 +1,131 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/math/tools
+END
+tuple.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/math/tools/tuple.hpp
+END
+series.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/math/tools/series.hpp
+END
+precision.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/math/tools/precision.hpp
+END
+workaround.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/math/tools/workaround.hpp
+END
+real_cast.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/math/tools/real_cast.hpp
+END
+toms748_solve.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/math/tools/toms748_solve.hpp
+END
+stats.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/math/tools/stats.hpp
+END
+fraction.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/math/tools/fraction.hpp
+END
+config.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/math/tools/config.hpp
+END
+roots.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/math/tools/roots.hpp
+END
+traits.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/math/tools/traits.hpp
+END
+test_data.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/math/tools/test_data.hpp
+END
+rational.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/math/tools/rational.hpp
+END
+minima.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/math/tools/minima.hpp
+END
+big_constant.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/math/tools/big_constant.hpp
+END
+user.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/math/tools/user.hpp
+END
+test.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/math/tools/test.hpp
+END
+remez.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/math/tools/remez.hpp
+END
+polynomial.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/math/tools/polynomial.hpp
+END
+promotion.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/math/tools/promotion.hpp
+END
+solve.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/math/tools/solve.hpp
+END

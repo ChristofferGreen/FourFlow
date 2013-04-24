@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/numeric/ublas/detail
+END
+documentation.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/numeric/ublas/detail/documentation.hpp
+END
+iterator.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/numeric/ublas/detail/iterator.hpp
+END
+raw.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/numeric/ublas/detail/raw.hpp
+END
+definitions.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/numeric/ublas/detail/definitions.hpp
+END
+concepts.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/numeric/ublas/detail/concepts.hpp
+END
+returntype_deduction.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/numeric/ublas/detail/returntype_deduction.hpp
+END
+temporary.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/numeric/ublas/detail/temporary.hpp
+END
+duff.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/numeric/ublas/detail/duff.hpp
+END
+config.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/numeric/ublas/detail/config.hpp
+END
+vector_assign.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/numeric/ublas/detail/vector_assign.hpp
+END
+matrix_assign.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/numeric/ublas/detail/matrix_assign.hpp
+END

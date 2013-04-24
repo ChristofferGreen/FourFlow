@@ -63,14 +63,15 @@ The main toolbar has a number of different functions grouped together by type. S
 * Polygon Editor: Is used on the currently selected Probe Plane to display a new window that can be used to create a 2d segmentation of data from a 3d volume.
 * Scripting: Shows a window from where python scripts can be written, run and loaded.
 * Particle Trace: Applies a particle trace visualization to the currently selected polygon segment in a velocity volume.
+* Particle Collector: Enables quantification of how many particles go through polygons (collectors) created with the polygon editor. Since it supports multiple polygons and shows the meassurements in a graph the results the difference in polygon throughput can be seen.
 * Streamlines: Applies a streamline visualization to the currently selected polygon segment in a velocity volume.
 * Graph: Applies a filter to the currently selected polygon segment that opens a window with quantification information from the velocity data on the volume segment.
 * Probe Plane: Adds a widget that can be moved around, rotated and scaled to show a slice of the velocity data in a volume. This can then be used with the Polygon Editor for more advanced visualizations.
-* Pathlines: Is applied to a particle trace visualization to add lines between the different timesteps that a particle goes through.
+* Pathlines: Similar to streamlines but adds lines between the different timesteps that a particle goes through instead of in a single timestep.
 * Volume Tracking: Is applied to volume tracking data  to visualize the flow of a user defined volume over time.
 * Clip: Can be used to clip away unwanted parts of a data set.
 * Iso Surface: Displays a polygon shell of a specific magnitude value in a velocity volume.
-* Advanced Menu: Contains extra functionality from ParaView, check the ParaView manual for further information.
+* Advanced Menu: Contains extra functionality from ParaView, consult the ParaView manual for further information.
 
 ###Secondary Toolbar
 ![Secondary Toolbar](./images/secondarytoolbar.png)\
@@ -95,23 +96,14 @@ The pipeline browser shows the currently loaded data and the filters that are ap
 
 ###Properties Editor
 
-The properties editor is split up into three different tabs.
+The properties editor is split up into two different tabs.
 
 
 ####Properties Tab
 
-The properties tab is used to display node properties, in the following image it is displaying the settings for the SAX node which has controls for changing what image slice to display.
+The properties tab is used to change node properties and for changing how the currently selected node is shown in the 3d view. In the following image it is displaying the settings for a volume node which has controls for changing what data to display and how to display it.
 
 ![Properties Editor 1](./images/propertieseditor1.png)\
-
-\newpage
-\pagebreak
-
-####Display Tab
-
-The display tab has settings for changing how the currently selected node is shown in the 3d view. Here you can for example change if the object should be shown in surface or in wireframe mode, what color it should have and what variable should be used for that colorization.
-
-![Properties Editor 2](./images/propertieseditor2.png)\
 
 \newpage
 \pagebreak
@@ -209,21 +201,27 @@ Particle tracing works in FourFlow by ejecting particles into a velocity volume 
 3. Click the Polygon Editor button to open the polygon editor window and give an outline of the area of interest, if the area of interest should eject particles from every timestep make sure that every timestep has a region of interest in the polygon editor. 
 3. Create the polygon from the region of interest by clicking the Create Polygon button in the Polygon Editor. 
 4. Click the Particle Trace button to set up a particle trace node network. 
-5. Rewind the current time to the beginning, this is needed because in the particle trace calculation every frame calculation depends on the previous frame so it must start from the beginning. 
-6. Play the animation to see the particle trace animation.
 
 ![Particle Trace options](./images/particletraceoptions.png)\
 
 The attributes that can be changed on a particle trace node are the following:
 
 * Integration Direction: Determines what the direction of the movement of the particles should be through the volume.
-* Particle Release Start Frame: Sets the first frame in which particles should be emitted from the polygon particle emitter. If set to -1 then particles are emitted from the first possible frame.
-* Particle Release End Frame: Sets the first frame in which particles should end being emitted from the polygon particle emitter. If set to -1 then particles are never stopped being emitted.
+* Particle Release Start Frame: Sets the first frame in which particles should be emitted from the polygon particle emitter. If set to -1 then particles are emitted from the first possible frame. (this is currently unimplemented)
+* Particle Release End Frame: Sets the first frame in which particles should end being emitted from the polygon particle emitter. If set to -1 then particles are never stopped being emitted. (this is currently unimplemented)
 * Termination Time: Sets the lifetime of individual particles.
 * Termination Time Unit: Sets how the Termination Time attribute should be interpreted.
 * Term. Speed: If particles have a speed below this value then they are removed from the simulation.
 * Force Reinjection Every NSteps: Sets how often new particles should be injected from the polygon ejector.
 
+##Particle Collector
+Enables quantification of how many particles go through polygons (collectors) created with the polygon editor. Since it supports multiple polygons and shows the meassurements in a graph the results the difference in polygon throughput can be seen.
+
+To create a particle collector graph first there must be a particle a particle trace simulation already set up. The particle collectors are created as normal polygons with the polygon editor on probe planes, there is no upper limit to how many are supported.
+
+When clicking the Particle Collector button on the main toolbar there is a window that pops up asking for inputs and sources. The particle trace simulation node is the input and one or more polygons are the sources.
+
+The resulting graphs show the number of vertices that the polygons have as an identification of what polygon matches to what graph line. To tell how many vertices a polygon has select it's node and switch to the Information tab, at the top there is a "Number of points:" field that tells how many there are.
 
 ##Streamlines
 ![Streamline](./images/streamlines.png)\

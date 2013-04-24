@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/multi/algorithms/detail
+END
+multi_sum.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/multi/algorithms/detail/multi_sum.hpp
+END
+modify_with_predicate.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/multi/algorithms/detail/modify_with_predicate.hpp
+END
+point_on_border.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/multi/algorithms/detail/point_on_border.hpp
+END

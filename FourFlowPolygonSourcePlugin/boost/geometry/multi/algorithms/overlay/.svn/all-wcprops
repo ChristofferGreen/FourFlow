@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/multi/algorithms/overlay
+END
+get_turns.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/multi/algorithms/overlay/get_turns.hpp
+END
+assemble.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/multi/algorithms/overlay/assemble.hpp
+END
+self_turn_points.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/multi/algorithms/overlay/self_turn_points.hpp
+END
+copy_segments.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/multi/algorithms/overlay/copy_segments.hpp
+END
+copy_segment_point.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/multi/algorithms/overlay/copy_segment_point.hpp
+END

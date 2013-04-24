@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/strategies/spherical
+END
+compare_circular.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/strategies/spherical/compare_circular.hpp
+END
+side_by_cross_track.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/strategies/spherical/side_by_cross_track.hpp
+END
+area_huiller.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/strategies/spherical/area_huiller.hpp
+END
+distance_haversine.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/strategies/spherical/distance_haversine.hpp
+END
+distance_cross_track.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/strategies/spherical/distance_cross_track.hpp
+END

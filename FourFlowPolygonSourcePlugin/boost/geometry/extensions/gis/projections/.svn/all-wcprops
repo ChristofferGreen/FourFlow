@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/gis/projections
+END
+projection.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/gis/projections/projection.hpp
+END
+epsg.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/gis/projections/epsg.hpp
+END
+parameters.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/gis/projections/parameters.hpp
+END
+project_inverse_transformer.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/gis/projections/project_inverse_transformer.hpp
+END
+epsg_traits.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/gis/projections/epsg_traits.hpp
+END
+factory.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/gis/projections/factory.hpp
+END
+project_transformer.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/gis/projections/project_transformer.hpp
+END

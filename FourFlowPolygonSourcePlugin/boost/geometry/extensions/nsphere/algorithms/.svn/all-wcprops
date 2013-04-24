@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/nsphere/algorithms
+END
+num_points.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/nsphere/algorithms/num_points.hpp
+END
+envelope.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/nsphere/algorithms/envelope.hpp
+END
+within.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/nsphere/algorithms/within.hpp
+END
+assign.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/nsphere/algorithms/assign.hpp
+END
+clear.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/nsphere/algorithms/clear.hpp
+END
+append.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/nsphere/algorithms/append.hpp
+END
+area.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/nsphere/algorithms/area.hpp
+END

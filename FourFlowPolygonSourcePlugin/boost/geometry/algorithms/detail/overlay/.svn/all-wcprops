@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/algorithms/detail/overlay
+END
+debug_turn_info.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/algorithms/detail/overlay/debug_turn_info.hpp
+END
+visit_info.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/algorithms/detail/overlay/visit_info.hpp
+END
+ring_properties.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/algorithms/detail/overlay/ring_properties.hpp
+END
+traversal_info.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/algorithms/detail/overlay/traversal_info.hpp
+END
+get_turn_info.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/algorithms/detail/overlay/get_turn_info.hpp
+END
+turn_info.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/algorithms/detail/overlay/turn_info.hpp
+END
+get_relative_order.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/algorithms/detail/overlay/get_relative_order.hpp
+END
+calculate_distance_policy.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/algorithms/detail/overlay/calculate_distance_policy.hpp
+END
+stream_info.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/algorithms/detail/overlay/stream_info.hpp
+END
+enrichment_info.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/algorithms/detail/overlay/enrichment_info.hpp
+END

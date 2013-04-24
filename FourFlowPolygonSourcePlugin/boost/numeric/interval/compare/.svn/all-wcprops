@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/numeric/interval/compare
+END
+tribool.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/numeric/interval/compare/tribool.hpp
+END
+set.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/numeric/interval/compare/set.hpp
+END
+possible.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/numeric/interval/compare/possible.hpp
+END
+explicit.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/numeric/interval/compare/explicit.hpp
+END
+lexicographic.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/numeric/interval/compare/lexicographic.hpp
+END
+certain.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/numeric/interval/compare/certain.hpp
+END

@@ -1,0 +1,109 @@
+<ServerManagerConfiguration>
+  <ProxyGroup name="filters">
+    <SourceProxy class="vtkParticlePathFilter"
+                 name="CustomParticlePath">
+      <Documentation long_help="Trace Particle Paths through time in a vector field."
+                     short_help="Trace Particle Paths through time in a vector field.">
+                     The Particle Trace filter generates pathlines in a vector
+                     field from a collection of seed points. The vector field
+                     used is selected from the Vectors menu, so the input data
+                     set is required to have point-centered vectors. The Seed
+                     portion of the interface allows you to select whether the
+                     seed points for this integration lie in a point cloud or
+                     along a line. Depending on which is selected, the
+                     appropriate 3D widget (point or line widget) is displayed
+                     along with traditional user interface controls for
+                     positioning the point cloud or line within the data set.
+                     Instructions for using the 3D widgets and the
+                     corresponding manual controls can be found in section 7.4.
+                     This filter operates on any type of data set, provided it
+                     has point-centered vectors. The output is polygonal data
+                     containing polylines. This filter is available on the
+                     Toolbar.</Documentation>
+      <InputProperty clean_command="RemoveAllInputs"
+                     command="AddInputConnection"
+                     multiple_input="1"
+                     name="Input">
+        <ProxyGroupDomain name="groups">
+          <Group name="sources" />
+          <Group name="filters" />
+        </ProxyGroupDomain>
+        <DataTypeDomain composite_data_supported="1"
+                        name="input_type">
+          <DataType value="vtkDataObject" />
+        </DataTypeDomain>
+        <InputArrayDomain attribute_type="point"
+                          name="input_array"
+                          number_of_components="3" />
+        <Documentation>Specify which is the Input of the StreamTracer
+        filter.</Documentation>
+      </InputProperty>
+      <InputProperty clean_command="RemoveAllSources"
+                     command="AddSourceConnection"
+                     label="Seed Source"
+                     multiple_input="1"
+                     name="Source">
+        <ProxyGroupDomain name="groups">
+          <Group name="sources" />
+          <Group name="filters" />
+        </ProxyGroupDomain>
+        <DataTypeDomain name="input_type">
+          <DataType value="vtkDataSet" />
+        </DataTypeDomain>
+        <Documentation>Specify the seed dataset. Typically fron where the
+        vector field integration should begin. Usually a point/radius or a line
+        with a given resolution.</Documentation>
+      </InputProperty>
+      <DoubleVectorProperty command="SetTerminationTime"
+                            default_values="0.3"
+                            name="TerminationTime"
+                            number_of_elements="1"
+                            panel_visibility="default">
+        <DoubleRangeDomain name="range" />
+        <Documentation>Setting TerminationTime to a positive value will cause
+        particles to terminate when the time is reached. The units of time
+        should be consistent with the primary time variable.</Documentation>
+      </DoubleVectorProperty>
+      <DoubleVectorProperty information_only="1"
+                            name="TimestepValues">
+        <TimeStepsInformationHelper />
+      </DoubleVectorProperty>
+      <StringVectorProperty animateable="0"
+                            command="SetInputArrayToProcess"
+                            element_types="0 0 0 0 2"
+                            name="SelectInputVectors"
+                            number_of_elements="5"
+                            panel_visibility="default">
+        <ArrayListDomain attribute_type="Vectors"
+                         name="array_list">
+          <RequiredProperties>
+            <Property function="Input"
+                      name="Input" />
+          </RequiredProperties>
+        </ArrayListDomain>
+        <Documentation>Specify which vector array should be used for the
+        integration through that filter.</Documentation>
+      </StringVectorProperty>
+      <IntVectorProperty command="SetComputeVorticity"
+                         default_values="1"
+                         name="ComputeVorticity"
+                         number_of_elements="1">
+        <BooleanDomain name="bool" />
+        <Documentation>Compute vorticity and angular rotation of particles as
+        they progress</Documentation>
+      </IntVectorProperty>
+      <IntVectorProperty command="SetDisableResetCache"
+                         default_values="0"
+                         name="DisableResetCache"
+                         number_of_elements="1"
+                         panel_visibility="never">
+        <BooleanDomain name="bool" />
+        <Documentation>Prevents cache from getting reset so that new computation
+          always start from previous results.</Documentation>
+      </IntVectorProperty>
+		  <Hints>
+        <Visibility replace_input="0" />
+		  </Hints>
+    </SourceProxy>
+  </ProxyGroup>
+</ServerManagerConfiguration>

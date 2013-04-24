@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/iterators
+END
+base.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/iterators/base.hpp
+END
+segment_iterator.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/iterators/segment_iterator.hpp
+END
+circular_iterator.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/iterators/circular_iterator.hpp
+END
+range_type.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/iterators/range_type.hpp
+END
+section_iterators.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/iterators/section_iterators.hpp
+END
+ever_circling_iterator.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/iterators/ever_circling_iterator.hpp
+END

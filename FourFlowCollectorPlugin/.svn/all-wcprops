@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/fourflow/!svn/ver/138/FourFlowCollectorPlugin
+END
+vtkFourFlowCollector.cxx
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/fourflow/!svn/ver/147/FourFlowCollectorPlugin/vtkFourFlowCollector.cxx
+END
+CollectorPlugin.xml
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/fourflow/!svn/ver/138/FourFlowCollectorPlugin/CollectorPlugin.xml
+END
+vtkFourFlowCollector.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/fourflow/!svn/ver/138/FourFlowCollectorPlugin/vtkFourFlowCollector.h
+END
+CollectorPluginGUI.xml
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/fourflow/!svn/ver/138/FourFlowCollectorPlugin/CollectorPluginGUI.xml
+END
+CMakeLists.txt
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/fourflow/!svn/ver/138/FourFlowCollectorPlugin/CMakeLists.txt
+END
+structs.h
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/fourflow/!svn/ver/138/FourFlowCollectorPlugin/structs.h
+END

@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/gis/latlong
+END
+latlong.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/gis/latlong/latlong.hpp
+END
+point_ll.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/extensions/gis/latlong/point_ll.hpp
+END

@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/strategies/cartesian
+END
+cart_intersect.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/strategies/cartesian/cart_intersect.hpp
+END
+area_by_triangles.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/strategies/cartesian/area_by_triangles.hpp
+END
+distance_pythagoras.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/strategies/cartesian/distance_pythagoras.hpp
+END
+point_in_poly_crossings_multiply.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/strategies/cartesian/point_in_poly_crossings_multiply.hpp
+END
+centroid_bashein_detmer.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/strategies/cartesian/centroid_bashein_detmer.hpp
+END
+distance_projected_point.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/strategies/cartesian/distance_projected_point.hpp
+END
+side_by_triangle.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/strategies/cartesian/side_by_triangle.hpp
+END
+point_in_poly_franklin.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/geometry/strategies/cartesian/point_in_poly_franklin.hpp
+END

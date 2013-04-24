@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/config/no_tr1
+END
+cmath.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/config/no_tr1/cmath.hpp
+END
+functional.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/config/no_tr1/functional.hpp
+END
+utility.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/config/no_tr1/utility.hpp
+END
+complex.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/config/no_tr1/complex.hpp
+END
+memory.hpp
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fourflow/!svn/ver/107/FourFlowPolygonSourcePlugin/trunk/boost/config/no_tr1/memory.hpp
+END
