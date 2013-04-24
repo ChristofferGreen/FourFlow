@@ -10,7 +10,7 @@ A discussion forum for FourFlow can be found here: https://groups.google.com/for
 Building
 Requirements:
 Microsoft Visual Studio 2008
-Python 2.6
-Qt 4.6.4
-ParaView 3.14
+Python 2.7
+Qt 4.8.4
+ParaView 3.98.1
 CMake ~2.8
