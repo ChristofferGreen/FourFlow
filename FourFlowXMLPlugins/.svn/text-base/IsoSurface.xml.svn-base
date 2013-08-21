@@ -38,7 +38,7 @@
           <Element index="0" value="Result"/>
         </Property>
       </Proxy>
-      <Proxy group="filters" type="Contour" id="719" servers="1" compound_name="Contour1">
+      <Proxy group="filters" type="FourFlowIsoSurface" id="719" servers="1" compound_name="Contour1">
         <Property name="ComputeGradients" id="719.ComputeGradients" number_of_elements="1">
           <Element index="0" value="0"/>
           <Domain name="bool" id="719.ComputeGradients.bool"/>
@@ -54,8 +54,8 @@
         <Property name="ContourValues" id="719.ContourValues" number_of_elements="1">
           <Element index="0" value="0.5"/>
           <Domain name="scalar_range" id="719.ContourValues.scalar_range">
-            <Min index="0" value="8.87971e-008"/>
-            <Max index="0" value="12.6667"/>
+            <Min index="0" value="0.0"/>
+            <Max index="0" value="3.0"/>
           </Domain>
         </Property>
         <Property name="Input" id="719.Input" number_of_elements="1">
@@ -114,6 +114,9 @@
         <Property name="Locator" proxy_name="Contour1" exposed_name="Point Merge Method"/>
       </ExposedProperties>
       <OutputPort name="Output" proxy="Contour1" port_index="0"/>
+		  <Hints>
+        <Visibility replace_input="0" />
+		  </Hints>
     </CompoundSourceProxy>
   </ProxyGroup>
 </ServerManagerConfiguration>

@@ -21,12 +21,6 @@ svn:wc:ra_dav:version-url
 V 74
 /svn/fourflow/!svn/ver/150/FourFlowXMLPlugins/trunk/old/vtkProbeFilter.xml
 END
-IsoSurface.xml
-K 25
-svn:wc:ra_dav:version-url
-V 70
-/svn/fourflow/!svn/ver/150/FourFlowXMLPlugins/trunk/old/IsoSurface.xml
-END
 CustomContour.xml
 K 25
 svn:wc:ra_dav:version-url

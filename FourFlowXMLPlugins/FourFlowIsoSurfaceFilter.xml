@@ -1,0 +1,112 @@
+<ServerManagerConfiguration>
+  <ProxyGroup name="filters">
+    <CompoundSourceProxy id="3673" servers="1"  name="IsoSurfaceCompound">
+      <Proxy group="filters" type="Calculator" id="3432" servers="1" compound_name="Calculator1">
+        <Property name="AttributeMode" id="3432.AttributeMode" number_of_elements="1">
+          <Element index="0" value="1"/>
+          <Domain name="enum" id="3432.AttributeMode.enum">
+            <Entry value="1" text="Point Data"/>
+            <Entry value="2" text="Cell Data"/>
+          </Domain>
+        </Property>
+        <Property name="CoordinateResults" id="3432.CoordinateResults" number_of_elements="1">
+          <Element index="0" value="0"/>
+          <Domain name="bool" id="3432.CoordinateResults.bool"/>
+        </Property>
+        <Property name="Function" id="3432.Function" number_of_elements="1">
+          <Element index="0" value="sqrt(V_3D_01_X*V_3D_01_X+V_3D_01_Y*V_3D_01_Y+V_3D_01_Z*V_3D_01_Z)"/>
+        </Property>
+        <Property name="Input" id="3432.Input" number_of_elements="1">
+          <Domain name="groups" id="3432.Input.groups"/>
+          <Domain name="input_array" id="3432.Input.input_array">
+            <InputArray attribute_type="any" number_of_components="0"/>
+          </Domain>
+          <Domain name="input_type" id="3432.Input.input_type"/>
+        </Property>
+        <Property name="ReplaceInvalidValues" id="3432.ReplaceInvalidValues" number_of_elements="1">
+          <Element index="0" value="1"/>
+          <Domain name="bool" id="3432.ReplaceInvalidValues.bool"/>
+        </Property>
+        <Property name="ReplacementValue" id="3432.ReplacementValue" number_of_elements="1">
+          <Element index="0" value="0"/>
+          <Domain name="range" id="3432.ReplacementValue.range"/>
+        </Property>
+        <Property name="ResultArrayName" id="3432.ResultArrayName" number_of_elements="1">
+          <Element index="0" value="Result"/>
+        </Property>
+      </Proxy>
+      <Proxy group="filters" type="FourFlowIsoSurface" id="3537" servers="1" compound_name="FourFlowIsoSurface1">
+        <Property name="ComputeGradients" id="3537.ComputeGradients" number_of_elements="1">
+          <Element index="0" value="0"/>
+          <Domain name="bool" id="3537.ComputeGradients.bool"/>
+        </Property>
+        <Property name="ComputeNormals" id="3537.ComputeNormals" number_of_elements="1">
+          <Element index="0" value="1"/>
+          <Domain name="bool" id="3537.ComputeNormals.bool"/>
+        </Property>
+        <Property name="ComputeScalars" id="3537.ComputeScalars" number_of_elements="1">
+          <Element index="0" value="0"/>
+          <Domain name="bool" id="3537.ComputeScalars.bool"/>
+        </Property>
+        <Property name="GenerateTriangles" id="3537.GenerateTriangles" number_of_elements="1">
+          <Element index="0" value="1"/>
+          <Domain name="bool" id="3537.GenerateTriangles.bool"/>
+        </Property>
+        <Property name="Input" id="3537.Input" number_of_elements="1">
+          <Proxy value="3432" output_port="0"/>
+          <Domain name="groups" id="3537.Input.groups"/>
+          <Domain name="input_array" id="3537.Input.input_array">
+            <InputArray attribute_type="point" number_of_components="1"/>
+          </Domain>
+          <Domain name="input_type" id="3537.Input.input_type"/>
+        </Property>
+        <Property name="IsoValue" id="3537.IsoValue" number_of_elements="1">
+          <Element index="0" value="0.5"/>
+          <Domain name="range" id="3537.IsoValue.range"/>
+        </Property>
+        <Property name="Locator" id="3537.Locator" number_of_elements="1">
+          <Proxy value="3548"/>
+          <Domain name="groups" id="3537.Locator.groups"/>
+          <Domain name="proxy_list" id="3537.Locator.proxy_list">
+            <Proxy value="3548"/>
+            <Proxy value="3549"/>
+            <Proxy value="3550"/>
+          </Domain>
+        </Property>
+        <Property name="SelectInputScalars" id="3537.SelectInputScalars" number_of_elements="5">
+          <Element index="0" value=""/>
+          <Element index="1" value=""/>
+          <Element index="2" value=""/>
+          <Element index="3" value="0"/>
+          <Element index="4" value="Result"/>
+          <Domain name="array_list" id="3537.SelectInputScalars.array_list">
+            <String text="Result"/>
+          </Domain>
+          <Domain name="field_list" id="3537.SelectInputScalars.field_list">
+            <Entry value="0" text="Point Data"/>
+          </Domain>
+        </Property>
+      </Proxy>
+      <Proxy group="incremental_point_locators" type="MergePoints" id="3548" servers="1" compound_name="auto_3548">
+        <Property name="Divisions" id="3548.Divisions" number_of_elements="3">
+          <Element index="0" value="50"/>
+          <Element index="1" value="50"/>
+          <Element index="2" value="50"/>
+        </Property>
+        <Property name="NumberOfPointsPerBucket" id="3548.NumberOfPointsPerBucket" number_of_elements="1">
+          <Element index="0" value="8"/>
+        </Property>
+      </Proxy>
+      <ExposedProperties>
+        <Property name="Function" proxy_name="Calculator1" exposed_name="Function"/>
+        <Property name="Input" proxy_name="Calculator1" exposed_name="Input"/>
+        <Property name="IsoValue" proxy_name="FourFlowIsoSurface1" exposed_name="Iso Value"/>
+      </ExposedProperties>
+      <OutputPort name="Output" proxy="FourFlowIsoSurface1" port_index="0"/>
+      <Hints>
+        <ShowInMenu/>
+        <Visibility replace_input="0" />
+      </Hints>
+    </CompoundSourceProxy>
+  </ProxyGroup>
+</ServerManagerConfiguration>

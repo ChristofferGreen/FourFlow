@@ -38,7 +38,7 @@
           <Element index="0" value="Result"/>
         </Property>
       </Proxy>
-      <Proxy group="filters" type="Contour" id="719" servers="1" compound_name="Contour1">
+      <Proxy group="filters" type="FourFlowIsoSurface" id="719" servers="1" compound_name="Contour1">
         <Property name="ComputeGradients" id="719.ComputeGradients" number_of_elements="1">
           <Element index="0" value="0"/>
           <Domain name="bool" id="719.ComputeGradients.bool"/>
