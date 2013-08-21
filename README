@@ -12,5 +12,5 @@ Requirements:
 Microsoft Visual Studio 2008
 Python 2.7
 Qt 4.8.4
-ParaView 3.98.1
+ParaView 4.01
 CMake ~2.8
