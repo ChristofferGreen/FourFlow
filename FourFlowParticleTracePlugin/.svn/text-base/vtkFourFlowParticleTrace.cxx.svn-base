@@ -1027,10 +1027,6 @@ int vtkFourFlowParticleTrace::RequestData(
   vtkInformationVector *outputVector)
 {
   PRINT("RD start: "<<this->CurrentTimeStep<<" "<<this->CurrentTime<<" "<<this->StartTimeStep<<" "<<this->TerminationTimeStep);
-  std::cout << "time: " << this->CurrentTimeStep<<" "<<this->CurrentTime<<" "<<this->StartTimeStep<<" "<<this->TerminationTimeStep << std::endl;
-  /*this->StartTimeStep=-1;
-  if(this->CurrentTimeStep>=6)
-	  this->StartTimeStep=6;*/
   if(this->StartTimeStep<0)
     {
     return 0;
