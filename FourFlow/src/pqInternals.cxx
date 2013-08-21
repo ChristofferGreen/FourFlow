@@ -70,7 +70,7 @@ void pqInternals::applyIsoSurface() { // buggy
 	pqPipelineSource *source = pqActiveObjects::instance().activeSource(); 
 	vtkSMProxy *proxy = source->getProxy();
 	if(source->getOutputPort(0)->getDataInformation()->GetPointDataInformation()->GetArrayInformation(0)->GetNumberOfComponents() == 3) {
-		pqFiltersMenuReaction::createFilter("filters", "IsoSurface");
+		pqFiltersMenuReaction::createFilter("filters", "IsoSurfaceCompound");
 	}
 	else {
 		pqFiltersMenuReaction::createFilter("filters", "Contour");
@@ -170,6 +170,8 @@ void pqInternals::updateEnableState() {
 				this->actionGraph->setEnabled(true);
 				this->actionClip->setEnabled(true);
 			}
+			else if(hasThreeComponents)
+				this->actionClip->setEnabled(true);
 		}
 	}
 }
@@ -350,9 +352,9 @@ void pqInternals::addToolbars(FourFlowMainWindow *mainWindow) {
 	timeToolbar->layout()->setSpacing(0);
 	mainWindow->addToolBar(Qt::TopToolBarArea, timeToolbar);
 
-	QToolBar* selectionToolbar = new pqSelectionToolbar(mainWindow) << pqSetName("selectionToolbar");
+/*	QToolBar* selectionToolbar = new pqSelectionToolbar(mainWindow) << pqSetName("selectionToolbar");
 	selectionToolbar->layout()->setSpacing(0);
-	mainWindow->addToolBar(Qt::TopToolBarArea, selectionToolbar);
+	mainWindow->addToolBar(Qt::TopToolBarArea, selectionToolbar);*/
 
 	QToolBar* cameraToolbar = new pqCameraToolbar(mainWindow) << pqSetName("cameraToolbar");
 	cameraToolbar->layout()->setSpacing(0);
@@ -371,10 +373,6 @@ void pqInternals::setUpDefaults(FourFlowMainWindow *mainWindow) {
 	mainWindow->setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
 
 	// Enable automatic creation of representation on accept.
-	/*pqSettings *settings = pqApplicationCore::instance()->settings();
-	if(settings)
-		settings->setValue("autoAccept", true);
-	pqObjectInspectorWidget::setAutoAccept(true);*/
 	pqAutoApplyReaction::setAutoApply(true);
 
 	// setup the context menu for the pipeline browser.
@@ -385,6 +383,16 @@ void pqInternals::setUpDefaults(FourFlowMainWindow *mainWindow) {
 	new pqSaveStateReaction(this->actionSaveState);
 	new pqPythonShellReaction(this->actionScripting << pqSetName("actionToolsPythonShell"));
 	new pqServerDisconnectReaction(this->actionNewScene);
+
+	// set default background to gradient
+	/*pqServerManagerModel* smModel = pqApplicationCore::instance()->getServerManagerModel();
+    QList<pqRenderView*> views = smModel->findItems<pqRenderView*>();
+    foreach (pqRenderView* view, views) {
+		vtkSMProxy* proxy = view->getProxy();
+		std::cout << "UseGradientBackground " << proxy << std::endl;
+		vtkSMPropertyHelper(proxy, "UseGradientBackground").Set(1);
+	}
+	std::cout << "end" << std::endl;*/
 }
 
 

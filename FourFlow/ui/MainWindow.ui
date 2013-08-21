@@ -70,6 +70,9 @@
   </widget>
   <widget class="pqStatusBar" name="statusbar"/>
   <widget class="QDockWidget" name="pipelineBrowserDock">
+   <property name="features">
+    <set>QDockWidget::NoDockWidgetFeatures</set>
+   </property>
    <property name="allowedAreas">
     <set>Qt::LeftDockWidgetArea|Qt::RightDockWidgetArea</set>
    </property>
@@ -86,6 +89,9 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="animationViewDock">
+   <property name="features">
+    <set>QDockWidget::NoDockWidgetFeatures</set>
+   </property>
    <property name="windowTitle">
     <string>Animation View</string>
    </property>
@@ -95,6 +101,9 @@
    <widget class="pqPVAnimationWidget" name="animationView"/>
   </widget>
   <widget class="QDockWidget" name="objectInspectorDock">
+   <property name="features">
+    <set>QDockWidget::NoDockWidgetFeatures</set>
+   </property>
    <property name="windowTitle">
     <string>Properties</string>
    </property>
@@ -104,6 +113,9 @@
    <widget class="pqObjectInspectorWidget" name="objectInspector"/>
   </widget>
   <widget class="QDockWidget" name="displayDock">
+   <property name="features">
+    <set>QDockWidget::NoDockWidgetFeatures</set>
+   </property>
    <property name="windowTitle">
     <string>Display</string>
    </property>
@@ -139,6 +151,9 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="informationDock">
+   <property name="features">
+    <set>QDockWidget::NoDockWidgetFeatures</set>
+   </property>
    <property name="windowTitle">
     <string>Information</string>
    </property>
@@ -174,6 +189,9 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="propertiesDock">
+   <property name="features">
+    <set>QDockWidget::NoDockWidgetFeatures</set>
+   </property>
    <property name="windowTitle">
     <string>Properties</string>
    </property>

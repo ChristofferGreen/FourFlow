@@ -7,7 +7,7 @@ logo.pdn
 K 25
 svn:wc:ra_dav:version-url
 V 53
-/svn/fourflow/!svn/ver/139/FourFlow/trunk/ui/logo.pdn
+/svn/fourflow/!svn/ver/153/FourFlow/trunk/ui/logo.pdn
 END
 ImportDirectoryWindow.ui
 K 25
@@ -19,13 +19,13 @@ logo.png
 K 25
 svn:wc:ra_dav:version-url
 V 53
-/svn/fourflow/!svn/ver/139/FourFlow/trunk/ui/logo.png
+/svn/fourflow/!svn/ver/153/FourFlow/trunk/ui/logo.png
 END
 MainWindow.ui
 K 25
 svn:wc:ra_dav:version-url
 V 58
-/svn/fourflow/!svn/ver/152/FourFlow/trunk/ui/MainWindow.ui
+/svn/fourflow/!svn/ver/153/FourFlow/trunk/ui/MainWindow.ui
 END
 resources.qrc
 K 25

@@ -12,13 +12,20 @@
 #include "vtkSMCompoundSourceProxy.h"
 
 FourFlowMainWindow::FourFlowMainWindow() : internals(new pqInternals()) {
+	pqSettings* settings = pqApplicationCore::instance()->settings();
+	settings->beginGroup("renderModule");
+	settings->setValue("LODThreshold", VTK_DOUBLE_MAX);
+	settings->endGroup();
+
+	pqAnimationScene::setCacheLimitSetting(3024000);
+
+
 	this->internals->fourFlowMainWindow = this;
 	this->internals->setupUi(this);
 	this->internals->setUpDefaults(this);
 	this->internals->setUpAdvancedMenu();
 	this->internals->addToolbars(this);
 	this->internals->connectButtonSignalsWithSlots();
-	this->showMaximized();
 
 	QObject::connect(this->internals->actionOpenDir,		SIGNAL(triggered()), this, SLOT(importDir()));
 	//new pqLoadDataReaction(this->internals->actionOpenDir);
@@ -34,12 +41,24 @@ FourFlowMainWindow::FourFlowMainWindow() : internals(new pqInternals()) {
 	delete this->internals->displayDock;
 	this->internals->objectInspectorDock = 0;
 	this->internals->displayDock = 0;
+	this->showMaximized();
 
 	this->tabifyDockWidget(this->internals->propertiesDock, this->internals->informationDock);
 	this->internals->propertiesDock->show();
 	this->internals->propertiesDock->raise();
 
 	new pqParaViewBehaviors(this, this);
+
+	pqApplicationCore *core = pqApplicationCore::instance();
+	pqObjectBuilder *builder = core->getObjectBuilder();
+	pqServerManagerModel *sm = core->getServerManagerModel();
+	foreach(pqView *view, sm->findItems<pqView*>()) {
+		if(view->getViewType() == "RenderView") {
+			vtkSMPropertyHelper((vtkSMProxy*)view->getViewProxy(), "UseGradientBackground").Set(1);
+			((vtkSMProxy*)view->getViewProxy())->UpdateVTKObjects();
+			break;
+		}
+	}
 }
 
 FourFlowMainWindow::~FourFlowMainWindow() {

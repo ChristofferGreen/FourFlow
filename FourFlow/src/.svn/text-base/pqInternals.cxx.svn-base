@@ -11,7 +11,7 @@
 #include "staticFunctions.h"
 #include "vtkSMDoubleVectorProperty.h"
 #include "pqTimeKeeper.h"
-
+#include "pqAutoApplyReaction.h"
 
 pqInternals::pqInternals() {
 	this->animationHidden = true;
@@ -70,7 +70,7 @@ void pqInternals::applyIsoSurface() { // buggy
 	pqPipelineSource *source = pqActiveObjects::instance().activeSource(); 
 	vtkSMProxy *proxy = source->getProxy();
 	if(source->getOutputPort(0)->getDataInformation()->GetPointDataInformation()->GetArrayInformation(0)->GetNumberOfComponents() == 3) {
-		pqFiltersMenuReaction::createFilter("filters", "IsoSurface");
+		pqFiltersMenuReaction::createFilter("filters", "IsoSurfaceCompound");
 	}
 	else {
 		pqFiltersMenuReaction::createFilter("filters", "Contour");
@@ -308,7 +308,7 @@ void pqInternals::applyParticleTrace() {
 void pqInternals::applyStreamlines() {
 	setActiveRenderView();
 	preferedColorVariable = "V_3D_01";
-	autoConnectFilter("ArbitrarySourceStreamTracer", true);
+	autoConnectFilter("CustomStreamLines", true);
 }
 
 void pqInternals::applyPathlines() {
@@ -371,10 +371,7 @@ void pqInternals::setUpDefaults(FourFlowMainWindow *mainWindow) {
 	mainWindow->setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
 
 	// Enable automatic creation of representation on accept.
-	pqSettings *settings = pqApplicationCore::instance()->settings();
-	if(settings)
-		settings->setValue("autoAccept", true);
-	pqObjectInspectorWidget::setAutoAccept(true);
+	pqAutoApplyReaction::setAutoApply(true);
 
 	// setup the context menu for the pipeline browser.
 	pqParaViewMenuBuilders::buildPipelineBrowserContextMenu(*this->pipelineBrowser);
@@ -384,6 +381,16 @@ void pqInternals::setUpDefaults(FourFlowMainWindow *mainWindow) {
 	new pqSaveStateReaction(this->actionSaveState);
 	new pqPythonShellReaction(this->actionScripting << pqSetName("actionToolsPythonShell"));
 	new pqServerDisconnectReaction(this->actionNewScene);
+
+	// set default background to gradient
+	/*pqServerManagerModel* smModel = pqApplicationCore::instance()->getServerManagerModel();
+    QList<pqRenderView*> views = smModel->findItems<pqRenderView*>();
+    foreach (pqRenderView* view, views) {
+		vtkSMProxy* proxy = view->getProxy();
+		std::cout << "UseGradientBackground " << proxy << std::endl;
+		vtkSMPropertyHelper(proxy, "UseGradientBackground").Set(1);
+	}
+	std::cout << "end" << std::endl;*/
 }
 
 

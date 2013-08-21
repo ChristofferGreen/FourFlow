@@ -49,9 +49,9 @@ INCLUDE_DIRECTORIES(
 
 build_paraview_client(FourFlow
   TITLE "FourFlow"
-  ORGANIZATION  "Region Skåne"
+  ORGANIZATION  "LundsUniversitet"
   VERSION_MAJOR 1 
-  VERSION_MINOR 1
+  VERSION_MINOR 2
   VERSION_PATCH 1
   SPLASH_IMAGE "${CMAKE_CURRENT_SOURCE_DIR}/ui/logo.png"
   PVMAIN_WINDOW FourFlowMainWindow
