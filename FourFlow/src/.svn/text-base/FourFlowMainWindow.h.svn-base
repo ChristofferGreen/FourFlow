@@ -22,6 +22,8 @@ class FourFlowMainWindow : public QMainWindow {
 	void representationAddedSurface(pqPipelineSource *source, pqDataRepresentation *repr, int val);
 	void setColorMapGreyscale();
 	void setRepresentationToSurface();
+	void nextTimeStepShortCut();
+	void previousTimeStepShortCut();
   private:
 	QSharedPointer<ImportDirectoryWindow> importDirectoryWindow;
 

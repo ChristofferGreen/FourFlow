@@ -272,6 +272,7 @@ void pqInternals::useColorVariable(pqDataRepresentation *repr) {
 		}
 	}
 	((pqPipelineRepresentation*)repr)->colorByArray(selectedArray, 0);
+	this->fourFlowMainWindow->setColorMapRed(repr);
 	repr->getProxy()->UpdateVTKObjects();
 	repr->renderView(true);
 }

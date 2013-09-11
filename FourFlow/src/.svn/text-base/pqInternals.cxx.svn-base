@@ -170,6 +170,8 @@ void pqInternals::updateEnableState() {
 				this->actionGraph->setEnabled(true);
 				this->actionClip->setEnabled(true);
 			}
+			else if(hasThreeComponents)
+				this->actionClip->setEnabled(true);
 		}
 	}
 }
@@ -350,9 +352,9 @@ void pqInternals::addToolbars(FourFlowMainWindow *mainWindow) {
 	timeToolbar->layout()->setSpacing(0);
 	mainWindow->addToolBar(Qt::TopToolBarArea, timeToolbar);
 
-	QToolBar* selectionToolbar = new pqSelectionToolbar(mainWindow) << pqSetName("selectionToolbar");
+/*	QToolBar* selectionToolbar = new pqSelectionToolbar(mainWindow) << pqSetName("selectionToolbar");
 	selectionToolbar->layout()->setSpacing(0);
-	mainWindow->addToolBar(Qt::TopToolBarArea, selectionToolbar);
+	mainWindow->addToolBar(Qt::TopToolBarArea, selectionToolbar);*/
 
 	QToolBar* cameraToolbar = new pqCameraToolbar(mainWindow) << pqSetName("cameraToolbar");
 	cameraToolbar->layout()->setSpacing(0);

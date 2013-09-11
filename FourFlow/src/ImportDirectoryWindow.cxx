@@ -122,12 +122,8 @@ void ImportDirectoryWindow::loadTexture(const QString& filename, pqDataRepresent
 }
 
 void ImportDirectoryWindow::updatedLoadDataPostRepresentationSlot() {
-	//cout << "ImportDirectoryWindow::updatedLoadDataPostRepresentationSlot" << endl;
 	pqDataRepresentation *repr = (pqDataRepresentation *)sender();
-	pqScalarsToColors* lut = ((pqPipelineRepresentation*)repr)->getLookupTable();
-	if(lut)
-		//lut->setScalarRange(0.0f, 0.4);
-		lut->setWholeScalarRange(0.0f, 0.4);
+	//cout << "ImportDirectoryWindow::updatedLoadDataPostRepresentationSlot" << endl;
 	QObject::disconnect(repr, SIGNAL(dataUpdated()), this, SLOT(updatedLoadDataPostRepresentationSlot()));
 	pqPipelineSource *source = repr->getInput();
 	if(source->getSMName().contains(".pvd")) {

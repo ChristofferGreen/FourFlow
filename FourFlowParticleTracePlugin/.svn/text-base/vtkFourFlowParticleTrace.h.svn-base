@@ -189,6 +189,12 @@ public:
   vtkGetMacro(EnableParticleWriting,int);
   vtkBooleanMacro(EnableParticleWriting,int);
 
+  void SetStartTimeStep(int);
+  vtkGetMacro(StartTimeStep,int);
+
+  void SetEndTimeStep(int);
+  vtkGetMacro(EndTimeStep,int);
+
   // Description:
   // Set/Get the flag to disable cache
   // This is off by default and turned on in special circumstances
@@ -273,7 +279,7 @@ public:
   //    either at the beginning or at the end of each step (modulo this->ForceReinjectionEveryNSteps)
   //  * Output a polydata representing the moved particles
   // Note that if the starting and the ending time coincide, the polydata is still valid.
-  virtual vtkPolyData* Execute(vtkInformationVector** inputVector);
+  virtual vtkPolyData* Execute(vtkInformationVector** inputVector, float ActualCurrentTime);
 
   // the RequestData will call these methods in turn
   virtual void Initialize(){} //the first iteration
@@ -417,6 +423,7 @@ private:
 
 
   int  StartTimeStep; //InputTimeValues[StartTimeStep] <= StartTime <= InputTimeValues[StartTimeStep+1]
+  int  EndTimeStep;
   int  CurrentTimeStep;
   int  TerminationTimeStep; //computed from start time
   bool FirstIteration;

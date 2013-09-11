@@ -13,7 +13,7 @@
 //#include "pqServerResources.h"
 #include "vtkSMProxyManager.h"
 #include "pqSaveScreenshotReaction.h"
-#include "pqSelectionToolbar.h"
+//#include "pqSelectionToolbar.h"
 #include "pqCameraToolbar.h"
 #include "pqVCRToolbar.h"
 #include "pqAnimationTimeToolbar.h"

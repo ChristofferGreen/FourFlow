@@ -10,6 +10,23 @@
 #include "vtkDataObject.h"
 #include "vtkMultiBlockDataSet.h"
 #include "vtkSMCompoundSourceProxy.h"
+#include <QShortcut>
+
+void FourFlowMainWindow::nextTimeStepShortCut() {
+	pqAnimationManager *animationManager = pqPVApplicationCore::instance()->animationManager();
+	pqAnimationScene *animationScene = animationManager->getActiveScene();
+	animationScene->setCacheGeometrySetting(false);
+	animationScene->getProxy()->InvokeCommand("GoToNext");
+	animationScene->setCacheGeometrySetting(true);
+}
+
+void FourFlowMainWindow::previousTimeStepShortCut() {
+	pqAnimationManager *animationManager = pqPVApplicationCore::instance()->animationManager();
+	pqAnimationScene *animationScene = animationManager->getActiveScene();
+	animationScene->setCacheGeometrySetting(false);
+	animationScene->getProxy()->InvokeCommand("GoToPrevious");
+	animationScene->setCacheGeometrySetting(true);
+}
 
 FourFlowMainWindow::FourFlowMainWindow() : internals(new pqInternals()) {
 	pqSettings* settings = pqApplicationCore::instance()->settings();
@@ -19,7 +36,6 @@ FourFlowMainWindow::FourFlowMainWindow() : internals(new pqInternals()) {
 
 	pqAnimationScene::setCacheLimitSetting(3024000);
 
-
 	this->internals->fourFlowMainWindow = this;
 	this->internals->setupUi(this);
 	this->internals->setUpDefaults(this);
@@ -28,6 +44,15 @@ FourFlowMainWindow::FourFlowMainWindow() : internals(new pqInternals()) {
 	this->internals->connectButtonSignalsWithSlots();
 
 	QObject::connect(this->internals->actionOpenDir,		SIGNAL(triggered()), this, SLOT(importDir()));
+
+	QShortcut *leftArrowShortCut = new QShortcut(Qt::Key_Left, this);
+	leftArrowShortCut->setContext(Qt::ApplicationShortcut);
+	QObject::connect(leftArrowShortCut, SIGNAL(activated()), this, SLOT(previousTimeStepShortCut()));
+
+	QShortcut *rightArrowShortCut = new QShortcut(Qt::Key_Right, this);
+	rightArrowShortCut->setContext(Qt::ApplicationShortcut);
+	QObject::connect(rightArrowShortCut, SIGNAL(activated()), this, SLOT(nextTimeStepShortCut()));
+
 	//new pqLoadDataReaction(this->internals->actionOpenDir);
 
 	// Final step, define application behaviors. Since we want all ParaView
@@ -188,6 +213,7 @@ void FourFlowMainWindow::setColorMapGreyscale(pqDataRepresentation *repr) {
 	*/
 	QList<QVariant> rgbPoints;
 	rgbPoints << 0.0 << 0.0 << 0.0 << 0.0;
+	rgbPoints << 0.2 << 1.0 << 1.0 << 1.0;
 	rgbPoints << 1.0 << 1.0 << 1.0 << 1.0;
 	pqApplicationCore* core = pqApplicationCore::instance();
 	pqObjectBuilder* builder = core->getObjectBuilder();
@@ -203,6 +229,32 @@ void FourFlowMainWindow::setColorMapGreyscale(pqDataRepresentation *repr) {
 		pqSMAdaptor::setEnumerationProperty(repr->getProxy()->GetProperty("ColorArrayName"), "MagnitudeP001N");
 	pqSMAdaptor::setProxyProperty(repr->getProxy()->GetProperty("LookupTable"), lookupTable);
 	pqSMAdaptor::setEnumerationProperty(repr->getProxy()->GetProperty("ColorAttributeType"), "POINT_DATA");
+
+	/*pqScalarsToColors* lut = ((pqPipelineRepresentation*)repr)->getLookupTable();
+	if(lut) {
+		//lut->setScalarRange(0.0f, 0.4);
+		lut->setWholeScalarRange(0.0f, 0.4);
+	}*/
+
+	lookupTable->UpdateVTKObjects();
+	repr->getProxy()->UpdateVTKObjects();
+	repr->renderViewEventually();
+
+}
+
+void FourFlowMainWindow::setColorMapRed(pqDataRepresentation *repr) {
+	QList<QVariant> rgbPoints;
+	rgbPoints << 0.0 << 0.0 << 0.0 << 0.0;
+	rgbPoints << 0.28 << 1.0 << 0.0 << 0.0;
+	rgbPoints << 0.56 << 1.0 << 1.0 << 0.0;
+	rgbPoints << 1.0 << 1.0 << 1.0 << 1.0;
+	pqApplicationCore* core = pqApplicationCore::instance();
+	pqObjectBuilder* builder = core->getObjectBuilder();
+	vtkSMProxy *lookupTable = builder->createProxy("lookup_tables", "PVLookupTable", pqActiveObjects::instance().activeServer(), "lookup_tables");
+	pqSMAdaptor::setMultipleElementProperty(lookupTable->GetProperty("RGBPoints"), rgbPoints);
+	pqSMAdaptor::setEnumerationProperty(lookupTable->GetProperty("ColorSpace"), "RGB");
+	pqSMAdaptor::setEnumerationProperty(lookupTable->GetProperty("VectorMode"), "Magnitude");
+	pqSMAdaptor::setProxyProperty(repr->getProxy()->GetProperty("LookupTable"), lookupTable);
 
 	lookupTable->UpdateVTKObjects();
 	repr->getProxy()->UpdateVTKObjects();
