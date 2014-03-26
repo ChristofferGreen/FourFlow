@@ -43,6 +43,10 @@ FourFlowMainWindow::FourFlowMainWindow() : internals(new pqInternals()) {
 	this->internals->addToolbars(this);
 	this->internals->connectButtonSignalsWithSlots();
 
+	  /// Provide access to the color-editor panel for the application.
+	pqApplicationCore::instance()->registerManager("COLOR_EDITOR_PANEL", this->internals->colorMapEditorDock);
+
+
 	QObject::connect(this->internals->actionOpenDir,		SIGNAL(triggered()), this, SLOT(importDir()));
 
 	QShortcut *leftArrowShortCut = new QShortcut(Qt::Key_Left, this);
@@ -66,7 +70,6 @@ FourFlowMainWindow::FourFlowMainWindow() : internals(new pqInternals()) {
 	delete this->internals->displayDock;
 	this->internals->objectInspectorDock = 0;
 	this->internals->displayDock = 0;
-	this->showMaximized();
 
 	this->tabifyDockWidget(this->internals->propertiesDock, this->internals->informationDock);
 	this->internals->propertiesDock->show();
@@ -84,6 +87,9 @@ FourFlowMainWindow::FourFlowMainWindow() : internals(new pqInternals()) {
 			break;
 		}
 	}
+
+//	this->showMaximized();
+	setWindowState(Qt::WindowMaximized);
 }
 
 FourFlowMainWindow::~FourFlowMainWindow() {
@@ -121,6 +127,15 @@ void FourFlowMainWindow::importDir() {
 void FourFlowMainWindow::representationAddedSurface(pqPipelineSource *source, pqDataRepresentation *repr, int val) {
 	QObject::disconnect(source, SIGNAL(representationAdded(pqPipelineSource*, pqDataRepresentation*, int)), this, SLOT(representationAddedGreyscale(pqPipelineSource*, pqDataRepresentation*, int)));
 	QObject::connect(repr, SIGNAL(dataUpdated()), this, SLOT(setRepresentationToSurface()));
+}
+
+void FourFlowMainWindow::showConnectionWindow() {
+	this->connectionWindow->show();
+}
+
+void FourFlowMainWindow::createConnectionWindow() {
+	this->connectionWindow = QSharedPointer<ConnectionWindow>(new ConnectionWindow);
+	this->connectionWindow->ffWindow = this;
 }
 
 
@@ -203,14 +218,49 @@ void FourFlowMainWindow::setColorMapGreyscale() {
 }
 
 void FourFlowMainWindow::setColorMapGreyscale(pqDataRepresentation *repr) {
-	/*
-		Change display type to polygon surface
-	*/
+	pqApplicationCore* core = pqApplicationCore::instance();
+	pqObjectBuilder* builder = core->getObjectBuilder();
+	
+	//repr->getProxy()->GetProperty("LookupTable")->PrintSelf(std::cout, vtkIndent(0));
+
+	vtkSMProxy *newLookupTable = builder->createProxy("lookup_tables", "PVLookupTable", pqActiveObjects::instance().activeServer(), "lookup_tables");
+	pqSMAdaptor::setProxyProperty(repr->getProxy()->GetProperty("LookupTable"), newLookupTable);
+	repr->getProxy()->UpdateVTKObjects();
+
+	vtkSMProxy *newOpacityFunction = builder->createProxy("piecewise_functions", "PiecewiseFunction", pqActiveObjects::instance().activeServer(), "piecewise_functions");
+    pqSMAdaptor::setProxyProperty(repr->getProxy()->GetProperty("ScalarOpacityFunction"), newOpacityFunction);
+	vtkSMPropertyHelper(newLookupTable, "ScalarOpacityFunction").Set(newOpacityFunction);
+	newLookupTable->UpdateVTKObjects();
+	repr->getProxy()->UpdateVTKObjects();
+
+	if(vtkSMProxy *lookupTableProxy = repr->getLookupTableProxy()) {
+		QList<QVariant> rgbPoints;
+		rgbPoints << 0.0 << 0.0 << 0.0 << 0.0;
+		rgbPoints << 0.2 << 1.0 << 1.0 << 1.0;
+		rgbPoints << 1.0 << 1.0 << 1.0 << 1.0;
+		
+		pqSMAdaptor::setMultipleElementProperty(lookupTableProxy->GetProperty("RGBPoints"), rgbPoints);
+		pqSMAdaptor::setEnumerationProperty(lookupTableProxy->GetProperty("ColorSpace"), "RGB");
+		pqSMAdaptor::setEnumerationProperty(lookupTableProxy->GetProperty("VectorMode"), "Magnitude");
+		repr->getProxy()->UpdateVTKObjects();
+
+		if(vtkSMProxy *opacityFunctionProxy =  repr->getScalarOpacityFunctionProxy()) {
+			QList<QVariant> opacityValues;
+			opacityValues << 0.0  << 0.0 << 0.5 << 0.0 ;
+			opacityValues << 0.04 << 1.0 << 0.5 << 0.0 ;
+			opacityValues << 1.0  << 1.0 << 0.5 << 0.0 ;
+
+			pqSMAdaptor::setMultipleElementProperty(opacityFunctionProxy->GetProperty("Points"), opacityValues);
+			repr->getProxy()->UpdateVTKObjects();
+		}
+	}
+	repr->renderViewEventually();
+
+
+	/*//Change display type to polygon surface
 	//pqSMAdaptor::setEnumerationProperty(repr->getProxy()->GetProperty("Representation"), "Surface");
 
-	/*
-		Create the lookup table
-	*/
+	//Create the lookup table
 	QList<QVariant> rgbPoints;
 	rgbPoints << 0.0 << 0.0 << 0.0 << 0.0;
 	rgbPoints << 0.2 << 1.0 << 1.0 << 1.0;
@@ -218,28 +268,38 @@ void FourFlowMainWindow::setColorMapGreyscale(pqDataRepresentation *repr) {
 	pqApplicationCore* core = pqApplicationCore::instance();
 	pqObjectBuilder* builder = core->getObjectBuilder();
 	vtkSMProxy *lookupTable = builder->createProxy("lookup_tables", "PVLookupTable", pqActiveObjects::instance().activeServer(), "lookup_tables");
+	vtkSMProxyProperty* pp = vtkSMProxyProperty::SafeDownCast(repr->getProxy()->GetProperty("ScalarOpacityFunction"));
+	if(pp) {
+		std::cout << "Setting ScalarOpacityFunction property!" << std::endl;
+		pqObjectBuilder* builder = pqApplicationCore::instance()->getObjectBuilder();
+		vtkSMProxy *opacityFunction = builder->createProxy("piecewise_functions", "PiecewiseFunction", pqActiveObjects::instance().activeServer(), "piecewise_functions");
+		// Setup default opacity function to go from (0.0,0.0) to (1.0,1.0).
+		// We are new setting defaults for midPoint (0.5) and sharpness(0.0) 
+		QList<QVariant> values;
+		values << 0.0 << 0.0 << 0.5 << 0.0 ;
+		values << 1.0 << 1.0 << 0.5 << 0.0 ;
+	    
+		pqSMAdaptor::setMultipleElementProperty(opacityFunction->GetProperty("Points"), values);
+		opacityFunction->UpdateVTKObjects();
+		pqSMAdaptor::setProxyProperty(pp, opacityFunction);
+		repr->getProxy()->UpdateVTKObjects();
+	}
+	else
+		std::cout << "----- Could not find ScalarOpacityFunction property!" << std::endl;
 	pqSMAdaptor::setMultipleElementProperty(lookupTable->GetProperty("RGBPoints"), rgbPoints);
 	pqSMAdaptor::setEnumerationProperty(lookupTable->GetProperty("ColorSpace"), "RGB");
 
-	/*
-		Update proxy properties
-	*/
+	//Update proxy properties
 	vtkSMStringVectorProperty *colorArrayName = vtkSMStringVectorProperty::SafeDownCast(repr->getProxy()->GetProperty("ColorArrayName"));
 	if(string(colorArrayName->GetElement(0)).compare("Result") != 0)
 		pqSMAdaptor::setEnumerationProperty(repr->getProxy()->GetProperty("ColorArrayName"), "MagnitudeP001N");
 	pqSMAdaptor::setProxyProperty(repr->getProxy()->GetProperty("LookupTable"), lookupTable);
 	pqSMAdaptor::setEnumerationProperty(repr->getProxy()->GetProperty("ColorAttributeType"), "POINT_DATA");
 
-	/*pqScalarsToColors* lut = ((pqPipelineRepresentation*)repr)->getLookupTable();
-	if(lut) {
-		//lut->setScalarRange(0.0f, 0.4);
-		lut->setWholeScalarRange(0.0f, 0.4);
-	}*/
 
 	lookupTable->UpdateVTKObjects();
 	repr->getProxy()->UpdateVTKObjects();
-	repr->renderViewEventually();
-
+	repr->renderViewEventually();*/
 }
 
 void FourFlowMainWindow::setColorMapRed(pqDataRepresentation *repr) {

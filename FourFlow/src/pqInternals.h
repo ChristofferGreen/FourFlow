@@ -49,7 +49,7 @@ class pqInternals : public QObject, public Ui::MainWindow {
 		bool animationHidden, propertiesHidden, polygonEditorHidden;
 		pqView *polygonEditorView;
 
-		pqPipelineSource *autoConnectFilter(std::string filter, bool color);
+		pqPipelineSource *autoConnectFilter(std::string group, std::string filter, bool color);
 };
 
 #endif

@@ -20,11 +20,10 @@
                      name="Input">
         <ProxyGroupDomain name="groups">
           <Group name="sources" />
-          <Group name="filters" />
         </ProxyGroupDomain>
         <DataTypeDomain composite_data_supported="1"
                         name="input_type">
-          <DataType value="vtkDataSet" />
+          <DataType value="vtkStructuredGrid"/>
         </DataTypeDomain>
         <InputArrayDomain attribute_type="point"
                           name="input_array"
@@ -194,6 +193,9 @@
         <ProxyGroupDomain name="groups">
           <Group name="sources" />
         </ProxyGroupDomain>
+        <DataTypeDomain name="input_type">
+          <DataType value="vtkPolyData"/>
+        </DataTypeDomain>
         <Documentation>This property specifies the input used to obtain the
         seed points.</Documentation>
       </InputProperty>

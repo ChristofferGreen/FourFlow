@@ -88,7 +88,13 @@ void pqInternals::applyVolumeTrace() {
 }
 
 void pqInternals::applyGraph() {
-	autoConnectFilter("FourFlowGraph", false);
+	//autoConnectFilter("filters", "FourFlowGraph", false);
+	this->fourFlowMainWindow->createConnectionWindow();
+	this->fourFlowMainWindow->connectionWindow->setInputText("Flow Graph Input", "Please specify the velocity data volume to be used for the flow graph.");
+	this->fourFlowMainWindow->connectionWindow->setSourceText("Flow Graph Source", "Please specify the polygon ring to be used for the flow graph.");
+	this->fourFlowMainWindow->connectionWindow->setType(ConnectionWindow::Graph);
+	this->fourFlowMainWindow->connectionWindow->fill();
+	this->fourFlowMainWindow->showConnectionWindow();
 }
 
 
@@ -176,7 +182,7 @@ void pqInternals::updateEnableState() {
 	}
 }
 
-pqPipelineSource *pqInternals::autoConnectFilter(string filter, bool color) {
+pqPipelineSource *pqInternals::autoConnectFilter(string group, string filter, bool color) {
 	pqServer* server = pqActiveObjects::instance().activeServer();
 	pqApplicationCore *core = pqApplicationCore::instance();
 	pqObjectBuilder *builder = core->getObjectBuilder();  
@@ -187,7 +193,7 @@ pqPipelineSource *pqInternals::autoConnectFilter(string filter, bool color) {
 
 	QMap<QString, QList<pqOutputPort*> > namedInputs;
 
-    vtkSMProxy *filterProxy = pxm->GetPrototypeProxy("filters", filter.c_str());
+    vtkSMProxy *filterProxy = pxm->GetPrototypeProxy(group.c_str(), filter.c_str());
 
 	QList<pqPipelineSource*> sources = sm->findItems<pqPipelineSource*>(activeObjects->activeServer());
 	int inputB = 0;
@@ -215,7 +221,7 @@ pqPipelineSource *pqInternals::autoConnectFilter(string filter, bool color) {
 		}
 		namedInputs = dialog.selectedInputs();
 	}
-	pqPipelineSource *source = builder->createFilter("filters", filter.c_str(), namedInputs, server);
+	pqPipelineSource *source = builder->createFilter(group.c_str(), filter.c_str(), namedInputs, server);
 	if(color)
 		useVelocityForColor(source);
 	return source;
@@ -279,15 +285,30 @@ void pqInternals::useColorVariable(pqDataRepresentation *repr) {
 
 void pqInternals::applyParticleCollector() {
 	setActiveRenderView();
-	pqPipelineSource *source = autoConnectFilter("FourFlowCollector", true);
+	this->fourFlowMainWindow->createConnectionWindow();
+	this->fourFlowMainWindow->connectionWindow->setInputText("Particle Collector Input", "Please specify the particle trace simulation to be used for the particle collection.");
+	this->fourFlowMainWindow->connectionWindow->setSourceText("Particle Collector Source", "Please specify the polygon ring that will collect the particles.");
+	this->fourFlowMainWindow->connectionWindow->setType(ConnectionWindow::ParticleCollector);
+	this->fourFlowMainWindow->connectionWindow->fill();
+	this->fourFlowMainWindow->showConnectionWindow();
+	/*setActiveRenderView();
+	pqPipelineSource *source = autoConnectFilter("filters", "FourFlowCollector", true);*/
 }
 
 void pqInternals::applyParticleTrace() {
 	setActiveRenderView();
+	this->fourFlowMainWindow->createConnectionWindow();
+	this->fourFlowMainWindow->connectionWindow->setInputText("Particle Trace Input", "Please specify the velocity data volume to be used for the simulation.");
+	this->fourFlowMainWindow->connectionWindow->setSourceText("Particle Trace Source", "Please specify the polygon ring to be used for the simulation.");
+	this->fourFlowMainWindow->connectionWindow->setType(ConnectionWindow::ParticleTrace);
+	this->fourFlowMainWindow->connectionWindow->fill();
+	this->fourFlowMainWindow->showConnectionWindow();
+	//this->fourFlowMainWindow->fillVelocityVolumeNodes();
+	/*setActiveRenderView();
 	this->preferedColorVariable = "V_3D_01";
 	//pqPipelineSource *source = autoConnectFilter("FourFlowParticleTracerCompound", true);
 	//pqPipelineSource *source = autoConnectFilter("ParticleTracer", true);
-	pqPipelineSource *source = autoConnectFilter("FourFlowParticleTraceSource", true);
+	pqPipelineSource *source = autoConnectFilter("particles", "FourFlowParticleTraceSource", true);
 	
 	if(!source)
 		return;
@@ -305,19 +326,33 @@ void pqInternals::applyParticleTrace() {
 	std::cout << "current frame: " << currentFrame << " " << prop << std::endl;
 	pqSMAdaptor::setElementProperty(prop, currentFrame);
 	sourceProxy->UpdateProperty("ParticleReleaseStartFrame", true);
-	sourceProxy->UpdateVTKObjects();
+	sourceProxy->UpdateVTKObjects();*/
 }
 
 void pqInternals::applyStreamlines() {
 	setActiveRenderView();
+	this->fourFlowMainWindow->createConnectionWindow();
+	this->fourFlowMainWindow->connectionWindow->setInputText("Stream Lines Input", "Please specify the velocity data volume to be used for the simulation.");
+	this->fourFlowMainWindow->connectionWindow->setSourceText("Stream Lines Source", "Please specify the polygon ring to be used for the simulation.");
+	this->fourFlowMainWindow->connectionWindow->setType(ConnectionWindow::StreamLines);
+	this->fourFlowMainWindow->connectionWindow->fill();
+	this->fourFlowMainWindow->showConnectionWindow();
+/*	setActiveRenderView();
 	preferedColorVariable = "V_3D_01";
-	autoConnectFilter("CustomStreamLines", true);
+	autoConnectFilter("filters", "CustomStreamLines", true);*/
 }
 
 void pqInternals::applyPathlines() {
 	setActiveRenderView();
+	this->fourFlowMainWindow->createConnectionWindow();
+	this->fourFlowMainWindow->connectionWindow->setInputText("Path Line Input", "Please specify the velocity data volume to be used for the simulation.");
+	this->fourFlowMainWindow->connectionWindow->setSourceText("Path line Source", "Please specify the polygon ring to be used for the simulation.");
+	this->fourFlowMainWindow->connectionWindow->setType(ConnectionWindow::PathLines);
+	this->fourFlowMainWindow->connectionWindow->fill();
+	this->fourFlowMainWindow->showConnectionWindow();
+	/*setActiveRenderView();
 	preferedColorVariable = "V_3D_01";
-	autoConnectFilter("CustomParticlePath", true);
+	autoConnectFilter("filters", "CustomParticlePath", true);*/
 	/*setActiveRenderView();
 	preferedColorVariable = "V_3D_01";
 	pqPipelineSource *source = pqFiltersMenuReaction::createFilter("filters", "ParticlePath");

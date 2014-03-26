@@ -69,6 +69,18 @@
    <addaction name="actionRedo"/>
   </widget>
   <widget class="pqStatusBar" name="statusbar"/>
+  
+  <widget class="QDockWidget" name="colorMapEditorDock">
+   <property name="windowTitle">
+    <string>Color Map Editor</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="pqColorMapEditor" name="colorMapEditorPanel"/>
+  </widget>
+  
+  
   <widget class="QDockWidget" name="pipelineBrowserDock">
    <property name="features">
     <set>QDockWidget::NoDockWidgetFeatures</set>
@@ -140,7 +152,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>78</width>
+          <width>69</width>
           <height>175</height>
          </rect>
         </property>
@@ -178,7 +190,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>78</width>
+          <width>69</width>
           <height>174</height>
          </rect>
         </property>
@@ -347,7 +359,7 @@
      <normaloff>:/actions/icons/misc/200px-Icon_Mathematical_Plot.svg.png</normaloff>:/actions/icons/misc/200px-Icon_Mathematical_Plot.svg.png</iconset>
    </property>
    <property name="text">
-    <string>Graph</string>
+    <string>Flow Graph</string>
    </property>
   </action>
   <action name="actionVolumeTrace">

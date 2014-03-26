@@ -55,7 +55,7 @@
 #include "pqSetName.h"
 #include "pqLoadDataReaction.h"
 #include "pqPVApplicationCore.h"
-#include "pqColorScaleEditor.h"
+//#include "pqColorScaleEditor.h"
 #include "pqAutoApplyReaction.h"
 #include "pqServerDisconnectReaction.h"
 #include "pqAnimationManager.h"

@@ -8,10 +8,9 @@
         multiple_input="0">
        <ProxyGroupDomain name="groups">
          <Group name="sources"/>
-         <Group name="filters"/>
        </ProxyGroupDomain>
        <DataTypeDomain name="input_type" composite_data_supported="1">
-         <DataType value="vtkDataObject"/>
+         <DataType value="vtkPolyData"/>
        </DataTypeDomain>
        <InputArrayDomain name="input_array" attribute_type="point"
                          number_of_components="3"/>
@@ -24,10 +23,9 @@
          multiple_input="0">
         <ProxyGroupDomain name="groups">
           <Group name="sources"/>
-          <Group name="filters"/>
         </ProxyGroupDomain>
         <DataTypeDomain name="input_type">
-          <DataType value="vtkDataSet"/>
+          <DataType value="vtkPolyData"/>
         </DataTypeDomain>
       </InputProperty>
 

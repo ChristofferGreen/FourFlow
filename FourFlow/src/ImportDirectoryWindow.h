@@ -1,7 +1,7 @@
 #ifndef ImportDirectoryWindow_h
 #define ImportDirectoryWindow_h
 
-#include "Ui_ImportDirectoryWindow.h"
+#include "ui_ImportDirectoryWindow.h"
 #include "qtIncludes.h"
 #include "pqIncludes.h"
 #include "cppIncludes.h"

@@ -67,7 +67,7 @@ int vtkFourFlowGraph::FillInputPortInformation(int port, vtkInformation* info) {
 }
 
 int vtkFourFlowGraph::RequestData(vtkInformation *request, vtkInformationVector **inputVector, vtkInformationVector *outputVector) {
-	cout << "test: " << ShowFlow << " " << ShowFlowPrev << " " << ShowMaximumVelocity << " " << ShowMaximumVelocityPrev << " " << ShowMeanVelocity << " " << ShowMeanVelocityPrev << endl;
+	//cout << "test: " << ShowFlow << " " << ShowFlowPrev << " " << ShowMaximumVelocity << " " << ShowMaximumVelocityPrev << " " << ShowMeanVelocity << " " << ShowMeanVelocityPrev << endl;
 	if(this->continueExecuting == false)
 		if(ShowFlow == ShowFlowPrev && ShowMaximumVelocity == ShowMaximumVelocityPrev && ShowMeanVelocity == ShowMeanVelocityPrev)
 			return 1;
@@ -141,7 +141,7 @@ int vtkFourFlowGraph::RequestData(vtkInformation *request, vtkInformationVector 
 			points = pointSet.size();
 		}
 		if(polyData && polyData->GetPoints() && points > 3) {
-			cout << "polyData->GetPoints()->GetNumberOfPoints(): " << polyData->GetPoints()->GetNumberOfPoints() << endl;
+			//cout << "polyData->GetPoints()->GetNumberOfPoints(): " << polyData->GetPoints()->GetNumberOfPoints() << endl;
 			/*
 				Here we calculate the normal of the grid
 			*/

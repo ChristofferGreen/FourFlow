@@ -1,6 +1,6 @@
 % FourFlow Documentation
 % Christoffer Green
-% July 2012
+% July 2012 - March 2014
 \newpage
 \pagebreak
 \begingroup
@@ -17,7 +17,7 @@ FourFlow is an application for visualization and quantification of data from tim
 When we created FourFlow we envisioned a typical workflow as the user first having access to time resolved image data with velocity mapping in the [Ensight Gold](http://www2.ensight.com/91_manuals/UserManual.pdf "Ensight Gold") format and having an intention of visualizing this data in various ways. The recommended way of converting other types of data to the Ensight Gold format is with the FourFlow export plugin in the [Segment](http://medviso.com/products/segment/  "Segment") software but the Ensight Gold format is well documented so it is possible to implement custom data exporters in other software. The next step after having the data in the right format is to import it into FourFlow and apply various visualization filters to it. It is at this point also possible to do some simple quantification.
 
 ##Importing Data
-Data to be imported into FourFlow must be in the [Ensight Gold](http://www2.ensight.com/91_manuals/UserManual.pdf "Ensight Gold") format. The .case files that are to be imported should all be in the same directory. The naming rules for the different files are as follows (the * character signifies that any string of characters are allowed here):
+Data to be imported into FourFlow must be in the [Ensight Gold](http://www2.ensight.com/91_manuals/UserManual.pdf "Ensight Gold") format or the VTK PVD format. The .case files that are to be imported should all be in the same directory. The naming rules for the different files are as follows (the * character signifies that any string of characters are allowed here):
 
 * *Velocity Volume*: should be named velocity\*.case and should contain a 3-value vector variable with the name V_3D_01 that contains the velocity data.
 * *SAX Stack*: A stack of SAX images should be named sax\*.case
@@ -60,18 +60,18 @@ The main toolbar has a number of different functions grouped together by type. S
 * Save: Saves a copy of the current scene with all the applied filters.
 * Open: Open a previously saved scene.
 * Import Data: Imports data in Ensight format from a directory.
-* Polygon Editor: Is used on the currently selected Probe Plane to display a new window that can be used to create a 2d segmentation of data from a 3d volume.
-* Scripting: Shows a window from where python scripts can be written, run and loaded.
-* Particle Trace: Applies a particle trace visualization to the currently selected polygon segment in a velocity volume.
-* Particle Collector: Enables quantification of how many particles go through polygons (collectors) created with the polygon editor. Since it supports multiple polygons and shows the meassurements in a graph the results the difference in polygon throughput can be seen.
-* Streamlines: Applies a streamline visualization to the currently selected polygon segment in a velocity volume.
-* Graph: Applies a filter to the currently selected polygon segment that opens a window with quantification information from the velocity data on the volume segment.
 * Probe Plane: Adds a widget that can be moved around, rotated and scaled to show a slice of the velocity data in a volume. This can then be used with the Polygon Editor for more advanced visualizations.
+* Polygon Editor: Is used on the currently selected Probe Plane to display a new window that can be used to create a 2d segmentation of data from a 3d volume.
+* Particle Trace: Applies a particle trace visualization to the currently selected polygon segment in a velocity volume.
 * Pathlines: Similar to streamlines but adds lines between the different timesteps that a particle goes through instead of in a single timestep.
+* Streamlines: Applies a streamline visualization to the currently selected polygon segment in a velocity volume.
+* Particle Collector: Enables quantification of how many particles go through polygons (collectors) created with the polygon editor. Since it supports multiple polygons and shows the meassurements in a graph the results the difference in polygon throughput can be seen.
+* Flow Graph: Applies a filter to the currently selected polygon segment that opens a window with quantification information from the velocity data on the volume segment.
 * Volume Tracking: Is applied to volume tracking data  to visualize the flow of a user defined volume over time.
 * Clip: Can be used to clip away unwanted parts of a data set.
 * Iso Surface: Displays a polygon shell of a specific magnitude value in a velocity volume.
 * Advanced Menu: Contains extra functionality from ParaView, consult the ParaView manual for further information.
+* Scripting: Shows a window from where python scripts can be written, run and loaded.
 
 ###Secondary Toolbar
 ![Secondary Toolbar](./images/secondarytoolbar.png)\

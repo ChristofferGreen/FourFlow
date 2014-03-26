@@ -109,9 +109,12 @@ namespace
 };
 
 vtkStandardNewMacro(vtkFourFlowParticleTrace);
+
 //---------------------------------------------------------------------------
 vtkFourFlowParticleTrace::vtkFourFlowParticleTrace()
 {
+	//std::cout<< "vtkFourFlowParticleTrace()" << std::endl;
+
 	this->SetNumberOfInputPorts(2);
 
 	// by default process active point vectors
@@ -120,15 +123,13 @@ vtkFourFlowParticleTrace::vtkFourFlowParticleTrace()
 
 	this->CurrentTimeStep             = 0;
 	this->CurrentTime                 = 0;
-	this->ForceReinjectionEveryNSteps = 0;
+	this->ForceReinjectionEveryNSteps = 1;
 	this->ReinjectionCounter          = 0;
 	this->AllFixedGeometry            = 1;
 	this->StaticMesh                  = 1;
 	this->StaticSeeds                 = 1;
 	this->ComputeVorticity            = 1;
-	this->IgnorePipelineTime          = 0;
-	this->InjectionStart			  = -1;
-	this->InjectionEnd				  = -1;
+	this->IgnorePipelineTime          = 1; 
 	this->ParticleWriter              = NULL;
 	this->ParticleFileName            = NULL;
 	this->EnableParticleWriting       = false;
@@ -171,6 +172,7 @@ vtkFourFlowParticleTrace::vtkFourFlowParticleTrace()
 
 // changed by christoffer green
 int vtkFourFlowParticleTrace::OutputParticles(vtkPolyData* poly) {
+	//std::cout<< "OutputParticles()" << std::endl;
 	this->Output = poly;
 	return 1;
 }
@@ -179,6 +181,7 @@ int vtkFourFlowParticleTrace::OutputParticles(vtkPolyData* poly) {
 //---------------------------------------------------------------------------
 vtkFourFlowParticleTrace::~vtkFourFlowParticleTrace()
 {
+	//std::cout<< "~vtkFourFlowParticleTrace()" << std::endl;
 	this->SetParticleWriter(NULL);
 	if (this->ParticleFileName)
 	{
@@ -198,6 +201,7 @@ int vtkFourFlowParticleTrace::FillInputPortInformation(
 	int port,
 	vtkInformation* info)
 {
+	//std::cout<< "FillInputPortInformation()" << std::endl;
 	// port 0 must be a temporal collection of any type
 	// the executive should put a temporal collection in when
 	// we request multiple time steps.
@@ -216,20 +220,24 @@ int vtkFourFlowParticleTrace::FillInputPortInformation(
 //----------------------------------------------------------------------------
 void vtkFourFlowParticleTrace::AddSourceConnection(vtkAlgorithmOutput* input)
 {
+	//std::cout<< "AddSourceConnection()" << std::endl;
 	this->AddInputConnection(1, input);
 }
 //----------------------------------------------------------------------------
 void vtkFourFlowParticleTrace::RemoveAllSources()
 {
+	//std::cout<< "RemoveAllSources()" << std::endl;
 	this->SetInputConnection(1, 0);
 }
 
 void vtkFourFlowParticleTrace::SetParticleReleaseStartFrame(int val) {
+	//std::cout<< "SetParticleReleaseStartFrame()" << std::endl;
 	ParticleReleaseStartFrame = val;
 	this->ResetCache();
 }
 
 void vtkFourFlowParticleTrace::SetIntegrationDirection(int dir) {
+	//std::cout<< "SetIntegrationDirection()" << std::endl;
 	this->IntegrationDirection = dir;
 	this->ResetCache();
 }
@@ -240,6 +248,7 @@ int vtkFourFlowParticleTrace::ProcessRequest(
 	vtkInformationVector** inputVector,
 	vtkInformationVector* outputVector)
 {
+	//std::cout<< "ProcessRequest()" << std::endl;
 	if(request->Has(vtkDemandDrivenPipeline::REQUEST_INFORMATION()))
 	{
 		if(this->FirstIteration)
@@ -263,6 +272,7 @@ int vtkFourFlowParticleTrace::RequestInformation(
 	vtkInformationVector **inputVector,
 	vtkInformationVector *outputVector)
 {
+	//std::cout<< "RequestInformation()" << std::endl;
 	vtkInformation *inInfo  = inputVector[0]->GetInformationObject(0);
 	vtkInformation *outInfo = outputVector->GetInformationObject(0);
 
@@ -271,6 +281,7 @@ int vtkFourFlowParticleTrace::RequestInformation(
 		unsigned int numberOfInputTimeSteps = inInfo->Length(vtkStreamingDemandDrivenPipeline::TIME_STEPS());
 		vtkDebugMacro(<<"vtkFourFlowParticleTrace "
 			"inputVector TIME_STEPS " << numberOfInputTimeSteps);
+		//std::cout<< "inputVector TIME_STEPS" << numberOfInputTimeSteps << std::endl;
 		//
 		// Get list of input time step values
 		this->InputTimeValues.resize(numberOfInputTimeSteps);
@@ -282,6 +293,7 @@ int vtkFourFlowParticleTrace::RequestInformation(
 		}
 
 		//clamp the default start time to be within the data time range
+		//std::cout<< "StartTime" << this->StartTime << std::endl;
 		if(this->StartTime < this->InputTimeValues[0])
 		{
 			this->SetStartTime(this->InputTimeValues[0]);
@@ -290,6 +302,7 @@ int vtkFourFlowParticleTrace::RequestInformation(
 		{
 			this->SetStartTime(this->InputTimeValues.back());
 		}
+
 
 	}
 	else
@@ -308,14 +321,12 @@ int vtkFourFlowParticleTrace::RequestInformation(
 
 void vtkFourFlowParticleTrace::SetStartTimeStep(int s) {
 	this->StartTimeStep = s;
-	this->InjectionStart = s;
 	this->DisableResetCache=0;
 	this->ResetCache();
 }
 
 void vtkFourFlowParticleTrace::SetEndTimeStep(int s) {
 	this->EndTimeStep = s;
-	this->InjectionEnd = s;
 	this->DisableResetCache=0;
 	this->ResetCache();
 }
@@ -336,6 +347,7 @@ int vtkFourFlowParticleTrace::RequestUpdateExtent(
 	vtkInformationVector **inputVector,
 	vtkInformationVector *outputVector)
 {
+		//std::cout<< "RequestUpdateExtent()" << std::endl;
 	int numInputs = inputVector[0]->GetNumberOfInformationObjects();
 	vtkInformation *outInfo = outputVector->GetInformationObject(0);
 
@@ -346,7 +358,8 @@ int vtkFourFlowParticleTrace::RequestUpdateExtent(
 	// do this only for the first time
 	if(this->FirstIteration)
 	{
-		/*if(this->StartTimeStep==-1) {
+		//this->StartTimeStep = ParticleReleaseStartFrame;
+		if(this->StartTimeStep==-1) {
 			if(this->InputTimeValues.size()==1)
 			{
 				this->StartTimeStep = this->InputTimeValues[0]==this->StartTime? 0 : -1;
@@ -355,14 +368,6 @@ int vtkFourFlowParticleTrace::RequestUpdateExtent(
 			{
 				this->StartTimeStep = FindInterval(this->StartTime, this->InputTimeValues);
 			}
-		}*/
-		if(this->InputTimeValues.size()==1)
-		{
-			this->StartTimeStep = this->InputTimeValues[0]==this->StartTime? 0 : -1;
-		}
-		else
-		{
-			this->StartTimeStep = FindInterval(this->StartTime, this->InputTimeValues);
 		}
 
 		if(this->StartTimeStep<0)
@@ -374,6 +379,7 @@ int vtkFourFlowParticleTrace::RequestUpdateExtent(
 		if (!this->IgnorePipelineTime && outInfo->Has(vtkStreamingDemandDrivenPipeline::UPDATE_TIME_STEP()))
 		{
 			double terminationTime = outInfo->Get(vtkStreamingDemandDrivenPipeline::UPDATE_TIME_STEP());
+			//std::cout << "setting terminationTime: " << terminationTime << std::endl;
 			PRINT("Pipeline has set termination time: "<< terminationTime);
 			this->SetTerminationTime(terminationTime);
 		}
@@ -381,6 +387,7 @@ int vtkFourFlowParticleTrace::RequestUpdateExtent(
 		if(this->TerminationTime> this->InputTimeValues.back())
 		{
 			this->TerminationTime = this->InputTimeValues.back();
+			//std::cout << "setting TerminationTime: " << TerminationTime << std::endl;
 		}
 
 		if(this->InputTimeValues.size()==1)
@@ -416,6 +423,7 @@ int vtkFourFlowParticleTrace::RequestUpdateExtent(
 		if(!this->HasCache)
 		{
 			this->CurrentTimeStep = this->StartTimeStep;
+			//	  this->CurrentTimeStep = -1;
 			this->CurrentTime = -DBL_MAX;
 		}
 	}
@@ -438,6 +446,7 @@ int vtkFourFlowParticleTrace::RequestUpdateExtent(
 //---------------------------------------------------------------------------
 int vtkFourFlowParticleTrace::InitializeInterpolator()
 {
+	//std::cout<< "InitializeInterpolator()" << std::endl;
 	if (!this->CachedData[0] || !this->CachedData[1]) {
 		return 0;
 	}
@@ -548,6 +557,7 @@ int vtkFourFlowParticleTrace::InitializeInterpolator()
 }
 int vtkFourFlowParticleTrace::UpdateDataCache(vtkDataObject *data)
 {
+	//std::cout<< "UpdateDataCache()" << std::endl;
 	double dataTime = data->GetInformation()->Get(vtkDataObject::DATA_TIME_STEP());
 
 	Assert(dataTime>=this->GetCacheDataTime());
@@ -625,6 +635,7 @@ int vtkFourFlowParticleTrace::UpdateDataCache(vtkDataObject *data)
 //---------------------------------------------------------------------------
 bool vtkFourFlowParticleTrace::InsideBounds(double point[])
 {
+	//std::cout<< "InsideBounds()" << std::endl;
 	double delta[3] = { 0.0, 0.0, 0.0 };
 	for (int t=0; t<2; ++t)
 	{
@@ -642,7 +653,7 @@ bool vtkFourFlowParticleTrace::InsideBounds(double point[])
 void vtkFourFlowParticleTrace::TestParticles(
 	ParticleVector &candidates, ParticleVector &passed, int &count)
 {
-
+	//std::cout<< "TestParticles()" << std::endl;
 	std::vector<int> passedIndices;
 	this->TestParticles(candidates, passedIndices);
 	count = static_cast<int>(passedIndices.size());
@@ -655,6 +666,7 @@ void vtkFourFlowParticleTrace::TestParticles(
 
 void vtkFourFlowParticleTrace::TestParticles(vtkFourFlowParticleTraceNamespace::ParticleVector &candidates, std::vector<int> &passed)
 {
+	//std::cout<< "TestParticles()" << std::endl;
 	int i = 0;
 	for (ParticleIterator it=candidates.begin(); it!=candidates.end(); ++it, ++i)
 	{
@@ -686,6 +698,7 @@ void vtkFourFlowParticleTrace::AssignSeedsToProcessors( double time,
 													   vtkDataSet *source, int sourceID, int ptId,
 													   ParticleVector &LocalSeedPoints, int &LocalAssignedCount)
 {
+	//std::cout<< "AssignSeedsToProcessors()" << std::endl;
 	ParticleVector candidates;
 	//
 	// take points from the source object and create a particle list
@@ -732,6 +745,7 @@ void vtkFourFlowParticleTrace::AssignSeedsToProcessors( double time,
 void vtkFourFlowParticleTrace::AssignUniqueIds(
 	vtkFourFlowParticleTraceNamespace::ParticleVector &LocalSeedPoints)
 {
+	//std::cout<< "AssignUniqueIds()" << std::endl;
 	vtkIdType ParticleCountOffset = 0;
 	vtkIdType numParticles = LocalSeedPoints.size();
 	for (vtkIdType i=0; i<numParticles; i++)
@@ -745,6 +759,7 @@ void vtkFourFlowParticleTrace::AssignUniqueIds(
 //---------------------------------------------------------------------------
 void vtkFourFlowParticleTrace::UpdateParticleList(ParticleVector &candidates)
 {
+	//std::cout<< "UpdateParticleList()" << std::endl;
 	int numSeedsNew = static_cast<int>(candidates.size());
 	//
 	for (int i=0; i<numSeedsNew; i++) {
@@ -756,8 +771,8 @@ void vtkFourFlowParticleTrace::UpdateParticleList(ParticleVector &candidates)
 
 int vtkFourFlowParticleTrace::ProcessInput(vtkInformationVector** inputVector)
 {
-	////Assert(this->CurrentTimeStep>=StartTimeStep  && this->CurrentTimeStep<=TerminationTimeStep);
-	Assert(this->CurrentTimeStep>=StartTimeStep  && this->CurrentTimeStep<=TerminationTimeStep);
+	//std::cout<< "ProcessInput()" << std::endl;
+	//Assert(this->CurrentTimeStep>=StartTimeStep  && this->CurrentTimeStep<=TerminationTimeStep);
 	int numInputs = inputVector[0]->GetNumberOfInformationObjects();
 	if(numInputs!=1)
 	{
@@ -778,20 +793,20 @@ int vtkFourFlowParticleTrace::ProcessInput(vtkInformationVector** inputVector)
 	return 1;
 }
 
-
 vtkPolyData* vtkFourFlowParticleTrace::Execute(vtkInformationVector** inputVector, float ActualCurrentTime)
 {
-
-	double from = this->CurrentTimeStep==this->StartTimeStep? this->StartTime : this->GetCacheDataTime(0);
+	//std::cout<< "Execute()" << std::endl;
+	double from = this->CurrentTimeStep==this->StartTimeStep ? this->StartTime : this->GetCacheDataTime(0);
 	this->CurrentTime =
-		this->CurrentTimeStep==this->StartTimeStep? StartTime:
+		this->CurrentTimeStep==this->StartTimeStep? StartTime:this->TerminationTime;
 		(this->CurrentTimeStep==this->TerminationTimeStep? this->TerminationTime : this->GetCacheDataTime(1));
-	//	double from = this->CurrentTimeStep==this->StartTimeStep ? this->StartTime : this->GetCacheDataTime(0);
-/*	this->CurrentTime =
-		this->CurrentTimeStep==this->StartTimeStep? StartTime:this->TerminationTime;*/
+	//std::cout << "this->CurrentTimeStep: " << this->CurrentTimeStep << " " << this->StartTimeStep << " " << this->StartTime << " " << this->GetCacheDataTime(0) << " " << from << " " << this->CurrentTime << std::endl;
+
+
 	//set up the output
 	vtkPolyData *output = vtkPolyData::New();
-
+	//if(this->CurrentTimeStep<this->StartTimeStep)
+	//  return output;
 	//
 	// Add the datasets to an interpolator object
 	//
@@ -877,7 +892,7 @@ vtkPolyData* vtkFourFlowParticleTrace::Execute(vtkInformationVector** inputVecto
 	//
 	// Make sure the Particle Positions are initialized with Seed particles
 	//
-	if ((this->InjectionStart==-1 && this->StartTime==this->CurrentTime) || this->InjectionStart == this->CurrentTimeStep)
+	if ((this->StartTime==this->CurrentTime))
 	{
 		Assert(!this->HasCache); //shouldn't have cache if restarting
 		int seedPointId=0;
@@ -900,12 +915,12 @@ vtkPolyData* vtkFourFlowParticleTrace::Execute(vtkInformationVector** inputVecto
 		this->ReinjectionCounter += 1;
 	}
 
-	
 	if(this->CurrentTimeStep==this->StartTimeStep) //just add all the particles
 	{
 		for(ParticleListIterator itr = this->ParticleHistories.begin();  itr!=this->ParticleHistories.end();itr++)
 		{
 			ParticleInformation& info(*itr);
+			//std::cout << "setting ActualCurrentTime: " << ActualCurrentTime << std::endl;
 			info.CurrentPosition.x[3]=ActualCurrentTime;
 			this->Interpolator->TestPoint(info.CurrentPosition.x);
 			double velocity[3];
@@ -979,13 +994,9 @@ vtkPolyData* vtkFourFlowParticleTrace::Execute(vtkInformationVector** inputVecto
 	{
 		injectionFlag = (this->CurrentTimeStep - this->StartTimeStep)%this->ForceReinjectionEveryNSteps==0;
 	}
-	if(this->InjectionStart > this->CurrentTimeStep)
-		injectionFlag = false;
-	if(this->InjectionEnd != -1 && this->InjectionEnd < this->CurrentTimeStep)
-		injectionFlag = false;
 
-	/*if(this->EndTimeStep>0 && this->CurrentTimeStep>this->EndTimeStep-1)
-		injectionFlag = false;*/
+	if(this->EndTimeStep>0 && this->CurrentTimeStep>this->EndTimeStep-1)
+		injectionFlag = false;
 
 	if(injectionFlag) //reinject again in the last step
 	{
@@ -1053,7 +1064,6 @@ vtkPolyData* vtkFourFlowParticleTrace::Execute(vtkInformationVector** inputVecto
 	//Check post condition
 	// To do:  verify here that the particles in ParticleHistories are consistent with CurrentTime
 
-	//if(this->InjectionStart > this->CurrentTimeStep)
 	return output;
 }
 
@@ -1062,23 +1072,19 @@ int vtkFourFlowParticleTrace::RequestData(
 	vtkInformationVector **inputVector,
 	vtkInformationVector *outputVector)
 {
+	//std::cout<< "RequestData()" << std::endl;
 	PRINT("RD start: "<<this->CurrentTimeStep<<" "<<this->CurrentTime<<" "<<this->StartTimeStep<<" "<<this->TerminationTimeStep);
 	if(this->StartTimeStep<0)
 	{
 		return 0;
 	}
 
-	if(inputVector[0]->GetNumberOfInformationObjects()<1)
-		return 0;
-	if(inputVector[1]->GetNumberOfInformationObjects()<1)
-		return 0;
-
 	vtkInformation *outInfo = outputVector->GetInformationObject(0);
 	vtkInformation    *inInfo = inputVector[0]->GetInformationObject(0);
 
-	/*if((this->StartTimeStep != -1) && FindInterval(outInfo->Get(vtkStreamingDemandDrivenPipeline::UPDATE_TIME_STEP()), this->InputTimeValues) < (this->StartTimeStep-1)) {
+	if((this->StartTimeStep != -1) && FindInterval(outInfo->Get(vtkStreamingDemandDrivenPipeline::UPDATE_TIME_STEP()), this->InputTimeValues) < (this->StartTimeStep-1)) {
 		return 1;
-	}*/
+	}
 
 	if(this->HasCache && this->CurrentTime == this->TerminationTime)
 	{
@@ -1095,13 +1101,6 @@ int vtkFourFlowParticleTrace::RequestData(
 	if(this->FirstIteration)
 	{
 		vtkDataObject* input    = inInfo->Get(vtkDataObject::DATA_OBJECT());
-		// first check if the point data is consistent on all blocks of a multiblock
-		// and over all processes.
-		/*if(this->IsPointDataValid(input) == false)
-		{
-			vtkErrorMacro("Point data arrays are not consistent across all data sets. Cannot do flow paths.");
-			return 0;
-		}*/
 		this->CreateProtoPD(input);
 	}
 
@@ -1127,7 +1126,7 @@ int vtkFourFlowParticleTrace::RequestData(
 		request->Set(vtkStreamingDemandDrivenPipeline::CONTINUE_EXECUTING(), 1);
 		this->FirstIteration = false;
 	}
-	else
+	else 
 	{
 		this->Finalize();
 		this->Output->GetInformation()->Set(vtkDataObject::DATA_TIME_STEP(), this->TerminationTime);
@@ -1147,6 +1146,7 @@ void vtkFourFlowParticleTrace::IntegrateParticle(
 	double currenttime, double targettime,
 	vtkInitialValueProblemSolver* integrator)
 {
+	//std::cout<< "IntegrateParticle() currenttime: " << currenttime << " targettime: " << targettime << std::endl;
 	double epsilon = (targettime-currenttime)/100.0;
 	double velocity[3], point1[4], point2[4] = {0.0, 0.0, 0.0, 0.0};
 	double minStep=0, maxStep=0;
@@ -1201,8 +1201,12 @@ void vtkFourFlowParticleTrace::IntegrateParticle(
 				minStep = -maxStep;
 				maxStep = -minStep;
 			}
+
+
 			// Calculate the next step using the integrator provided.
 			// If the next point is out of bounds, send it to another process
+			// (double * 	xprev, double * 	xnext, double 	t, double & 	delT, double & 	delTActual, double 	minStep, double 	maxStep, double 	maxError, double & 	error)
+
 			if (integrator->ComputeNextStep(
 				point1, // double point1[4], Initial point {x,y,z,t}	-> integration point start pos
 				point2, // double point2[4], {0.0, 0.0, 0.0, 0.0}		-> prolly new pos after integration
@@ -1334,6 +1338,7 @@ void vtkFourFlowParticleTrace::IntegrateParticle(
 //---------------------------------------------------------------------------
 void vtkFourFlowParticleTrace::PrintSelf(ostream& os, vtkIndent indent)
 {
+	//std::cout<< "PrintSelf()" << std::endl;
 	this->Superclass::PrintSelf(os,indent);
 
 	os << indent << "ParticleWriter: " << this->ParticleWriter << endl;
@@ -1352,6 +1357,7 @@ bool vtkFourFlowParticleTrace::ComputeDomainExitLocation(
 	double pos[4], double p2[4], double intersection[4],
 	vtkGenericCell *cell)
 {
+	//std::cout<< "ComputeDomainExitLocation()" << std::endl;
 	double t, pcoords[3];
 	int subId;
 	if (cell->IntersectWithLine(pos, p2, 1E-3, t, intersection, pcoords, subId)==0)
@@ -1373,6 +1379,7 @@ bool vtkFourFlowParticleTrace::ComputeDomainExitLocation(
 //---------------------------------------------------------------------------
 void vtkFourFlowParticleTrace::SetIntegratorType(int type)
 {
+	//std::cout<< "SetIntegratorType()" << std::endl;
 	vtkInitialValueProblemSolver* ivp=0;
 	switch (type)
 	{
@@ -1399,6 +1406,7 @@ void vtkFourFlowParticleTrace::SetIntegratorType(int type)
 
 int vtkFourFlowParticleTrace::GetIntegratorType()
 {
+	//std::cout<< "GetIntegratorType()" << std::endl;
 	if (!this->Integrator)
 	{
 		return NONE;
@@ -1420,6 +1428,7 @@ int vtkFourFlowParticleTrace::GetIntegratorType()
 
 void vtkFourFlowParticleTrace::CalculateVorticity( vtkGenericCell* cell, double pcoords[3], vtkDoubleArray* cellVectors, double vorticity[3] )
 {
+	//std::cout<< "CalculateVorticity()" << std::endl;
 	double* cellVel;
 	double derivs[9];
 
@@ -1432,11 +1441,13 @@ void vtkFourFlowParticleTrace::CalculateVorticity( vtkGenericCell* cell, double 
 
 double vtkFourFlowParticleTrace::GetCacheDataTime(int i)
 {
+	//std::cout<< "GetCacheDataTime()" << std::endl;
 	return this->CachedData[i]->GetInformation()->Get(vtkDataObject::DATA_TIME_STEP());
 }
 
 double vtkFourFlowParticleTrace::GetCacheDataTime()
 {
+	//std::cout<< "GetCacheDataTime()" << std::endl;
 	double currentTime = CachedData[1]? this->GetCacheDataTime(1):
 		( CachedData[0]? this->GetCacheDataTime(0) :  -DBL_MAX);
 	return currentTime;
@@ -1445,11 +1456,13 @@ double vtkFourFlowParticleTrace::GetCacheDataTime()
 
 unsigned int vtkFourFlowParticleTrace::NumberOfParticles()
 {
+	//std::cout<< "NumberOfParticles()" << std::endl;
 	return static_cast<unsigned int>(this->ParticleHistories.size());
 }
 
 void vtkFourFlowParticleTrace::ResetCache()
 {
+	//std::cout<< "ResetCache()" << std::endl;
 	if(this->DisableResetCache==0)
 	{
 		PRINT("Reset cache");
@@ -1468,6 +1481,7 @@ void vtkFourFlowParticleTrace::ResetCache()
 
 void vtkFourFlowParticleTrace::SetTerminationTime(double t)
 {
+	//std::cout<< "SetTerminationTime()" << std::endl;
 	if(t==this->TerminationTime)
 	{
 		return;
@@ -1491,6 +1505,7 @@ void vtkFourFlowParticleTrace::SetTerminationTime(double t)
 
 void vtkFourFlowParticleTrace::CreateProtoPD(vtkDataObject* input)
 {
+	//std::cout<< "CreateProtoPD()" << std::endl;
 	this->ProtoPD = NULL;
 	vtkDataSet* inputData(NULL);
 
@@ -1517,6 +1532,7 @@ void vtkFourFlowParticleTrace::CreateProtoPD(vtkDataObject* input)
 //---------------------------------------------------------------------------
 bool vtkFourFlowParticleTrace::RetryWithPush(ParticleInformation &info,  double* point1,double delT, int substeps)
 {
+	//std::cout<< "RetryWithPush()" << std::endl;
 	double velocity[3];
 	this->Interpolator->ClearCache();
 	if (info.UniqueParticleId==3)
@@ -1580,6 +1596,7 @@ bool vtkFourFlowParticleTrace::RetryWithPush(ParticleInformation &info,  double*
 
 void vtkFourFlowParticleTrace::AddParticle( vtkFourFlowParticleTraceNamespace::ParticleInformation &info, double* velocity)
 {
+	//std::cout<< "AddParticle()" << std::endl;
 	const double    *coord = info.CurrentPosition.x;
 	vtkIdType tempId = this->OutputCoordinates->InsertNextPoint(coord);
 	// create the cell
@@ -1660,51 +1677,61 @@ void vtkFourFlowParticleTrace::AddParticle( vtkFourFlowParticleTraceNamespace::P
 
 vtkFloatArray*  vtkFourFlowParticleTrace::GetParticleAge(vtkPointData* pd)
 {
+	//std::cout<< "GetParticleAge()" << std::endl;
 	return vtkFloatArray::SafeDownCast(pd->GetArray("ParticleAge"));
 }
 
 vtkIntArray* vtkFourFlowParticleTrace::GetParticleIds(vtkPointData* pd)
 {
+	//std::cout<< "GetParticleIds()" << std::endl;
 	return vtkIntArray::SafeDownCast(pd->GetArray("ParticleId"));
 }
 
 vtkCharArray* vtkFourFlowParticleTrace::GetParticleSourceIds(vtkPointData* pd)
 {
+	//std::cout<< "GetParticleSourceIds()" << std::endl;
 	return vtkCharArray::SafeDownCast(pd->GetArray("ParticleSourceId"));
 }
 
 vtkIntArray* vtkFourFlowParticleTrace::GetInjectedPointIds(vtkPointData* pd)
 {
+	//std::cout<< "GetInjectedPointIds()" << std::endl;
 	return vtkIntArray::SafeDownCast(pd->GetArray("InjectedPointId"));
 }
 
 vtkIntArray* vtkFourFlowParticleTrace::GetInjectedStepIds(vtkPointData* pd)
 {
+	//std::cout<< "GetInjectedStepIds()" << std::endl;
 	return vtkIntArray::SafeDownCast(pd->GetArray("InjectionStepId"));
 }
 
 vtkIntArray* vtkFourFlowParticleTrace::GetErrorCodeArr(vtkPointData* pd)
 {
+	//std::cout<< "GetErrorCodeArr()" << std::endl;
 	return vtkIntArray::SafeDownCast(pd->GetArray("ErrorCode"));
 }
 
 vtkFloatArray*  vtkFourFlowParticleTrace::GetParticleVorticity(vtkPointData* pd)
 {
+	//std::cout<< "GetParticleVorticity()" << std::endl;
 	return vtkFloatArray::SafeDownCast(pd->GetArray("Vorticity"));
 }
 
 vtkFloatArray*  vtkFourFlowParticleTrace::GetParticleRotation(vtkPointData* pd)
 {
+	//std::cout<< "GetParticleRotation()" << std::endl;
 	return vtkFloatArray::SafeDownCast(pd->GetArray("Rotation"));
 }
 
 vtkFloatArray*  vtkFourFlowParticleTrace::GetParticleAngularVel(vtkPointData* pd)
 {
+	//std::cout<< "GetParticleAngularVel()" << std::endl;
 	return vtkFloatArray::SafeDownCast(pd->GetArray("AngularVelocity"));
 }
 
 void vtkFourFlowParticleTrace::PrintParticleHistories()
 {
+	//std::cout<< "PrintParticleHistories()" << std::endl;
 	cout<<"Particle id, ages: "<<endl;
 	for(ParticleListIterator itr = this->ParticleHistories.begin();  itr!=this->ParticleHistories.end();itr++)
 	{

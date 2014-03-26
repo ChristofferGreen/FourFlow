@@ -21,11 +21,17 @@ svn:wc:ra_dav:version-url
 V 53
 /svn/fourflow/!svn/ver/153/FourFlow/trunk/ui/logo.png
 END
+ConnectionWindow.ui
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/fourflow/!svn/ver/159/FourFlow/trunk/ui/ConnectionWindow.ui
+END
 MainWindow.ui
 K 25
 svn:wc:ra_dav:version-url
 V 58
-/svn/fourflow/!svn/ver/153/FourFlow/trunk/ui/MainWindow.ui
+/svn/fourflow/!svn/ver/159/FourFlow/trunk/ui/MainWindow.ui
 END
 resources.qrc
 K 25

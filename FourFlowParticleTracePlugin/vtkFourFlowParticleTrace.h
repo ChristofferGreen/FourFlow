@@ -423,6 +423,7 @@ private:
 
 
   int  StartTimeStep; //InputTimeValues[StartTimeStep] <= StartTime <= InputTimeValues[StartTimeStep+1]
+  int InjectionStart, InjectionEnd;
   int  EndTimeStep;
   int  CurrentTimeStep;
   int  TerminationTimeStep; //computed from start time

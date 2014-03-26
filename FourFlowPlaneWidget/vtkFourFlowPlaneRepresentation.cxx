@@ -89,6 +89,7 @@ vtkFourFlowPlaneRepresentation::vtkFourFlowPlaneRepresentation() {
 	this->LineMapper1->SetInputConnection(this->LineSource1->GetOutputPort());
 	this->LineActor1 = vtkActor::New();
 	this->LineActor1->SetMapper(this->LineMapper1);
+	this->LineActor1->GetProperty()->SetLineWidth(5);
 
 	this->ConeSource = vtkConeSource::New();
 	this->ConeSource->SetResolution(12);
@@ -106,6 +107,7 @@ vtkFourFlowPlaneRepresentation::vtkFourFlowPlaneRepresentation() {
 	this->LineMapper2->SetInputConnection(this->LineSource2->GetOutputPort());
 	this->LineActor2 = vtkActor::New();
 	this->LineActor2->SetMapper(this->LineMapper2);
+	this->LineActor2->GetProperty()->SetLineWidth(5);
 
 	this->ConeSource2 = vtkConeSource::New();
 	this->ConeSource2->SetResolution(12);

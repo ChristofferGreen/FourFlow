@@ -2,6 +2,7 @@
 #define __FourFlowMainWindow_h
 
 #include "ImportDirectoryWindow.h"
+#include "ConnectionWindow.h"
 #include "qtIncludes.h"
 class pqInternals;
 
@@ -12,10 +13,15 @@ class FourFlowMainWindow : public QMainWindow {
     QSharedPointer<pqInternals> internals;
 	string preferedColorVariable;
 
-    FourFlowMainWindow();
+	QSharedPointer<ConnectionWindow> connectionWindow;
+
+	FourFlowMainWindow();
     ~FourFlowMainWindow();
 	void useVelocityForColor(pqPipelineSource *source);
 	void setColorMapGreyscale(pqDataRepresentation *repr);
+	void setColorMapRed(pqDataRepresentation *repr);
+	void showConnectionWindow();
+	void createConnectionWindow();
   protected slots:
 	void importDir();
 	void representationAddedGreyscale(pqPipelineSource *source, pqDataRepresentation *repr, int val);
