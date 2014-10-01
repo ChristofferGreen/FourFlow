@@ -26,11 +26,11 @@
         <DoubleRangeDomain name="range"/>
       </DoubleVectorProperty>
 
-      <DoubleVectorProperty name="TimestepValues"
+      <!--<DoubleVectorProperty name="TimestepValues"
 			    repeatable="1"
 			    information_only="1">
         <TimeStepsInformationHelper/>
-      </DoubleVectorProperty>
+      </DoubleVectorProperty>-->
 
 
       <StringVectorProperty

@@ -112,6 +112,7 @@ vtkStandardNewMacro(vtkFourFlowParticleTrace);
 //---------------------------------------------------------------------------
 vtkFourFlowParticleTrace::vtkFourFlowParticleTrace()
 {
+	std::cout << "vtkFourFlowParticleTrace::vtkFourFlowParticleTrace() start" << std::endl;
 	this->SetNumberOfInputPorts(2);
 
 	// by default process active point vectors
@@ -167,6 +168,7 @@ vtkFourFlowParticleTrace::vtkFourFlowParticleTrace()
 
 	this->SetIntegratorType(RUNGE_KUTTA4);
 	this->DisableResetCache = 0;
+	std::cout << "vtkFourFlowParticleTrace::vtkFourFlowParticleTrace() end" << std::endl;
 }
 
 // changed by christoffer green
@@ -179,6 +181,7 @@ int vtkFourFlowParticleTrace::OutputParticles(vtkPolyData* poly) {
 //---------------------------------------------------------------------------
 vtkFourFlowParticleTrace::~vtkFourFlowParticleTrace()
 {
+	std::cout << "vtkFourFlowParticleTrace::~vtkFourFlowParticleTrace() start" << std::endl;
 	this->SetParticleWriter(NULL);
 	if (this->ParticleFileName)
 	{
@@ -191,13 +194,14 @@ vtkFourFlowParticleTrace::~vtkFourFlowParticleTrace()
 
 	this->SetIntegrator(0);
 	this->SetInterpolatorPrototype(0);
-
+	std::cout << "vtkFourFlowParticleTrace::~vtkFourFlowParticleTrace() end" << std::endl;
 }
 //----------------------------------------------------------------------------
 int vtkFourFlowParticleTrace::FillInputPortInformation(
 	int port,
 	vtkInformation* info)
 {
+	std::cout << "vtkFourFlowParticleTrace::FillInputPortInformation start" << std::endl;
 	// port 0 must be a temporal collection of any type
 	// the executive should put a temporal collection in when
 	// we request multiple time steps.
@@ -211,6 +215,7 @@ int vtkFourFlowParticleTrace::FillInputPortInformation(
 		info->Set(vtkAlgorithm::INPUT_REQUIRED_DATA_TYPE(), "vtkDataSet");
 		info->Set(vtkAlgorithm::INPUT_IS_REPEATABLE(), 1);
 	}
+	std::cout << "vtkFourFlowParticleTrace::FillInputPortInformation end" << std::endl;
 	return 1;
 }
 //----------------------------------------------------------------------------
@@ -240,21 +245,26 @@ int vtkFourFlowParticleTrace::ProcessRequest(
 	vtkInformationVector** inputVector,
 	vtkInformationVector* outputVector)
 {
+	std::cout << "vtkFourFlowParticleTrace::ProcessRequest start" << std::endl;
 	if(request->Has(vtkDemandDrivenPipeline::REQUEST_INFORMATION()))
 	{
 		if(this->FirstIteration)
 		{
+			std::cout << "vtkFourFlowParticleTrace::ProcessRequest end 1" << std::endl;
 			return this->RequestInformation(request, inputVector, outputVector);
 		}
 	}
 	if(request->Has(vtkStreamingDemandDrivenPipeline::REQUEST_UPDATE_EXTENT()))
 	{
+		std::cout << "vtkFourFlowParticleTrace::ProcessRequest end 2" << std::endl;
 		return this->RequestUpdateExtent(request, inputVector, outputVector);
 	}
 	if(request->Has(vtkDemandDrivenPipeline::REQUEST_DATA()))
 	{
+		std::cout << "vtkFourFlowParticleTrace::ProcessRequest end 3" << std::endl;
 		return this->RequestData(request, inputVector, outputVector);
 	}
+	std::cout << "vtkFourFlowParticleTrace::ProcessRequest end 4" << std::endl;
 	return 1;
 }
 //----------------------------------------------------------------------------
@@ -263,6 +273,7 @@ int vtkFourFlowParticleTrace::RequestInformation(
 	vtkInformationVector **inputVector,
 	vtkInformationVector *outputVector)
 {
+	std::cout << "vtkFourFlowParticleTrace::RequestInformation start" << std::endl;
 	vtkInformation *inInfo  = inputVector[0]->GetInformationObject(0);
 	vtkInformation *outInfo = outputVector->GetInformationObject(0);
 
@@ -271,6 +282,7 @@ int vtkFourFlowParticleTrace::RequestInformation(
 		unsigned int numberOfInputTimeSteps = inInfo->Length(vtkStreamingDemandDrivenPipeline::TIME_STEPS());
 		vtkDebugMacro(<<"vtkFourFlowParticleTrace "
 			"inputVector TIME_STEPS " << numberOfInputTimeSteps);
+
 		//
 		// Get list of input time step values
 		this->InputTimeValues.resize(numberOfInputTimeSteps);
@@ -290,19 +302,18 @@ int vtkFourFlowParticleTrace::RequestInformation(
 		{
 			this->SetStartTime(this->InputTimeValues.back());
 		}
-
 	}
 	else
 	{
 		vtkErrorMacro(<<"Input information has no TIME_STEPS set");
+		std::cout << "vtkFourFlowParticleTrace::RequestInformation end 1" << std::endl;
 		return 0;
 	}
 
 	outInfo->Set(
 		vtkStreamingDemandDrivenPipeline::MAXIMUM_NUMBER_OF_PIECES(), -1);
 
-
-
+	std::cout << "vtkFourFlowParticleTrace::RequestInformation end 2" << std::endl;
 	return 1;
 }
 
@@ -336,6 +347,7 @@ int vtkFourFlowParticleTrace::RequestUpdateExtent(
 	vtkInformationVector **inputVector,
 	vtkInformationVector *outputVector)
 {
+	std::cout << "vtkFourFlowParticleTrace::RequestUpdateExtent start" << std::endl;
 	int numInputs = inputVector[0]->GetNumberOfInformationObjects();
 	vtkInformation *outInfo = outputVector->GetInformationObject(0);
 
@@ -344,6 +356,7 @@ int vtkFourFlowParticleTrace::RequestUpdateExtent(
 	//
 	// The output has requested a time value, what times must we ask from our input
 	// do this only for the first time
+	std::cout << "vtkFourFlowParticleTrace::RequestUpdateExtent 1" << std::endl;
 	if(this->FirstIteration)
 	{
 		/*if(this->StartTimeStep==-1) {
@@ -356,33 +369,42 @@ int vtkFourFlowParticleTrace::RequestUpdateExtent(
 				this->StartTimeStep = FindInterval(this->StartTime, this->InputTimeValues);
 			}
 		}*/
+		std::cout << "vtkFourFlowParticleTrace::RequestUpdateExtent 1.0" << std::endl;
+		if(this->InputTimeValues.size()==0)
+			return 0;
 		if(this->InputTimeValues.size()==1)
 		{
+			std::cout << "vtkFourFlowParticleTrace::RequestUpdateExtent 1.0.1" << std::endl;
 			this->StartTimeStep = this->InputTimeValues[0]==this->StartTime? 0 : -1;
+			std::cout << "vtkFourFlowParticleTrace::RequestUpdateExtent 1.0.2" << std::endl;
 		}
 		else
 		{
+			std::cout << "vtkFourFlowParticleTrace::RequestUpdateExtent 1.0.3" << std::endl;
 			this->StartTimeStep = FindInterval(this->StartTime, this->InputTimeValues);
+			std::cout << "vtkFourFlowParticleTrace::RequestUpdateExtent 1.0.4" << std::endl;
 		}
+		std::cout << "vtkFourFlowParticleTrace::RequestUpdateExtent 1.1" << std::endl;
 
 		if(this->StartTimeStep<0)
 		{
 			vtkErrorMacro("Start time not in time range");
+			std::cout << "vtkFourFlowParticleTrace::RequestUpdateExtent end 1" << std::endl;
 			return 0;
 		}
-
+		std::cout << "vtkFourFlowParticleTrace::RequestUpdateExtent 1.2" << std::endl;
 		if (!this->IgnorePipelineTime && outInfo->Has(vtkStreamingDemandDrivenPipeline::UPDATE_TIME_STEP()))
 		{
 			double terminationTime = outInfo->Get(vtkStreamingDemandDrivenPipeline::UPDATE_TIME_STEP());
 			PRINT("Pipeline has set termination time: "<< terminationTime);
 			this->SetTerminationTime(terminationTime);
 		}
-
+		std::cout << "vtkFourFlowParticleTrace::RequestUpdateExtent 1.3" << std::endl;
 		if(this->TerminationTime> this->InputTimeValues.back())
 		{
 			this->TerminationTime = this->InputTimeValues.back();
 		}
-
+		std::cout << "vtkFourFlowParticleTrace::RequestUpdateExtent 1.4" << std::endl;
 		if(this->InputTimeValues.size()==1)
 		{
 			this->TerminationTimeStep = this->TerminationTime == this->InputTimeValues[0]? 0 : -1;
@@ -391,13 +413,14 @@ int vtkFourFlowParticleTrace::RequestUpdateExtent(
 		{
 			this->TerminationTimeStep = FindInterval(this->TerminationTime, this->InputTimeValues)+1;
 		}
-
+		std::cout << "vtkFourFlowParticleTrace::RequestUpdateExtent 1.5" << std::endl;
 		if(this->TerminationTimeStep<0)
 		{
 			vtkErrorMacro("Termination time not in time range");
+			std::cout << "vtkFourFlowParticleTrace::RequestUpdateExtent end 2" << std::endl;
 			return 0;
 		}
-
+		std::cout << "vtkFourFlowParticleTrace::RequestUpdateExtent 1.6" << std::endl;
 		for(int i=0; i<this->GetNumberOfInputPorts(); i++)
 		{
 			vtkAlgorithm* inputAlgorithm = this->GetInputAlgorithm(i,0);
@@ -413,13 +436,14 @@ int vtkFourFlowParticleTrace::RequestUpdateExtent(
 				}
 			}
 		}
+		std::cout << "vtkFourFlowParticleTrace::RequestUpdateExtent 1.7" << std::endl;
 		if(!this->HasCache)
 		{
 			this->CurrentTimeStep = this->StartTimeStep;
 			this->CurrentTime = -DBL_MAX;
 		}
 	}
-
+	std::cout << "vtkFourFlowParticleTrace::RequestUpdateExtent 2" << std::endl;
 	for (int i=0; i<numInputs; i++)
 	{
 		vtkInformation *inInfo = inputVector[0]->GetInformationObject(i);
@@ -432,7 +456,7 @@ int vtkFourFlowParticleTrace::RequestUpdateExtent(
 			Assert(this->CurrentTime == this->InputTimeValues.back());
 		}
 	}
-
+	std::cout << "vtkFourFlowParticleTrace::RequestUpdateExtent end 3" << std::endl;
 	return 1;
 }
 //---------------------------------------------------------------------------

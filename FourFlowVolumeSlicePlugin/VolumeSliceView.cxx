@@ -268,12 +268,12 @@ void VolumeSliceView::copyToAllButtonClicked() {
 void VolumeSliceView::copyToNextButtonClicked() {
 	if(this->sliceWidget->currentTimeIndex < this->numberOfTimeValues-1) {
 		sliceWidget->pointMap[sliceWidget->currentTimeIndex+1] = sliceWidget->pointMap[sliceWidget->currentTimeIndex];
+		this->updatePolygon();
 		pqAnimationManager *animationManager = pqPVApplicationCore::instance()->animationManager();
 		pqAnimationScene *animationScene = animationManager->getActiveScene();
 		animationScene->setCacheGeometrySetting(false);
 		animationScene->getProxy()->InvokeCommand("GoToNext");
 		animationScene->setCacheGeometrySetting(true);
-		this->updatePolygon();
 	}
 	else
 		cout << "At final frame, should not copy" << endl;
@@ -282,28 +282,42 @@ void VolumeSliceView::copyToNextButtonClicked() {
 void VolumeSliceView::updatePolygon() {
 	//if(sliceWidget->pointMap[sliceWidget->currentTimeIndex].size() < 3) // bug change this
 		//return;
-	vtkPolyData *polyData = this->getProbePlanePolyData();
-	if(this->polygon && polyData) {
-		vtkSMProxy *proxy = this->polygon->getProxy();
-		string paramString;
-		for(int i = 0; i < this->timeValues.size(); i++) {
-			std::vector<QPoint> points = this->sliceWidget->pointMap[i];
-			paramString = paramString + QString::number(this->timeValues[i]).toStdString()  + " ";
-			foreach(QPoint point, points) {
-				std::ostringstream s1, s2;
-				s1 << ((double)point.x())/IMAGE_WIDTH;
-				paramString = paramString + s1.str() + " ";
-				s2 << ((double)point.y())/IMAGE_HEIGHT;
-				paramString = paramString + s2.str() + " ";
-			}
-			paramString[paramString.size()-1]=':';
-		}
 
-		vtkSMStringVectorProperty *propString = vtkSMStringVectorProperty::SafeDownCast(proxy->GetProperty("Vertex2dString"));
-		propString->SetNumberOfElements(1);
-		propString->SetElement(0, paramString.c_str());
-		proxy->UpdateProperty("Vertex2dString", 1);
-		proxy->UpdateVTKObjects();
+	if(this->representation) {
+		pqPipelineRepresentation *pipelineRep = (pqPipelineRepresentation*)this->representation;
+		pqOutputPort *outPort = pipelineRep->getOutputPortFromInput();
+		if(outPort->getNumberOfConsumers()) {
+			vtkPolyData *polyData = this->getProbePlanePolyData();
+			if(this->polygon && polyData) {
+				if(vtkSMProxy *proxy = this->polygon->getProxy()) {
+					string paramString;
+					for(int i = 0; i < this->timeValues.size(); i++) {
+						std::vector<QPoint> points = this->sliceWidget->pointMap[i];
+						paramString = paramString + QString::number(this->timeValues[i]).toStdString()  + " ";
+						foreach(QPoint point, points) {
+							std::ostringstream s1, s2;
+							s1 << ((double)point.x())/IMAGE_WIDTH;
+							paramString = paramString + s1.str() + " ";
+							s2 << ((double)point.y())/IMAGE_HEIGHT;
+							paramString = paramString + s2.str() + " ";
+						}
+						paramString[paramString.size()-1]=':';
+					}
+
+					vtkSMStringVectorProperty *propString = vtkSMStringVectorProperty::SafeDownCast(proxy->GetProperty("Vertex2dString"));
+					propString->SetNumberOfElements(1);
+					propString->SetElement(0, paramString.c_str());
+					proxy->UpdateProperty("Vertex2dString", 1);
+					proxy->UpdateVTKObjects();
+					pipelineRep->renderView(true);
+					this->polygon->renderAllViews(true);
+					if(pqView *view = this->representation->getView())
+						view->forceRender();
+				}
+			}
+		}
+		else
+			this->sliceWidget->pointMap.clear();
 	}
 }
 
@@ -438,7 +452,6 @@ void VolumeSliceView::onRepresentationAdded(pqRepresentation* rep) {
 	pqOutputPort *outPort = pipelineRep->getOutputPortFromInput();
 	
 	if(outPort->getNumberOfConsumers()) {
-		sliceWidget->pointMap.clear();
 		this->polygon = outPort->getConsumer(0);
 		vtkSMProperty *prop = this->polygon->getProxy()->GetProperty("Vertex2dString");
 		vtkSMStringVectorProperty *stringProp = vtkSMStringVectorProperty::SafeDownCast(prop);
@@ -495,6 +508,10 @@ void VolumeSliceView::polygonUpdated() {
 void VolumeSliceView::onRepresentationRemoved(pqRepresentation* d) {
 	QObject::disconnect(d, SIGNAL(dataUpdated()), this, SLOT(updated()));
 	this->representation = 0;
+	this->sliceWidget->pointMap.clear();
+	QPixmap siPixmap;
+	this->sliceWidget->pixmap = siPixmap;
+	this->sliceWidget->repaint();
 	vtkSMProxy *proxy = getVolume();
 }
 

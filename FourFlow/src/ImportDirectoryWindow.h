@@ -37,6 +37,7 @@ class ImportDirectoryWindow : public QMainWindow {
 		pqDataRepresentation *dataRepresentation;
 		void decodeCaseFiles();
 		void loadTexture(const QString& filename, pqDataRepresentation *Representation);
+		void checkAnimationStepSanity();
 };
 
 #endif

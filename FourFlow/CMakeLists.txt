@@ -74,7 +74,7 @@ build_paraview_client(FourFlow
   ORGANIZATION  "LundsUniversitet"
   VERSION_MAJOR 1 
   VERSION_MINOR 2
-  VERSION_PATCH 8
+  VERSION_PATCH 13
   SPLASH_IMAGE "${CMAKE_CURRENT_SOURCE_DIR}/ui/logo.png"
   PVMAIN_WINDOW FourFlowMainWindow
   PVMAIN_WINDOW_INCLUDE src/FourFlowMainWindow.h

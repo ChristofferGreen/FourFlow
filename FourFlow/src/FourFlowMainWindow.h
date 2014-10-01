@@ -30,6 +30,9 @@ class FourFlowMainWindow : public QMainWindow {
 	void setRepresentationToSurface();
 	void nextTimeStepShortCut();
 	void previousTimeStepShortCut();
+	void saxUpShortCut();
+	void saxDownShortCut();
+	void closeEvent(QCloseEvent *bar);
   private:
 	QSharedPointer<ImportDirectoryWindow> importDirectoryWindow;
 

@@ -1,6 +1,0 @@
-<ParaViewFilters>
-   <Category name="FourFlow Extensions" menu_label="&amp;FourFlow Extensions">
-     <!-- adds a new category and then adds our filter to it -->
-     <Filter name="FourFlowIsoSurface" />
-   </Category>
-</ParaViewFilters>

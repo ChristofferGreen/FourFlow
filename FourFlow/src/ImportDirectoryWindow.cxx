@@ -121,8 +121,44 @@ void ImportDirectoryWindow::loadTexture(const QString& filename, pqDataRepresent
 	vtkObject::GlobalWarningDisplayOn();*/
 }
 
+void ImportDirectoryWindow::checkAnimationStepSanity() {
+	bool error=false;
+	if(pqAnimationManager* mgr = pqPVApplicationCore::instance()->animationManager()) {
+		if(pqAnimationScene *scene = mgr->getActiveScene()) {
+			QList<double> timeSteps = scene->getTimeSteps();
+			for(QList<double>::iterator iter = timeSteps.begin(); iter != timeSteps.end(); iter++) {
+				if((iter == timeSteps.begin()) || (iter == (timeSteps.begin()+1))) {}
+				else {
+					double range1 = *(iter-1)-*(iter-2);
+					double range2 = *(iter)-*(iter-1);
+					double difference = range1-range2;
+					if(difference<0.0) difference = -difference;
+					//std::cout << difference << std::endl;
+					if(difference>0.001) {
+						//std::cout << "error" << std::endl;
+						error=true;
+					}
+				}
+			}
+		}
+	}
+	if (error && vtkObject::GetGlobalWarningDisplay()) {
+		vtkOStreamWrapper::EndlType endl;
+		vtkOStreamWrapper::UseEndl(endl);
+		vtkOStrStreamWrapper vtkmsg;
+		vtkmsg << "Warning: The timesteps in the loaded files differ (this can often be seen as uneven timesteps in the timeline at the bottom of the window), this may cause the application to become unstable. To fix this it is recommended that all data to be imported into FourFlow is exported at the same time. It is _strongly_ recommended not to use FourFlow with the currently loaded files.";                               \
+		vtkOutputWindowDisplayErrorText(vtkmsg.str());
+		vtkmsg.rdbuf()->freeze(0); 
+		vtkObject::BreakOnError();
+		//vtkErrorMacro("Warning: The timesteps in the loaded files differ, this may cause the application to become unstable. To fix this it is recommended that all data to be imported into FourFlow is exported at the same time.");
+	}
+}
+
 void ImportDirectoryWindow::updatedLoadDataPostRepresentationSlot() {
 	pqDataRepresentation *repr = (pqDataRepresentation *)sender();
+
+	checkAnimationStepSanity();
+
 	//cout << "ImportDirectoryWindow::updatedLoadDataPostRepresentationSlot" << endl;
 	QObject::disconnect(repr, SIGNAL(dataUpdated()), this, SLOT(updatedLoadDataPostRepresentationSlot()));
 	pqPipelineSource *source = repr->getInput();

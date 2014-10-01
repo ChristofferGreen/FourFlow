@@ -11,6 +11,20 @@
 #include "vtkMultiBlockDataSet.h"
 #include "vtkSMCompoundSourceProxy.h"
 #include <QShortcut>
+#include <QCloseEvent>
+#include <QMessageBox>
+
+void FourFlowMainWindow::closeEvent(QCloseEvent *event) {
+	QMessageBox::StandardButton resBtn = QMessageBox::question( this, "FourFlow", tr("Save before exit?\n"), QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes, QMessageBox::Yes);
+	if (resBtn == QMessageBox::No)
+		event->accept();
+	else if (resBtn == QMessageBox::Cancel)
+		event->ignore();
+	else if (resBtn == QMessageBox::Yes) {
+		pqSaveStateReaction::saveState();
+		event->accept();
+	}
+}
 
 void FourFlowMainWindow::nextTimeStepShortCut() {
 	pqAnimationManager *animationManager = pqPVApplicationCore::instance()->animationManager();
@@ -27,6 +41,43 @@ void FourFlowMainWindow::previousTimeStepShortCut() {
 	animationScene->getProxy()->InvokeCommand("GoToPrevious");
 	animationScene->setCacheGeometrySetting(true);
 }
+
+void FourFlowMainWindow::saxUpShortCut() {
+	pqServer* server = pqActiveObjects::instance().activeServer();
+	pqApplicationCore *core = pqApplicationCore::instance();
+	pqObjectBuilder *builder = core->getObjectBuilder();  
+	pqServerManagerModel *sm = core->getServerManagerModel();
+	pqActiveObjects* activeObjects = &pqActiveObjects::instance();
+
+	QList<pqPipelineSource*> sources = sm->findItems<pqPipelineSource*>(activeObjects->activeServer());
+	foreach(pqPipelineSource *source, sources) {
+		if(QString("SAX") == source->getProxy()->GetXMLName()) {
+			pqSMAdaptor::setElementProperty(source->getProxy()->GetProperty("SAX plane"), pqSMAdaptor::getElementProperty(source->getProxy()->GetProperty("SAX plane")).toInt()+1);
+			source->getProxy()->UpdateProperty("SAX plane", true);
+			source->getProxy()->UpdateVTKObjects();
+			source->renderAllViews(true);
+		}
+	}
+}
+
+void FourFlowMainWindow::saxDownShortCut() {
+	pqServer* server = pqActiveObjects::instance().activeServer();
+	pqApplicationCore *core = pqApplicationCore::instance();
+	pqObjectBuilder *builder = core->getObjectBuilder();  
+	pqServerManagerModel *sm = core->getServerManagerModel();
+	pqActiveObjects* activeObjects = &pqActiveObjects::instance();
+
+	QList<pqPipelineSource*> sources = sm->findItems<pqPipelineSource*>(activeObjects->activeServer());
+	foreach(pqPipelineSource *source, sources) {
+		if(QString("SAX") == source->getProxy()->GetXMLName()) {
+			pqSMAdaptor::setElementProperty(source->getProxy()->GetProperty("SAX plane"), pqSMAdaptor::getElementProperty(source->getProxy()->GetProperty("SAX plane")).toInt()-1);
+			source->getProxy()->UpdateProperty("SAX plane", true);
+			source->getProxy()->UpdateVTKObjects();
+			source->renderAllViews(true);
+		}
+	}
+}
+
 
 FourFlowMainWindow::FourFlowMainWindow() : internals(new pqInternals()) {
 	pqSettings* settings = pqApplicationCore::instance()->settings();
@@ -56,6 +107,14 @@ FourFlowMainWindow::FourFlowMainWindow() : internals(new pqInternals()) {
 	QShortcut *rightArrowShortCut = new QShortcut(Qt::Key_Right, this);
 	rightArrowShortCut->setContext(Qt::ApplicationShortcut);
 	QObject::connect(rightArrowShortCut, SIGNAL(activated()), this, SLOT(nextTimeStepShortCut()));
+
+	QShortcut *upArrowShortCut = new QShortcut(Qt::Key_Up, this);
+	upArrowShortCut->setContext(Qt::ApplicationShortcut);
+	QObject::connect(upArrowShortCut, SIGNAL(activated()), this, SLOT(saxUpShortCut()));
+
+	QShortcut *downArrowShortCut = new QShortcut(Qt::Key_Down, this);
+	downArrowShortCut->setContext(Qt::ApplicationShortcut);
+	QObject::connect(downArrowShortCut, SIGNAL(activated()), this, SLOT(saxDownShortCut()));
 
 	//new pqLoadDataReaction(this->internals->actionOpenDir);
 

@@ -49,6 +49,7 @@ using namespace std;
 vtkStandardNewMacro(vtkFourFlowGraph);
 
 vtkFourFlowGraph::vtkFourFlowGraph() : vtkTableAlgorithm() {
+	std::cout << "vtkFourFlowGraph::vtkFourFlowGraph()" << std::endl;
 	this->SetNumberOfInputPorts(2);
 	this->CurrentTimeIndex = 0;
 	this->ShowFlow = true;
@@ -59,14 +60,17 @@ vtkFourFlowGraph::vtkFourFlowGraph() : vtkTableAlgorithm() {
 }
 
 vtkFourFlowGraph::~vtkFourFlowGraph() {
+	std::cout << "vtkFourFlowGraph::vtkFourFlowGraph()" << std::endl;
 }
 
 int vtkFourFlowGraph::FillInputPortInformation(int port, vtkInformation* info) {
+	std::cout << "vtkFourFlowGraph::FillInputPortInformation()" << std::endl;
     info->Set(vtkAlgorithm::INPUT_REQUIRED_DATA_TYPE(), "vtkDataObject");    
 	return 1;
 }
 
 int vtkFourFlowGraph::RequestData(vtkInformation *request, vtkInformationVector **inputVector, vtkInformationVector *outputVector) {
+	std::cout << "vtkFourFlowGraph::RequestData()" << std::endl;
 	//cout << "test: " << ShowFlow << " " << ShowFlowPrev << " " << ShowMaximumVelocity << " " << ShowMaximumVelocityPrev << " " << ShowMeanVelocity << " " << ShowMeanVelocityPrev << endl;
 	if(this->continueExecuting == false)
 		if(ShowFlow == ShowFlowPrev && ShowMaximumVelocity == ShowMaximumVelocityPrev && ShowMeanVelocity == ShowMeanVelocityPrev)
@@ -305,6 +309,7 @@ int vtkFourFlowGraph::RequestData(vtkInformation *request, vtkInformationVector 
 int vtkFourFlowGraph::ProcessRequest(vtkInformation* request,
                            vtkInformationVector** inputVector,
                            vtkInformationVector* outputVector) {
+	std::cout << "vtkFourFlowGraph::ProcessRequest()" << std::endl;
 	if(request->Has(vtkDemandDrivenPipeline::REQUEST_INFORMATION()))
     {
 		return this->RequestInformation(request, inputVector, outputVector);       
@@ -323,6 +328,7 @@ int vtkFourFlowGraph::ProcessRequest(vtkInformation* request,
 int vtkFourFlowGraph::RequestInformation(vtkInformation* request,
                               vtkInformationVector** inputVector,
                               vtkInformationVector* outputVector) {
+	  std::cout << "vtkFourFlowGraph::RequestInformation()" << std::endl;
 	vtkInformation* outInfo = outputVector->GetInformationObject(0);
 	if (outInfo->Has(vtkStreamingDemandDrivenPipeline::TIME_STEPS())) {
 		outInfo->Remove(vtkStreamingDemandDrivenPipeline::TIME_STEPS());
@@ -346,6 +352,7 @@ int vtkFourFlowGraph::RequestInformation(vtkInformation* request,
 int vtkFourFlowGraph::RequestUpdateExtent(vtkInformation* request,
                                 vtkInformationVector** inputVector,
                                 vtkInformationVector* outputVector) {
+	std::cout << "vtkFourFlowGraph::RequestUpdateExtent()" << std::endl;
 	vtkInformation *inInfo = inputVector[0]->GetInformationObject(0);
 	vtkInformation *inInfo2 = inputVector[1]->GetInformationObject(0);
 	double *inTimes = inInfo->Get(vtkStreamingDemandDrivenPipeline::TIME_STEPS());
@@ -357,9 +364,11 @@ int vtkFourFlowGraph::RequestUpdateExtent(vtkInformation* request,
 }
 
 void vtkFourFlowGraph::AddSourceConnection(vtkAlgorithmOutput* input) {
+	std::cout << "vtkFourFlowGraph::AddSourceConnection()" << std::endl;
 	this->AddInputConnection(1, input);
 }
 
 void vtkFourFlowGraph::RemoveAllSources() {
+	std::cout << "vtkFourFlowGraph::RemoveAllSources()" << std::endl;
 	this->SetInputConnection(1, 0);
 }

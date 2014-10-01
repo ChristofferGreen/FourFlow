@@ -70,10 +70,10 @@ void pqInternals::applyIsoSurface() { // buggy
 	pqPipelineSource *source = pqActiveObjects::instance().activeSource(); 
 	vtkSMProxy *proxy = source->getProxy();
 	if(source->getOutputPort(0)->getDataInformation()->GetPointDataInformation()->GetArrayInformation(0)->GetNumberOfComponents() == 3) {
-		pqFiltersMenuReaction::createFilter("filters", "IsoSurfaceCompound");
+		pqFiltersMenuReaction::createFilter("filters", "IsoSurfaceCleanupCompound");
 	}
 	else {
-		pqFiltersMenuReaction::createFilter("filters", "Contour");
+		pqFiltersMenuReaction::createFilter("filters", "FourFlowIsoCleanupSurface");
 	}
 }
 

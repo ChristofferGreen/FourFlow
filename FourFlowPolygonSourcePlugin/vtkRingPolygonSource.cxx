@@ -101,15 +101,18 @@ int vtkRingPolygonSource::RequestData(vtkInformation *request, vtkInformationVec
 		return 1;
 	if(!strlen(Vertex2dString))
 		return 1;
+	std::cout << "1" << std::endl;
 	// get the info object
 	vtkInformation *inInfo = inputVector[0]->GetInformationObject(0);
 	vtkInformation *outInfo = outputVector->GetInformationObject(0);
 	vtkPolyData *probePlaneData = vtkPolyData::SafeDownCast(inInfo->Get(vtkDataObject::DATA_OBJECT()));
 
+	std::cout << "2" << std::endl;
 	polygon.vertices.clear();
 	polygon2d.vertices.clear();
 	QString vertices2dString(Vertex2dString);
 	
+	std::cout << "3" << std::endl;
 	// find the correct time step in the data
 	double requestedTimeValue = 0.0f;
 	if (outInfo && outInfo->Has(vtkStreamingDemandDrivenPipeline::UPDATE_TIME_STEP()))
@@ -117,6 +120,7 @@ int vtkRingPolygonSource::RequestData(vtkInformation *request, vtkInformationVec
 	else
 		return 1;
 
+	std::cout << "4" << std::endl;
 	QStringList vertices2dTimeStringList = vertices2dString.split(":");
 	QString closestStep;
 	float currentClosestDistance = 1000000.0f;
@@ -131,6 +135,7 @@ int vtkRingPolygonSource::RequestData(vtkInformation *request, vtkInformationVec
 		}
 	}
 
+	std::cout << "5" << std::endl;
 	QStringList vertices2dStringList = closestStep.split(" ");
 	vertices2dStringList.pop_front(); // remove time data
 	polygon2d.vertices.clear();
@@ -144,8 +149,13 @@ int vtkRingPolygonSource::RequestData(vtkInformation *request, vtkInformationVec
 		polygon2d.vertices.push_back(v);
 	}
 
+	std::cout << "6" << std::endl;
 	// calculate corners
 	if(probePlaneData) {
+		std::cout << probePlaneData->GetNumberOfPoints() << std::endl;
+		if(probePlaneData->GetNumberOfPoints() < 10100)
+			return 0;
+
 		corners.vertices.clear();
 		std::vector<double> v1, v2, v3;
 		double a[3];
@@ -162,7 +172,10 @@ int vtkRingPolygonSource::RequestData(vtkInformation *request, vtkInformationVec
 		v3.push_back(a[0]);v3.push_back(a[1]);v3.push_back(a[2]);
 		corners.vertices.push_back(v3);
 	}
+	else
+		return 0;
 
+	std::cout << "7" << std::endl;
 	polygon.vertices.clear();
 	for(std::vector<std::vector<double> >::iterator iter = polygon2d.vertices.begin(); iter != polygon2d.vertices.end(); iter++) 	{
 		double x = (*iter)[0];
@@ -178,6 +191,7 @@ int vtkRingPolygonSource::RequestData(vtkInformation *request, vtkInformationVec
 		polygon.vertices.push_back(v);
 	}
 
+	std::cout << "8" << std::endl;
   // get the ouptut
 	vtkPolyData *output = vtkPolyData::SafeDownCast(outInfo->Get(vtkDataObject::DATA_OBJECT()));
 
@@ -231,6 +245,7 @@ int vtkRingPolygonSource::RequestData(vtkInformation *request, vtkInformationVec
 		output->SetPolys(newPolys);
 		newPolys->Delete();
 	}
+	std::cout << "9" << std::endl;
 	return 1;
 }
 
@@ -252,10 +267,11 @@ void vtkRingPolygonSource::PrintSelf(ostream& os, vtkIndent indent)
 }
 
 //----------------------------------------------------------------------------
-int vtkRingPolygonSource::RequestInformation(vtkInformation *vtkNotUsed(request),
-	vtkInformationVector **vtkNotUsed(inputVector), vtkInformationVector *outputVector)
+int vtkRingPolygonSource::RequestInformation(vtkInformation *request,
+	vtkInformationVector **inputVector, vtkInformationVector *outputVector)
 {
-  vtkInformation *outInfo = outputVector->GetInformationObject(0); // get the info object
+	return this->Superclass::RequestInformation(request,inputVector,outputVector);
+  /*vtkInformation *outInfo = outputVector->GetInformationObject(0); // get the info object
   outInfo->Set(vtkStreamingDemandDrivenPipeline::MAXIMUM_NUMBER_OF_PIECES(),-1);
   outInfo->Set(vtkStreamingDemandDrivenPipeline::WHOLE_BOUNDING_BOX(),
                this->Center[0] - 0.5,
@@ -283,5 +299,5 @@ int vtkRingPolygonSource::RequestInformation(vtkInformation *vtkNotUsed(request)
 	outInfo->Set(vtkStreamingDemandDrivenPipeline::TIME_STEPS(), timeValues, size);
 	delete timeValues;
 
-  return 1;
+  return 1;*/
 }
